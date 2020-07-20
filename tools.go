@@ -208,14 +208,13 @@ func InventoryHasItem(arr map[string]*ItemQuantity) bool {
 	return false
 }
 
-func indexOf(arr []string, item string) bool {
-	boolean := false
-	for _, elem := range arr {
+func indexOf(arr []string, item string) int {
+	for index, elem := range arr {
 		if elem == item {
-			boolean = true
+			return index
 		}
 	}
-	return boolean
+	return -1
 }
 
 func InitialsIndexOf(arr []string, item string) bool {

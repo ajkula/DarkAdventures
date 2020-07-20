@@ -36,7 +36,11 @@ func PresentScene(p *Character) {
 		showUniversalCmds()
 		// move
 		cmd := UserInputln()
-		ProcessCommands(p, cmd)
+		if ok := arrayIncludesCommand(worldCommands, cmd); ok {
+			ProcessCommands(p, cmd)
+		} else {
+			Output("red", Tab+"You can't do that here...")
+		}
 	}
 
 	if loc.HasSeller {
@@ -52,7 +56,11 @@ func PresentScene(p *Character) {
 		showUniversalCmds()
 		// buy listener
 		cmd := UserInputln()
-		ProcessCommands(p, cmd)
+		if ok := arrayIncludesCommand(sellerCommands, cmd); ok {
+			ProcessCommands(p, cmd)
+		} else {
+			Output("red", Tab+"You can't do that here...")
+		}
 	}
 
 }
@@ -94,4 +102,22 @@ func Article(str string) string {
 		return "an " + str + " "
 	}
 	return "a " + str + " "
+}
+
+func extractCommand(input string) string {
+	tokens := strings.Fields(input)
+	if len(tokens) == 0 {
+		return ""
+	}
+	return strings.ToLower(tokens[0])
+}
+
+func arrayIncludesCommand(comArr []string, input string) bool {
+	if str := extractCommand(input); str != "" {
+		test := append(comArr[:], universalCommands[:]...)
+		if ok := InitialsIndexOf(test, str); ok {
+			return true
+		}
+	}
+	return false
 }

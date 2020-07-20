@@ -65,24 +65,20 @@ func init() {
 	for _, l := range Grid {
 		fmt.Println("grid", l)
 	}
-
 	CreateMap()
 }
 
 func main() {
-
 	// player = *new(Character)
 	ChooseHero()
 	hero := heroFromName(indexedHeroes[Hero])
 	hero.SetPlayerRoom()
-
 	// hero.MoveTo("n")
 	for {
 		PresentScene(hero)
 	}
 	// DisplayWorldMap(hero)
 	// hero.DisplayInvetory()
-
 }
 
 // Outputf("yellow", "\t%s", Items[itm].Name)

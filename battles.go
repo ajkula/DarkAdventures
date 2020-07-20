@@ -49,7 +49,13 @@ func Battle(player, enemy *Character) {
 		// Output("white", Tab+CalculateSpaceAlign("You can use: ")+actualPlayer.DisplayItems())
 		// Output("white", Tab+CalculateSpaceAlign("...or: ")+ArrayToString(universalCommands))
 		cmd := UserInputln()
-		ProcessCommands(player, cmd, enemy)
+		if ok := arrayIncludesCommand(battleCommands, cmd); ok {
+			ProcessCommands(player, cmd, enemy)
+		} else {
+			Output("red", Tab+"You can't do that here...")
+			ResetTurns()
+		}
+
 	} else {
 		Output("red", actualPlayer.Name)
 		EnemyAction(player, enemy)

@@ -14,6 +14,8 @@ const YourPosition string = "@"
 const LegendSpace int = 8
 const inventorySpace int = 38
 
+var dragon *Dragon
+
 var LegendArray []string = []string{
 	CustomSpaceAlign("You:", LegendSpace) + YourPosition,
 	CustomSpaceAlign("Shops:", LegendSpace) + Shop,
