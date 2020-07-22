@@ -175,6 +175,10 @@ func (player *Character) calculateDammage(enemy *Character) int {
 
 func (player *Character) isAlive() bool {
 	player.Alive = player.Health > 0
+	if player.Name == enemiesList.DRAGON {
+		loc := player.SetPlayerRoom()
+		loc.Ephemeral = ""
+	}
 	return player.Alive
 }
 

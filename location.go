@@ -59,6 +59,7 @@ func (loc *Location) addDescriptionToAdjacentRooms(add string) {
 func (loc *Location) ClearEphemeral() {
 	loc.HasEnemy = false
 	loc.Enemy = NullifiedEnemy
+	loc.Ephemeral = ""
 	for _, dir := range loc.CanGoTo {
 		// Output("green", dir)
 		switch dir {
@@ -81,6 +82,7 @@ func (loc *Location) ClearEphemeral() {
 func (loc *Location) AddEphemeral() {
 	loc.HasEnemy = true
 	loc.Enemy = *dragon.Character
+	loc.Ephemeral += dragonProximity["x"]
 	for _, dir := range loc.CanGoTo {
 		// Output("green", dir)
 		switch dir {

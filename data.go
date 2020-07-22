@@ -134,11 +134,11 @@ var ItemChancesByEnemyName map[string]map[string]int = map[string]map[string]int
 		itemNames.Coins:     1,
 	},
 	enemiesList.DRAGON: map[string]int{
-		itemNames.Doll:      75,
-		itemNames.Scroll:    60,
-		itemNames.Potion:    40,
-		itemNames.Key:       30,
-		itemNames.Moonstone: 10,
+		itemNames.Doll:      60,
+		itemNames.Scroll:    55,
+		itemNames.Potion:    50,
+		itemNames.Key:       45,
+		itemNames.Moonstone: 5,
 		itemNames.Coins:     1,
 	},
 }
@@ -184,6 +184,10 @@ var dragonProximity = map[string]string{
 	"l": "The air carries ashes flying in the wind...",
 	"d": "It's hotter than usual and so dry...",
 	"c": "It smells like burning from all directions...",
+	"x": "NO LUCK, A strong wind bursts all around the place,\n" +
+		Tab + "The sunlight dims before you heard the loudest of noises\n" +
+		Tab + "Humongous, wings deployed its scream tearing the sky,\n" +
+		Tab + "Here it is. The mightiest of all foes...",
 }
 
 // You are

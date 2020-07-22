@@ -10,16 +10,21 @@ type Dragon struct {
 var dragon *Dragon
 
 func (dragon *Dragon) dragonMoves() {
-	loc := dragon.SetPlayerRoom()
-	dragon.PreviousLocation[0] = loc.Y
-	dragon.PreviousLocation[1] = loc.X
+	if ok := dragon.isAlive(); ok {
+		loc := dragon.SetPlayerRoom()
+		dragon.PreviousLocation[0] = loc.Y
+		dragon.PreviousLocation[1] = loc.X
 
-	possibleWays := dragonPossibleWays()
-	if len(possibleWays) > 0 {
-		dragon.MoveTo(possibleWays[rand.Intn(len(possibleWays))])
+		possibleWays := dragonPossibleWays()
+		Output("red", "dragon can go: ", possibleWays)
+		if len(possibleWays) > 0 {
+			goTo := possibleWays[rand.Intn(len(possibleWays))]
+			Output("red", "dragon moves to: ", goTo)
+			dragon.MoveTo(goTo)
+		}
+		loc = dragon.SetPlayerRoom()
+		loc.AddEphemeral()
 	}
-	loc = dragon.SetPlayerRoom()
-	loc.AddEphemeral()
 }
 
 // Character{
@@ -35,7 +40,7 @@ func (dragon *Dragon) dragonMoves() {
 // }
 
 func CreateDragon() {
-	HP := rand.Intn(20) + 80
+	HP := rand.Intn(50) + 80
 	dragonStartPosition := getAvailableRoom()
 	dragon = &Dragon{
 		Character: &Character{

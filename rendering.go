@@ -14,7 +14,8 @@ func PresentScene(p *Character) {
 		Output("yellow", loc.Ephemeral)
 	}
 	Output("red", loc.HasEnemy)
-	Output("red", p.CurrentLocation)
+	Output("red", "player: ", p.CurrentLocation)
+	Output("red", "dragon: ", dragon.CurrentLocation)
 	Output("green", getTurns())
 	if loc.HasEnemy {
 		if loc.Enemy.Alive {
