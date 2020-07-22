@@ -74,7 +74,6 @@ func main() {
 	hero := heroFromName(indexedHeroes[Hero])
 	hero.SetPlayerRoom()
 
-	CreateDragon()
 	Outputf("red", "%+v", dragon)
 	// hero.MoveTo("n")
 	for {
