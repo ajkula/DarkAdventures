@@ -8,9 +8,11 @@ import (
 func PresentScene(p *Character) {
 	loc := p.SetPlayerRoom()
 	loc.RemoveBattle()
-
 	// ICI
 	Output("yellow", loc.Description)
+	if loc.Ephemeral != "" {
+		Output("yellow", loc.Ephemeral)
+	}
 	Output("red", loc.HasEnemy)
 	Output("red", p.CurrentLocation)
 	Output("green", getTurns())
@@ -31,6 +33,7 @@ func PresentScene(p *Character) {
 	}
 
 	if !loc.HasEnemy && !loc.HasSeller {
+		dragon.dragonMoves()
 		showActions(p, worldCommands)
 		showWhereCanGo(loc)
 		showUniversalCmds()
@@ -44,6 +47,7 @@ func PresentScene(p *Character) {
 	}
 
 	if loc.HasSeller {
+		dragon.dragonMoves()
 		Output("yellow", loc.Seller)
 
 		var concat string = ""
@@ -62,7 +66,6 @@ func PresentScene(p *Character) {
 			Output("red", Tab+"You can't do that here...")
 		}
 	}
-
 }
 
 func showWhereCanGo(loc *Location) {

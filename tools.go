@@ -111,20 +111,25 @@ func CreateMap() [Y][X]*Location {
 	}
 	for b := 0; b < Y; b++ {
 		for a := 0; a < Y; a++ {
-			if WorldMap[a][b].HasEnemy {
-				if WorldMap[a][b].Enemy.Name == enemiesList.ORC {
-					WorldMap[a][b].addDescriptionToAdjacentRooms("There's an odd smell in this place...")
-				}
-			}
+			addOrcProximity(WorldMap[a][b])
 		}
 	}
-
 	showGameItems()
 	showGameEnemies()
 	AnalyzeItemsRepartition()
 
 	fmt.Println("Difficulty", Difficulty+1, difficultyIndex[Difficulty])
 	return WorldMap
+}
+
+func addOrcProximity(loc *Location) {
+	if loc.HasEnemy {
+		if loc.Enemy.Name == enemiesList.ORC {
+			if !strings.Contains(loc.Description, NearORC) {
+				loc.addDescriptionToAdjacentRooms(NearORC)
+			}
+		}
+	}
 }
 
 // fmt.Printf("\nBEFORE: %+v\n", loc.Enemy)

@@ -73,6 +73,9 @@ func main() {
 	ChooseHero()
 	hero := heroFromName(indexedHeroes[Hero])
 	hero.SetPlayerRoom()
+
+	CreateDragon()
+	Outputf("red", "%+v", dragon)
 	// hero.MoveTo("n")
 	for {
 		PresentScene(hero)
@@ -81,7 +84,6 @@ func main() {
 	// hero.DisplayInvetory()
 }
 
-// Outputf("yellow", "\t%s", Items[itm].Name)
 func Outputf(c string, format string, args ...interface{}) {
 	s := fmt.Sprintf(format, args...)
 	Output(c, s)

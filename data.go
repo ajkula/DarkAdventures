@@ -13,8 +13,9 @@ const Shop string = "#"
 const YourPosition string = "@"
 const LegendSpace int = 8
 const inventorySpace int = 38
+const NearORC string = "There's an odd smell in this place..."
 
-var dragon *Dragon
+var NullifiedEnemy Character
 
 var LegendArray []string = []string{
 	CustomSpaceAlign("You:", LegendSpace) + YourPosition,
@@ -66,7 +67,7 @@ var difficultyIndex = map[int]string{0: difficultyNames.Easy, 1: difficultyNames
 var GameDifficulty = map[string]int{difficultyNames.Easy: 15, difficultyNames.Meddium: 30, difficultyNames.Hard: 45}
 
 type HeroesList struct{ Thieve, Paladin, Wizzard, Barbarian string }
-type EnemiesList struct{ SKELETON, GOBLIN, SORCERER, ORC string }
+type EnemiesList struct{ SKELETON, GOBLIN, SORCERER, ORC, DRAGON string }
 
 var indexedHeroes = []string{heroesList.Thieve, heroesList.Paladin, heroesList.Wizzard, heroesList.Barbarian}
 var heroesList = HeroesList{
@@ -82,6 +83,7 @@ var enemiesList = EnemiesList{
 	GOBLIN:   "GOBLIN",
 	SORCERER: "SORCERER",
 	ORC:      "ORC",
+	DRAGON:   "DRAGON",
 }
 
 // nnnnnnnnnif (i > 98) return "doll";
@@ -167,6 +169,13 @@ var enemiesSpecificsValues = map[string]Specifics{
 		Evasion:  3,
 		Crit:     25,
 	},
+}
+
+var dragonProximity = map[string]string{
+	"f": "Trees are burned the soil is ash...",
+	"l": "The air carries ashes flying in the wind...",
+	"d": "It's hotter than usual and so dry...",
+	"c": "It smells like burning from all directions...",
 }
 
 // You are

@@ -26,7 +26,9 @@ func (player *Character) SetPlayerRoom() *Location {
 	x := player.CurrentLocation[1]
 	y := player.CurrentLocation[0]
 	loc := WorldMap[y][x]
-	WorldMap[y][x].Visited = true
+	if !player.Npc {
+		WorldMap[y][x].Visited = true
+	}
 	return loc
 }
 

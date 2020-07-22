@@ -38,7 +38,7 @@ func (loc *Location) RemoveItem(n string) {
 func (loc *Location) addDescriptionToAdjacentRooms(add string) {
 	Output("green", loc.CanGoTo, " ", loc.Y, " ", loc.X)
 	for _, dir := range loc.CanGoTo {
-		Output("green", dir)
+		// Output("green", dir)
 		switch dir {
 		case directions.North:
 			WorldMap[loc.Y-1][loc.X].Description += Tab + add
@@ -51,6 +51,50 @@ func (loc *Location) addDescriptionToAdjacentRooms(add string) {
 			break
 		case directions.West:
 			WorldMap[loc.Y][loc.X-1].Description += Tab + add
+			break
+		}
+	}
+}
+
+func (loc *Location) ClearEphemeral() {
+	loc.HasEnemy = false
+	loc.Enemy = NullifiedEnemy
+	for _, dir := range loc.CanGoTo {
+		// Output("green", dir)
+		switch dir {
+		case directions.North:
+			WorldMap[loc.Y-1][loc.X].Ephemeral = ""
+			break
+		case directions.South:
+			WorldMap[loc.Y+1][loc.X].Ephemeral = ""
+			break
+		case directions.East:
+			WorldMap[loc.Y][loc.X+1].Ephemeral = ""
+			break
+		case directions.West:
+			WorldMap[loc.Y][loc.X-1].Ephemeral = ""
+			break
+		}
+	}
+}
+
+func (loc *Location) AddEphemeral() {
+	loc.HasEnemy = true
+	loc.Enemy = *dragon.Character
+	for _, dir := range loc.CanGoTo {
+		// Output("green", dir)
+		switch dir {
+		case directions.North:
+			WorldMap[loc.Y-1][loc.X].Ephemeral += Tab + dragonProximity[Grid[loc.Y-1][loc.X]]
+			break
+		case directions.South:
+			WorldMap[loc.Y+1][loc.X].Ephemeral += Tab + dragonProximity[Grid[loc.Y+1][loc.X]]
+			break
+		case directions.East:
+			WorldMap[loc.Y][loc.X+1].Ephemeral += Tab + dragonProximity[Grid[loc.Y][loc.X+1]]
+			break
+		case directions.West:
+			WorldMap[loc.Y][loc.X-1].Ephemeral += Tab + dragonProximity[Grid[loc.Y][loc.X-1]]
 			break
 		}
 	}
