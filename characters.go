@@ -82,7 +82,9 @@ func (player *Character) MoveTo(direction string) bool {
 // }
 
 func (p *Character) addItemTypeToInventory(n string, i int) {
-
+	if !p.Npc {
+		SCORE.scoreItems(n, i)
+	}
 	if p.hasItemInInventory(n) {
 		p.Inventory[n].Quantity += i
 	} else {
@@ -123,6 +125,7 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 	case itemNames.Doll:
 		p.Health = 30
 		p.Alive = true
+		p.Inventory[name].Quantity--
 		Output("green", Tab+"A dark force is devouring your body")
 		Output("green", Tab+"A chance has been given to youm or is it?")
 		Output("green", Tab+"You died... and revived.")
@@ -141,7 +144,9 @@ func (player *Character) showHP() {
 
 func (player *Character) attack(enemy *Character) {
 	if !evadeAttack(player, enemy) {
-		enemy.Health -= player.calculateDammage(enemy)
+		dmg := player.calculateDammage(enemy)
+		SCORE.scoreDammages(player.Npc, dmg)
+		enemy.Health -= dmg
 	}
 }
 
@@ -196,7 +201,7 @@ func (player *Character) DisplayInvetory() {
 func (player *Character) DisplayItems() string {
 	var items []string
 	for _, item := range player.Inventory {
-		if UsableItems[item.Type.Name] {
+		if UsableItems[item.Type.Name] && item.Quantity > 0 {
 			items = append(items, item.Type.Name+"("+strconv.Itoa(item.Quantity)+")")
 		}
 	}

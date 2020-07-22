@@ -13,7 +13,7 @@ const Shop string = "#"
 const YourPosition string = "@"
 const LegendSpace int = 8
 const inventorySpace int = 38
-const NearORC string = "There's an odd smell in this place..."
+const NearORC string = "There's an odd smell in this place...\n"
 
 var NullifiedEnemy Character
 

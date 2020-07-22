@@ -99,6 +99,7 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 		Output("blue", Tab+CustomSpaceAlign("inv", 25)+"- Display your inventory\n\n")
 	case Initial(commands.Quit):
 		Output("green", "Goodbye...")
+		SCORE.getSCORE()
 		os.Exit(0)
 	default:
 		Output("red", "I didn't understand -> ", command)
