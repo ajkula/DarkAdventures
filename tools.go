@@ -68,6 +68,7 @@ var aggregateEnemies = map[string]int{
 	enemiesList.SKELETON: 0,
 	enemiesList.ORC:      0,
 	enemiesList.SORCERER: 0,
+	enemiesList.DRAGON:   0,
 }
 
 func AnalyzeItemsRepartition() {
@@ -114,6 +115,7 @@ func CreateMap() [Y][X]*Location {
 			addOrcProximity(WorldMap[a][b])
 		}
 	}
+	CreateDragon()
 	showGameItems()
 	showGameEnemies()
 	AnalyzeItemsRepartition()
@@ -397,6 +399,14 @@ var itemsByEnemy = map[string]map[string]int{
 		itemNames.Scroll:    0,
 	},
 	enemiesList.SORCERER: map[string]int{
+		itemNames.Moonstone: 0,
+		itemNames.Doll:      0,
+		itemNames.Coins:     0,
+		itemNames.Key:       0,
+		itemNames.Potion:    0,
+		itemNames.Scroll:    0,
+	},
+	enemiesList.DRAGON: map[string]int{
 		itemNames.Moonstone: 0,
 		itemNames.Doll:      0,
 		itemNames.Coins:     0,

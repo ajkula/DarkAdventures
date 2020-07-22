@@ -54,6 +54,7 @@ func CreateDragon() {
 		PreviousLocation: dragonStartPosition,
 	}
 	var loc *Location
+	dragon.createEnemyInventory()
 	loc = dragon.SetPlayerRoom()
 	loc.AddEphemeral()
 }

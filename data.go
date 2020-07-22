@@ -133,6 +133,14 @@ var ItemChancesByEnemyName map[string]map[string]int = map[string]map[string]int
 		itemNames.Moonstone: 50,
 		itemNames.Coins:     1,
 	},
+	enemiesList.DRAGON: map[string]int{
+		itemNames.Doll:      75,
+		itemNames.Scroll:    60,
+		itemNames.Potion:    40,
+		itemNames.Key:       30,
+		itemNames.Moonstone: 10,
+		itemNames.Coins:     1,
+	},
 }
 
 type Specifics struct {
