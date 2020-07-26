@@ -127,7 +127,7 @@ func CreateMap() [Y][X]*Location {
 func addOrcProximity(loc *Location) {
 	if loc.HasEnemy {
 		if loc.Enemy.Name == enemiesList.ORC {
-			if !strings.Contains(loc.Description, NearORC) {
+			if near := strings.Contains(loc.Description, "odd smell"); !near {
 				loc.addDescriptionToAdjacentRooms(NearORC)
 			}
 		}

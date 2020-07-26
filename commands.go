@@ -23,6 +23,7 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 	Output("yellow", "command ", command)
 	Output("yellow", "itemName ", itemName)
 	loc := player.SetPlayerRoom()
+	dragon.shouldFreeze(Initial(command))
 	switch Initial(command) {
 	case Initial(commands.Go):
 		ResetTurns()
@@ -68,7 +69,6 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 		player.DisplayInvetory()
 	case Initial(commands.Buy):
 		if ok := player.BuyFromShop(itemName); !ok {
-			// ICI
 			Output("red", Tab+"Can't buy "+Article(itemName))
 		}
 	// case "get":

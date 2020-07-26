@@ -33,21 +33,11 @@ func PrintArrayAligned(arr []string) string {
 
 func Battle(player, enemy *Character) {
 	opponents := []*Character{player, enemy}
-
-	// for {
 	if !player.isAlive() || !enemy.isAlive() {
-		// break
 		return
 	}
-
 	actualPlayer := opponents[turns()]
 	if !actualPlayer.Npc {
-		// Output("white", "\tYou are fighting "+Article(enemy.Name)+"\n")
-		// Output("white", Tab+CalculateSpaceAlign(player.Name+": ")+strconv.Itoa(player.Health)+" HP")
-		// Output("yellow", Tab+CalculateSpaceAlign(enemy.Name+": ")+strconv.Itoa(enemy.Health)+" HP")
-		// Output("white", Tab+CalculateSpaceAlign("You can: ")+ArrayToString(battleCommands))
-		// Output("white", Tab+CalculateSpaceAlign("You can use: ")+actualPlayer.DisplayItems())
-		// Output("white", Tab+CalculateSpaceAlign("...or: ")+ArrayToString(universalCommands))
 		cmd := UserInputln()
 		if ok := arrayIncludesCommand(battleCommands, cmd); ok {
 			ProcessCommands(player, cmd, enemy)
@@ -60,7 +50,6 @@ func Battle(player, enemy *Character) {
 		Output("red", actualPlayer.Name)
 		EnemyAction(player, enemy)
 	}
-	// }
 
 	for _, opp := range opponents {
 		if !opp.isAlive() {

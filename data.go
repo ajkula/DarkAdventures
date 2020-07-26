@@ -204,9 +204,9 @@ var introDesert = map[int]string{
 }
 
 var introCastle = map[int]string{
-	0: " in front of a castle ruin's gate, the edifice barely stands,\n",
-	1: " at an old fort or what might have been one, long long ago,\n",
-	2: " below a huge tower, on top of which float an unknown old flag,n",
+	0: " in front of a castle ruin's gate, it barely stands,\n",
+	1: " at an old fort or what might have been one long ago,\n",
+	2: " below a huge tower, on top of which float an old flag,\n",
 }
 
 var introForest = map[int]string{

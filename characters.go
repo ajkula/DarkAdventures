@@ -22,10 +22,10 @@ type Character struct {
 }
 
 func (player *Character) SetPlayerRoom() *Location {
-
+	var loc *Location
 	x := player.CurrentLocation[1]
 	y := player.CurrentLocation[0]
-	loc := WorldMap[y][x]
+	loc = WorldMap[y][x]
 	if !player.Npc {
 		WorldMap[y][x].Visited = true
 	}
@@ -74,12 +74,6 @@ func (player *Character) MoveTo(direction string) bool {
 	// player.SetPlayerRoom()
 	return ok
 }
-
-// func (player *Character) create() {
-// 	Outputf("blue", "\t%s", "Welcome to Adventures, choose a hero:")
-// 	cmd := UserInputln()
-// 	fmt.Print(cmd)
-// }
 
 func (p *Character) addItemTypeToInventory(n string, i int) {
 	if !p.Npc {
@@ -161,9 +155,9 @@ func (player *Character) calculateDammage(enemy *Character) int {
 	}
 	dmg := Abs(calc)
 	// ICI
-	fmt.Println("calc ", calc)
-	fmt.Println("dmg ", dmg)
-	fmt.Println("Boost ", player.Boost)
+	// fmt.Println("calc ", calc)
+	// fmt.Println("dmg ", dmg)
+	// fmt.Println("Boost ", player.Boost)
 	if rand.Intn(100) < player.Crit {
 		dmg = Abs(dmg + (dmg * player.Crit / 100) + (dmg * (player.Strength / 100)))
 		Output("red", "\t"+player.Name+" does "+strconv.Itoa(dmg)+" Critical DMG to "+enemy.Name)
@@ -180,7 +174,7 @@ func (player *Character) calculateDammage(enemy *Character) int {
 
 func (player *Character) isAlive() bool {
 	player.Alive = player.Health > 0
-	if player.Name == enemiesList.DRAGON {
+	if player.Name == enemiesList.DRAGON && !player.Alive {
 		loc := player.SetPlayerRoom()
 		loc.Ephemeral = ""
 	}

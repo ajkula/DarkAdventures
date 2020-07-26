@@ -59,7 +59,8 @@ func (loc *Location) addDescriptionToAdjacentRooms(add string) {
 func (loc *Location) ClearEphemeral() {
 	loc.HasEnemy = false
 	loc.Enemy = NullifiedEnemy
-	loc.Ephemeral = ""
+	// WorldMap[loc.Y][loc.X].Ephemeral = ""
+	Output("red", "ClearEphemeral() ", WorldMap[loc.Y][loc.X] == loc)
 	for _, dir := range loc.CanGoTo {
 		// Output("green", dir)
 		switch dir {
@@ -82,22 +83,31 @@ func (loc *Location) ClearEphemeral() {
 func (loc *Location) AddEphemeral() {
 	loc.HasEnemy = true
 	loc.Enemy = *dragon.Character
-	loc.Ephemeral += dragonProximity["x"]
+	WorldMap[loc.Y][loc.X].Ephemeral = Tab + dragonProximity["x"]
+	// Output("red", "AddEphemeral() ", WorldMap[loc.Y][loc.X] == loc)
+	// fmt.Printf("\ny: %v x: %v  EPHEMERAL: %v", loc.Y, loc.X, WorldMap[loc.Y][loc.X].Ephemeral)
 	for _, dir := range loc.CanGoTo {
 		// Output("green", dir)
 		switch dir {
 		case directions.North:
-			WorldMap[loc.Y-1][loc.X].Ephemeral += Tab + dragonProximity[Grid[loc.Y-1][loc.X]]
+			WorldMap[loc.Y-1][loc.X].Ephemeral = Tab + dragonProximity[Grid[loc.Y-1][loc.X]]
+			// fmt.Printf("\ny: %v x: %v  EPHEMERAL: %v", loc.Y-1, loc.X, WorldMap[loc.Y-1][loc.X].Ephemeral)
 			break
 		case directions.South:
-			WorldMap[loc.Y+1][loc.X].Ephemeral += Tab + dragonProximity[Grid[loc.Y+1][loc.X]]
+			WorldMap[loc.Y+1][loc.X].Ephemeral = Tab + dragonProximity[Grid[loc.Y+1][loc.X]]
+			// fmt.Printf("\ny: %v x: %v  EPHEMERAL: %v", loc.Y+1, loc.X, WorldMap[loc.Y+1][loc.X].Ephemeral)
 			break
 		case directions.East:
-			WorldMap[loc.Y][loc.X+1].Ephemeral += Tab + dragonProximity[Grid[loc.Y][loc.X+1]]
+			WorldMap[loc.Y][loc.X+1].Ephemeral = Tab + dragonProximity[Grid[loc.Y][loc.X+1]]
+			// fmt.Printf("\ny: %v x: %v  EPHEMERAL: %v", loc.Y, loc.X+1, WorldMap[loc.Y][loc.X+1].Ephemeral)
 			break
 		case directions.West:
-			WorldMap[loc.Y][loc.X-1].Ephemeral += Tab + dragonProximity[Grid[loc.Y][loc.X-1]]
+			WorldMap[loc.Y][loc.X-1].Ephemeral = Tab + dragonProximity[Grid[loc.Y][loc.X-1]]
+			// fmt.Printf("\ny: %v x: %v  EPHEMERAL: %v", loc.Y, loc.X-1, WorldMap[loc.Y][loc.X-1].Ephemeral)
 			break
 		}
 	}
+	// y := dragon.CurrentLocation[0]
+	// x := dragon.CurrentLocation[1]
+	// fmt.Printf("\nDRAGON POSITION:  y: %v x: %v  EPHEMERAL: %v", y, x, WorldMap[y][x].Ephemeral)
 }

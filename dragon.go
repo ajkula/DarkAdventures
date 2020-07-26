@@ -1,30 +1,44 @@
 package main
 
-import "math/rand"
+import (
+	"math/rand"
+)
 
 type Dragon struct {
 	*Character
 	PreviousLocation []int
+	Freeze           bool
 }
 
 var dragon *Dragon
 
 func (dragon *Dragon) dragonMoves() {
-	if ok := dragon.isAlive(); ok {
-		loc := dragon.SetPlayerRoom()
-		dragon.PreviousLocation[0] = loc.Y
-		dragon.PreviousLocation[1] = loc.X
+	// ICI
+	// fmt.Printf("DRAGON SHOULD FREEZE: %+v\n", dragon.Freeze)
+	if !dragon.Freeze {
+		if ok := dragon.isAlive(); ok {
+			loc := dragon.SetPlayerRoom()
+			dragon.PreviousLocation = []int{loc.Y, loc.X}
 
-		possibleWays := dragonPossibleWays()
-		Output("red", "dragon can go: ", possibleWays)
-		if len(possibleWays) > 0 {
-			goTo := possibleWays[rand.Intn(len(possibleWays))]
-			Output("red", "dragon moves to: ", goTo)
-			dragon.MoveTo(goTo)
+			possibleWays := dragonPossibleWays()
+			Output("red", "dragon can go: ", possibleWays)
+			if len(possibleWays) > 0 {
+				goTo := possibleWays[rand.Intn(len(possibleWays))]
+				Output("red", "dragon moves to: ", goTo)
+				loc.ClearEphemeral()
+				dragon.MoveTo(goTo)
+			}
+			newLoc := dragon.SetPlayerRoom()
+			// fmt.Printf("DRAGON: %+v\ndragon character: %+v\n", dragon, dragon.Character)
+			// fmt.Printf("NewLOC: %+v\n", newLoc)
+			// fmt.Printf("OLD LOC: Y: %+v X: %+v\n", loc.Y, loc.X)
+			newLoc.AddEphemeral()
 		}
-		loc = dragon.SetPlayerRoom()
-		loc.AddEphemeral()
 	}
+}
+
+func (dragon *Dragon) shouldFreeze(str string) {
+	dragon.Freeze = str == Initial(commands.Map)
 }
 
 // Character{
@@ -57,6 +71,7 @@ func CreateDragon() {
 			Inventory:       map[string]*ItemQuantity{},
 		},
 		PreviousLocation: dragonStartPosition,
+		Freeze:           false,
 	}
 	var loc *Location
 	dragon.createEnemyInventory()
@@ -68,7 +83,6 @@ func dragonPossibleWays() []string {
 	var youCanGo []string
 	var yourPlace *Location
 	yourPlace = dragon.SetPlayerRoom()
-	yourPlace.ClearEphemeral()
 
 	if yourPlace.X >= 1 && canDragonMoveThatWay(yourPlace.X-1, yourPlace.Y) {
 		youCanGo = append(youCanGo, directions.West)

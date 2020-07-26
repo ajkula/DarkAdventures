@@ -18,9 +18,11 @@ func DisplayWorldMap(p *Character) {
 					result[y][x] = Shop
 				}
 			}
-			// if WorldMap[y][x].HasEnemy {
-			// 	result[y][x] = "E"
-			// }
+			if WorldMap[y][x].HasEnemy && Difficulty == 0 {
+				if WorldMap[y][x].Enemy.Name == enemiesList.DRAGON {
+					result[y][x] = "V"
+				}
+			}
 
 			if p.CurrentLocation[1] == x && p.CurrentLocation[0] == y {
 				result[y][x] = YourPosition

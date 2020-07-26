@@ -74,9 +74,12 @@ func main() {
 	hero := heroFromName(indexedHeroes[Hero])
 	hero.SetPlayerRoom()
 
-	Outputf("red", "%+v", dragon)
 	// hero.MoveTo("n")
 	for {
+		loc := hero.SetPlayerRoom()
+		if !loc.HasEnemy {
+			dragon.dragonMoves()
+		}
 		PresentScene(hero)
 	}
 	// DisplayWorldMap(hero)

@@ -64,19 +64,25 @@ func (score *ScoreSchema) getSCORE() {
 	for _, name := range indexedEnemiesForRandomization {
 		if SCORE.Enemies[name].Quantity > 0 {
 			SCORE.Total += SCORE.Enemies[name].Points * SCORE.Enemies[name].Quantity
-			Output("white", Tab+CalculateSpaceAlign(name+":")+strconv.Itoa(SCORE.Enemies[name].Quantity))
+			enemy := strconv.Itoa(SCORE.Enemies[name].Quantity)
+			Output("white", Tab+CustomSpaceAlign(name+":", 22-len(enemy))+enemy)
 		}
 	}
-	Output("white", DoubleTab+"Loots:")
+	Output("white", DoubleTab+"LOOT:")
 	for _, name := range ItemIndexList {
 		if SCORE.Items[name].Quantity > 0 {
 			SCORE.Total += SCORE.Items[name].Points * SCORE.Items[name].Quantity
-			Output("white", Tab+CalculateSpaceAlign(name+":")+strconv.Itoa(SCORE.Items[name].Quantity))
+			item := strconv.Itoa(SCORE.Items[name].Quantity)
+			Output("white", Tab+CustomSpaceAlign(name+":", 22-len(item))+item)
 		}
 	}
-	Output("white", Tab+CalculateSpaceAlign("DMG Dealt:")+strconv.Itoa(SCORE.Dammages.Dealt))
-	Output("white", Tab+CalculateSpaceAlign("DMG Taken:")+strconv.Itoa(SCORE.Dammages.Taken))
+	Output("white", DoubleTab+"POINTS:")
+	dealt := strconv.Itoa(SCORE.Dammages.Dealt)
+	taken := strconv.Itoa(SCORE.Dammages.Taken)
+	Output("white", Tab+CustomSpaceAlign("DMG Dealt:", 22-len(dealt))+dealt)
+	Output("white", Tab+CustomSpaceAlign("DMG Taken:", 22-len(taken))+taken)
 
-	Output("white", Tab+CalculateSpaceAlign("TOTAL SCORE:")+strconv.Itoa(SCORE.Total))
+	total := strconv.Itoa(SCORE.Total)
+	Output("white", Tab+CustomSpaceAlign("TOTAL SCORE:", 22-len(total))+total)
 
 } // SCORE.Enemies[name].Points*SCORE.Enemies[name].Quantity)

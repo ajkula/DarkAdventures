@@ -10,31 +10,24 @@ func PresentScene(p *Character) {
 	loc.RemoveBattle()
 	// ICI
 	Output("yellow", loc.Description)
-	if loc.Ephemeral != "" {
-		Output("yellow", loc.Ephemeral)
-	}
+	Output("yellow", loc.Ephemeral)
 	Output("red", loc.HasEnemy)
-	Output("red", "player: ", p.CurrentLocation)
-	Output("red", "dragon: ", dragon.CurrentLocation)
 	Output("green", getTurns())
+	Output("red", "dragon.Freeze "+strconv.FormatBool(dragon.Freeze))
+
 	if loc.HasEnemy {
 		if loc.Enemy.Alive {
 			Output("red", DoubleTab+"There is "+Article(loc.Enemy.Name)+"ready to fight you!\n")
 			p.showHP()
 			loc.Enemy.showHP()
 
-			// if getTurns() == 0 {
 			showActions(p, battleCommands)
 			showUniversalCmds()
-			// }
-			// loc.Description = "\tYou are fighting " + Article(loc.Enemy.Name) + "\n"
 			Battle(p, &loc.Enemy)
-
 		}
 	}
 
 	if !loc.HasEnemy && !loc.HasSeller {
-		dragon.dragonMoves()
 		showActions(p, worldCommands)
 		showWhereCanGo(loc)
 		showUniversalCmds()
@@ -48,7 +41,6 @@ func PresentScene(p *Character) {
 	}
 
 	if loc.HasSeller {
-		dragon.dragonMoves()
 		Output("yellow", loc.Seller)
 
 		var concat string = ""
