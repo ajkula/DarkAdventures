@@ -5,15 +5,20 @@ import (
 	"strings"
 )
 
+var started bool = false
+
 func PresentScene(p *Character) {
 	loc := p.SetPlayerRoom()
 	loc.RemoveBattle()
 	// ICI
-	Output("yellow", loc.Description)
-	Output("yellow", loc.Ephemeral)
-	Output("red", loc.HasEnemy)
-	Output("green", getTurns())
-	Output("red", "dragon.Freeze "+strconv.FormatBool(dragon.Freeze))
+	if started {
+		loc.showImage()
+		Output("yellow", loc.Description)
+		Output("yellow", loc.Ephemeral)
+		Output("red", loc.HasEnemy)
+		Output("green", getTurns())
+		Output("red", "dragon.Freeze "+strconv.FormatBool(dragon.Freeze))
+	}
 
 	if loc.HasEnemy {
 		if loc.Enemy.Alive {
@@ -23,15 +28,16 @@ func PresentScene(p *Character) {
 
 			showActions(p, battleCommands)
 			showUniversalCmds()
-			Battle(p, &loc.Enemy)
+			Battle(p, loc.Enemy)
 		}
 	}
 
 	if !loc.HasEnemy && !loc.HasSeller {
-		showActions(p, worldCommands)
-		showWhereCanGo(loc)
-		showUniversalCmds()
-		// move
+		if started {
+			showActions(p, worldCommands)
+			showWhereCanGo(loc)
+			showUniversalCmds()
+		}
 		cmd := UserInputln()
 		if ok := arrayIncludesCommand(worldCommands, cmd); ok {
 			ProcessCommands(p, cmd)
@@ -41,17 +47,17 @@ func PresentScene(p *Character) {
 	}
 
 	if loc.HasSeller {
-		Output("yellow", loc.Seller)
-
-		var concat string = ""
-		for name, element := range loc.Item {
-			concat += DoubleTab + strconv.Itoa(element.Quantity) + " - " + name + " for " + strconv.Itoa(element.Type.Price) + " coins." + "\n"
+		if started {
+			Output("yellow", loc.Seller)
+			var concat string = ""
+			for name, element := range loc.Item {
+				concat += DoubleTab + strconv.Itoa(element.Quantity) + " - " + name + " for " + strconv.Itoa(element.Type.Price) + " coins." + "\n"
+			}
+			Output("yellow", Tab+"He's proposing:\n"+concat)
+			showActions(p, sellerCommands)
+			showWhereCanGo(loc)
+			showUniversalCmds()
 		}
-		Output("yellow", Tab+"He's proposing:\n"+concat)
-		showActions(p, sellerCommands)
-		showWhereCanGo(loc)
-		showUniversalCmds()
-		// buy listener
 		cmd := UserInputln()
 		if ok := arrayIncludesCommand(sellerCommands, cmd); ok {
 			ProcessCommands(p, cmd)
@@ -59,6 +65,7 @@ func PresentScene(p *Character) {
 			Output("red", Tab+"You can't do that here...")
 		}
 	}
+	started = true
 }
 
 func showWhereCanGo(loc *Location) {

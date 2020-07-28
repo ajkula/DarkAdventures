@@ -13,7 +13,15 @@ const Shop string = "#"
 const YourPosition string = "@"
 const LegendSpace int = 8
 const inventorySpace int = 38
+const heroesDetailsSpacing int = 14
 const NearORC string = "There's an odd smell in this place...\n"
+
+var heroesDetails = map[string]string{
+	heroesList.Thieve:    " - High evasion, crits, can attack x2",
+	heroesList.Paladin:   " - High strength, health, more potions",
+	heroesList.Wizzard:   " - Potions and Scrolls from the start",
+	heroesList.Barbarian: " - High health, strength",
+}
 
 var NullifiedEnemy Character
 

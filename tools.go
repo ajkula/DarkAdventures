@@ -43,9 +43,9 @@ func Intro() {
 }
 
 func ChooseHero() {
-	Output("blue", Tab+"Select your hero:")
+	Output("blue", DoubleTab+"Select your hero:")
 	for index, name := range indexedHeroes {
-		Output("blue", DoubleTab+strconv.Itoa(index+1)+" - "+name)
+		Output("blue", Tab+CustomSpaceAlign(strconv.Itoa(index+1)+" - "+name, heroesDetailsSpacing)+heroesDetails[name])
 	}
 	UserInput(&Hero)
 	if Hero > 4 || Hero < 1 {
@@ -203,6 +203,9 @@ func getSeller(b bool) string {
 }
 
 func Initial(s string) string {
+	if s == "" {
+		return ""
+	}
 	return strings.ToLower(string(s[0]))
 }
 
@@ -226,9 +229,11 @@ func indexOf(arr []string, item string) int {
 
 func InitialsIndexOf(arr []string, item string) bool {
 	boolean := false
-	for _, elem := range arr {
-		if Initial(elem) == Initial(item) {
-			boolean = true
+	if item != "" {
+		for _, elem := range arr {
+			if Initial(elem) == Initial(item) {
+				boolean = true
+			}
 		}
 	}
 	return boolean
@@ -264,7 +269,7 @@ var heroFromName = func(s string) *Character {
 			Crit:            20,
 			Inventory:       map[string]*ItemQuantity{},
 		}
-		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(5)+1)
+		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(3)+3)
 		break
 	case "w":
 		hero = Character{
@@ -279,7 +284,7 @@ var heroFromName = func(s string) *Character {
 			Inventory:       map[string]*ItemQuantity{},
 		}
 		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(3)+1)
-		hero.addItemTypeToInventory(ItemIndexList[1], rand.Intn(5)+1)
+		hero.addItemTypeToInventory(ItemIndexList[1], rand.Intn(4)+2)
 		break
 	case "b":
 		hero = Character{
@@ -297,6 +302,7 @@ var heroFromName = func(s string) *Character {
 		break
 	}
 	hero.BaseHealth = hero.Health
+	hero.setImage()
 	return &hero
 }
 
@@ -314,7 +320,7 @@ func enemyNameByChances() string {
 	return A
 }
 
-func makeNewEnemy() Character {
+func makeNewEnemy() *Character {
 	name := enemyNameByChances()
 	base := enemiesSpecificsValues[name]
 	HP := base.Health()
@@ -330,8 +336,8 @@ func makeNewEnemy() Character {
 		Npc:        true,
 		Inventory:  map[string]*ItemQuantity{},
 	}
-
-	return enemy
+	enemy.setImage()
+	return &enemy
 }
 
 func enemyProbability(loc *Location) {

@@ -58,13 +58,13 @@ func Battle(player, enemy *Character) {
 			case true:
 				Output("green", "\t", opp.Name, " has been slain")
 				// you got :
-				SCORE.scoreKills(enemy.Name)
+				SCORE.scoreKills(opp.Name)
 				player.getEnemyItems(enemy)
 				return
 			case false:
 				if !opp.hasItemInInventory(itemNames.Doll) || (opp.hasItemInInventory(itemNames.Doll) && opp.Inventory[itemNames.Doll].Quantity < 1) {
 					Output("red", "\tYou died\n")
-					Output("red", "\tGAME OVER\n")
+					Output("red", GameOverAscii)
 					SCORE.getSCORE()
 					os.Exit(0)
 				}

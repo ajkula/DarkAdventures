@@ -73,6 +73,7 @@ func main() {
 	ChooseHero()
 	hero := heroFromName(indexedHeroes[Hero])
 	hero.SetPlayerRoom()
+	hero.getImage()
 
 	// hero.MoveTo("n")
 	for {

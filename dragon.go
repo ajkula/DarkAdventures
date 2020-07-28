@@ -75,6 +75,7 @@ func CreateDragon() {
 	}
 	var loc *Location
 	dragon.createEnemyInventory()
+	dragon.setImage()
 	loc = dragon.SetPlayerRoom()
 	loc.AddEphemeral()
 }
@@ -101,7 +102,19 @@ func dragonPossibleWays() []string {
 }
 
 func canDragonMoveThatWay(y, x int) bool {
-	return !(WorldMap[y][x].HasEnemy || WorldMap[y][x].HasSeller) && !(x == dragon.PreviousLocation[1] && y == dragon.PreviousLocation[0])
+	var loc *Location = WorldMap[y][x]
+	// ICI
+
+	if loc.HasEnemy {
+		// fmt.Println("can move that way: false", " enemy: ", loc.HasEnemy, " shop: ", loc.HasSeller)
+		return false
+	}
+	if loc.HasSeller {
+		// fmt.Println("can move that way: false", " enemy: ", loc.HasEnemy, " shop: ", loc.HasSeller)
+		return false
+	}
+	// fmt.Println("can move that way: true", " enemy: ", loc.HasEnemy, " shop: ", loc.HasSeller)
+	return true
 }
 
 func getAvailableRoom() []int {

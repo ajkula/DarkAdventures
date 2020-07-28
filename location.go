@@ -5,7 +5,7 @@ type Location struct {
 	Item                         map[string]*ItemQuantity
 	HasSeller, HasEnemy, Visited bool
 	Seller                       string
-	Enemy                        Character
+	Enemy                        *Character // ICI
 	X, Y                         int
 	CanGoTo                      []string
 }
@@ -14,6 +14,12 @@ func (loc *Location) RemoveBattle() {
 	if loc.HasEnemy && !loc.Enemy.isAlive() {
 		loc.HasEnemy = false
 		loc.Description += "\tYou see " + Article(loc.Enemy.Name) + "dead on the ground\n"
+	}
+}
+
+func (loc *Location) showImage() {
+	if loc.HasEnemy {
+		loc.Enemy.getImage()
 	}
 }
 
@@ -58,7 +64,7 @@ func (loc *Location) addDescriptionToAdjacentRooms(add string) {
 
 func (loc *Location) ClearEphemeral() {
 	loc.HasEnemy = false
-	loc.Enemy = NullifiedEnemy
+	loc.Enemy = &NullifiedEnemy
 	// WorldMap[loc.Y][loc.X].Ephemeral = ""
 	Output("red", "ClearEphemeral() ", WorldMap[loc.Y][loc.X] == loc)
 	for _, dir := range loc.CanGoTo {
@@ -82,7 +88,7 @@ func (loc *Location) ClearEphemeral() {
 
 func (loc *Location) AddEphemeral() {
 	loc.HasEnemy = true
-	loc.Enemy = *dragon.Character
+	loc.Enemy = dragon.Character
 	WorldMap[loc.Y][loc.X].Ephemeral = Tab + dragonProximity["x"]
 	// Output("red", "AddEphemeral() ", WorldMap[loc.Y][loc.X] == loc)
 	// fmt.Printf("\ny: %v x: %v  EPHEMERAL: %v", loc.Y, loc.X, WorldMap[loc.Y][loc.X].Ephemeral)

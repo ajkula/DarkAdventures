@@ -28,7 +28,7 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 	case Initial(commands.Go):
 		ResetTurns()
 		if itemName != "" {
-			if InitialsIndexOf(loc.CanGoTo, itemName) && !loc.Enemy.isAlive() {
+			if InitialsIndexOf(loc.CanGoTo, itemName) && (!loc.HasEnemy || (loc.HasEnemy && !loc.Enemy.isAlive())) {
 				player.MoveTo(itemName)
 			} else {
 				Output("red", "Can't go to "+itemName+" from here.")
@@ -38,7 +38,7 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 		}
 
 	case Initial(commands.Attack):
-		enemy := &loc.Enemy
+		enemy := loc.Enemy
 		if enemy != nil {
 			player.attack(enemy)
 		}
@@ -47,7 +47,7 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 		Output("red", "in the use case")
 		if itemName == itemNames.Scroll && player.hasItemInInventory(itemName) {
 			Output("red", "in the use if", args[0])
-			enemy := &loc.Enemy
+			enemy := loc.Enemy
 			Output("red", "enemy: ", enemy)
 			Output("yellow", "has "+itemName+": ", player.hasItemInInventory(itemName), " quantity: ", player.Inventory[itemName].Quantity)
 			ok := player.useItem(itemName, enemy)
@@ -90,13 +90,16 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 	case Initial(commands.Help):
 		ResetTurns()
 		Output("blue", DoubleTab+"Commands:")
-		Output("blue", Tab+CustomSpaceAlign("go <Location Name>", 25)+"- Go to the new location")
-		Output("blue", Tab+CustomSpaceAlign("attack", 25)+"- Attacks opponent(s)")
+		Output("blue", Tab+CustomSpaceAlign("[g]o <Location Name>", 25)+"- Go to the new location")
+		Output("blue", Tab+CustomSpaceAlign("[a]ttack", 25)+"- Attacks opponent(s)")
+		Output("blue", Tab+CustomSpaceAlign("[b]uy <Item Name>", 25)+"- Buy ONE OF proposed items")
+		Output("blue", Tab+CustomSpaceAlign("[u]se <Item Name>", 25)+"- Use item")
 		// Output("blue", "\tparry - Attemp to Parry incoming attack")
 		// Output("blue", "\trun - Escape attack")
 		// Output("blue", "\tget <Item Name> - Pick up item")
 		// Output("blue", "\topen <Item Name> - Open an iten if it can be opened")
-		Output("blue", Tab+CustomSpaceAlign("inv", 25)+"- Display your inventory\n\n")
+		Output("blue", Tab+CustomSpaceAlign("[i]nv", 25)+"- Display your inventory")
+		Output("blue", Tab+CustomSpaceAlign("[m]ap", 25)+"- Display unveiled World map rooms\n\n")
 	case Initial(commands.Quit):
 		Output("green", "Goodbye...")
 		SCORE.getSCORE()

@@ -28,4 +28,6 @@ type iCharacter interface {
 	spendMoney(amount int) bool
 
 	BuyFromShop(name string) bool
+
+	setImage()
 }

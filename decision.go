@@ -101,6 +101,9 @@ func doAttack(p, e *Character) {
 }
 
 func TreeVector(tree Node, p, e *Character) {
+	// ICI
+	Output("red", Tab+tree.Label+" leaf: ", tree.Leaf)
+
 	if tree.Leaf {
 		tree.Action(p, e)
 		return
@@ -130,7 +133,5 @@ func getTreeIndexNavigation(tree Node, e *Character) int {
 	default:
 		return 0
 	}
-	// ICI
-	Output("red", Tab+tree.Label+" ", index, " leaf: ", tree.Leaf)
 	return index
 }

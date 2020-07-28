@@ -12,11 +12,17 @@ type ItemQuantity struct {
 	Quantity int
 }
 
+type DisplayImage struct {
+	Image string
+	Show  bool
+}
+
 type Character struct {
-	Welcome, Name                                             string
+	Welcome, Name, Details                                    string
 	Health, Evasion, Strength, Boost, Skill, BaseHealth, Crit int
 	Alive, Npc                                                bool
 	Inventory                                                 map[string]*ItemQuantity
+	Display                                                   *DisplayImage
 
 	CurrentLocation []int
 }
@@ -32,8 +38,18 @@ func (player *Character) SetPlayerRoom() *Location {
 	return loc
 }
 
-func (player *Character) MoveTo(direction string) bool {
+func (player *Character) setImage() {
+	player.Display = AsciiArts.setImage(player.Name)
+}
 
+func (player *Character) getImage() {
+	if player.Display.Show {
+		Output("red", player.Display.Image)
+		player.Display.Show = false
+	}
+}
+
+func (player *Character) MoveTo(direction string) bool {
 	ok := false
 	switch strings.ToLower(direction) {
 	case "west":
@@ -177,6 +193,10 @@ func (player *Character) isAlive() bool {
 	if player.Name == enemiesList.DRAGON && !player.Alive {
 		loc := player.SetPlayerRoom()
 		loc.Ephemeral = ""
+		Outputf("white", "\nplayer: %+v\n", player)
+		Outputf("white", "dragon: %+v\n", dragon)
+		Outputf("white", "dragon Character: %+v\n", dragon.Character)
+		Outputf("white", "location enemy: %+v\n", loc.Enemy)
 	}
 	return player.Alive
 }
