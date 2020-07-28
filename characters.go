@@ -205,7 +205,7 @@ func (player *Character) DisplayInvetory() {
 	Output("green", DoubleTab+"Your inventory:")
 	for _, item := range player.Inventory {
 		if item.Quantity > 0 {
-			Output("green", Tab+CustomSpaceAlign(item.Type.Name+": "+item.Type.Description, inventorySpace)+"Quatity: ", item.Quantity)
+			Output("green", Tab+CustomSpaceAlign(item.Type.Name+": "+item.Type.Description, inventorySpace)+"Quantity: ", item.Quantity)
 		}
 	}
 	player.showHP()
