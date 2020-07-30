@@ -37,6 +37,8 @@ func (dragon *Dragon) dragonMoves() {
 	}
 }
 
+// TO DO: fix dragon kill no score, add player coins on presentation
+
 func (dragon *Dragon) shouldFreeze(str string) {
 	dragon.Freeze = str == Initial(commands.Map)
 }
@@ -85,18 +87,26 @@ func dragonPossibleWays() []string {
 	var yourPlace *Location
 	yourPlace = dragon.SetPlayerRoom()
 
-	if yourPlace.X >= 1 && canDragonMoveThatWay(yourPlace.X-1, yourPlace.Y) {
-		youCanGo = append(youCanGo, directions.West)
+	if yourPlace.X >= 1 {
+		if canDragonMoveThatWay(yourPlace.Y, yourPlace.X-1) {
+			youCanGo = append(youCanGo, directions.West)
+		}
 	}
-	if yourPlace.X <= 8 && canDragonMoveThatWay(yourPlace.X+1, yourPlace.Y) {
-		youCanGo = append(youCanGo, directions.East)
+	if yourPlace.X <= 8 {
+		if canDragonMoveThatWay(yourPlace.Y, yourPlace.X+1) {
+			youCanGo = append(youCanGo, directions.East)
+		}
 	}
 
-	if yourPlace.Y >= 1 && canDragonMoveThatWay(yourPlace.X, yourPlace.Y-1) {
-		youCanGo = append(youCanGo, directions.North)
+	if yourPlace.Y >= 1 {
+		if canDragonMoveThatWay(yourPlace.Y-1, yourPlace.X) {
+			youCanGo = append(youCanGo, directions.North)
+		}
 	}
-	if yourPlace.Y <= 2 && canDragonMoveThatWay(yourPlace.X, yourPlace.Y+1) {
-		youCanGo = append(youCanGo, directions.South)
+	if yourPlace.Y <= 2 {
+		if canDragonMoveThatWay(yourPlace.Y+1, yourPlace.X) {
+			youCanGo = append(youCanGo, directions.South)
+		}
 	}
 	return youCanGo
 }

@@ -18,14 +18,11 @@ func PresentScene(p *Character) {
 		Output("red", loc.HasEnemy)
 		Output("green", getTurns())
 		Output("red", "dragon.Freeze "+strconv.FormatBool(dragon.Freeze))
+		p.showHealth()
 	}
 
 	if loc.HasEnemy {
 		if loc.Enemy.Alive {
-			Output("red", DoubleTab+"There is "+Article(loc.Enemy.Name)+"ready to fight you!\n")
-			p.showHP()
-			loc.Enemy.showHP()
-
 			showActions(p, battleCommands)
 			showUniversalCmds()
 			Battle(p, loc.Enemy)
@@ -48,12 +45,6 @@ func PresentScene(p *Character) {
 
 	if loc.HasSeller {
 		if started {
-			Output("yellow", loc.Seller)
-			var concat string = ""
-			for name, element := range loc.Item {
-				concat += DoubleTab + strconv.Itoa(element.Quantity) + " - " + name + " for " + strconv.Itoa(element.Type.Price) + " coins." + "\n"
-			}
-			Output("yellow", Tab+"He's proposing:\n"+concat)
 			showActions(p, sellerCommands)
 			showWhereCanGo(loc)
 			showUniversalCmds()

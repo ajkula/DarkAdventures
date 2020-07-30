@@ -149,7 +149,7 @@ func (player *Character) showHP() {
 	if player.Npc {
 		color = "yellow"
 	}
-	Output(color, Tab+CustomSpaceAlign(player.Name+": ", inventorySpace)+strconv.Itoa(player.Health)+" / "+strconv.Itoa(player.BaseHealth)+" HP")
+	Output(color, Tab+CalculateSpaceAlign(player.Name+": ")+"["+strconv.Itoa(player.Health)+" / "+strconv.Itoa(player.BaseHealth)+" HP]")
 }
 
 func (player *Character) attack(enemy *Character) {
@@ -188,15 +188,28 @@ func (player *Character) calculateDammage(enemy *Character) int {
 	return dmg
 }
 
+func (player *Character) showHealth() {
+	loc := player.SetPlayerRoom()
+	if loc.HasSeller {
+		var concat string = ""
+		for name, element := range loc.Item {
+			concat += DoubleTab + strconv.Itoa(element.Quantity) + " - " + name + " for " + strconv.Itoa(element.Type.Price) + " coins." + "\n"
+		}
+		Output("yellow", Tab+"He's proposing:\n"+concat)
+		Output("yellow", loc.Seller)
+	}
+	if loc.HasEnemy && loc.Enemy.isAlive() {
+		Output("red", DoubleTab+"There is "+Article(loc.Enemy.Name)+"ready to fight you!\n")
+		loc.Enemy.showHP()
+	}
+	player.showHP()
+}
+
 func (player *Character) isAlive() bool {
 	player.Alive = player.Health > 0
 	if player.Name == enemiesList.DRAGON && !player.Alive {
 		loc := player.SetPlayerRoom()
 		loc.Ephemeral = ""
-		Outputf("white", "\nplayer: %+v\n", player)
-		Outputf("white", "dragon: %+v\n", dragon)
-		Outputf("white", "dragon Character: %+v\n", dragon.Character)
-		Outputf("white", "location enemy: %+v\n", loc.Enemy)
 	}
 	return player.Alive
 }
@@ -208,7 +221,6 @@ func (player *Character) DisplayInvetory() {
 			Output("green", Tab+CustomSpaceAlign(item.Type.Name+": "+item.Type.Description, inventorySpace)+"Quantity: ", item.Quantity)
 		}
 	}
-	player.showHP()
 	fmt.Println()
 }
 

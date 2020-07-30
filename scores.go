@@ -1,6 +1,8 @@
 package main
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type ScoreSchema struct {
 	Enemies  map[string]*Calculus
@@ -61,10 +63,10 @@ func (score *ScoreSchema) scoreDammages(b bool, amount int) {
 func (score *ScoreSchema) getSCORE() {
 	Output("white", DoubleTab+"SCORE")
 	Output("white", DoubleTab+"Kills:")
-	for _, name := range indexedEnemiesForRandomization {
-		if SCORE.Enemies[name].Quantity > 0 {
-			SCORE.Total += SCORE.Enemies[name].Points * SCORE.Enemies[name].Quantity
-			enemy := strconv.Itoa(SCORE.Enemies[name].Quantity)
+	for name, obj := range SCORE.Enemies {
+		if obj.Quantity > 0 {
+			SCORE.Total += obj.Points * obj.Quantity
+			enemy := strconv.Itoa(obj.Quantity)
 			Output("white", Tab+CustomSpaceAlign(name+":", 22-len(enemy))+enemy)
 		}
 	}
