@@ -195,8 +195,8 @@ func (player *Character) showHealth() {
 		for name, element := range loc.Item {
 			concat += DoubleTab + strconv.Itoa(element.Quantity) + " - " + name + " for " + strconv.Itoa(element.Type.Price) + " coins." + "\n"
 		}
-		Output("yellow", Tab+"He's proposing:\n"+concat)
 		Output("yellow", loc.Seller)
+		Output("yellow", Tab+"He's proposing:\n"+concat)
 	}
 	if loc.HasEnemy && loc.Enemy.isAlive() {
 		Output("red", DoubleTab+"There is "+Article(loc.Enemy.Name)+"ready to fight you!\n")

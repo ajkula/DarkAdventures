@@ -17,6 +17,10 @@ func DisplayWorldMap(p *Character) {
 				if WorldMap[y][x].HasSeller {
 					result[y][x] = Shop
 				}
+
+				if WorldMap[y][x].HasGate {
+					result[y][x] = Root
+				}
 			}
 			if WorldMap[y][x].HasEnemy && Difficulty == 0 {
 				if WorldMap[y][x].Enemy.Name == enemiesList.DRAGON {

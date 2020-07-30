@@ -66,6 +66,7 @@ func init() {
 		fmt.Println("grid", l)
 	}
 	CreateMap()
+	InitGates()
 }
 
 func main() {
@@ -74,7 +75,6 @@ func main() {
 	hero := heroFromName(indexedHeroes[Hero])
 	hero.SetPlayerRoom()
 	hero.getImage()
-
 	// hero.MoveTo("n")
 	for {
 		loc := hero.SetPlayerRoom()

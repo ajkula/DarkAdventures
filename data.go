@@ -10,11 +10,14 @@ const Tab string = "\t"
 const DoubleTab string = "\t\t"
 const Unseen string = " "
 const Shop string = "#"
+const Root string = "π"
 const YourPosition string = "@"
 const LegendSpace int = 8
 const inventorySpace int = 38
 const heroesDetailsSpacing int = 14
 const NearORC string = "There's an odd smell in this place...\n"
+const rootBell string = Tab + "A big deep-rooted tree stump is in front of you\n" +
+	Tab + "You hear a bell sound, and something is glowing from your bag..\n"
 
 var heroesDetails = map[string]string{
 	heroesList.Thieve:    " - High evasion, crits, can attack x2",

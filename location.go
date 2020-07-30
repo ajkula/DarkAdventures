@@ -1,13 +1,14 @@
 package main
 
 type Location struct {
-	Description, Ephemeral       string
-	Item                         map[string]*ItemQuantity
-	HasSeller, HasEnemy, Visited bool
-	Seller                       string
-	Enemy                        *Character // ICI
-	X, Y                         int
-	CanGoTo                      []string
+	Description, Ephemeral                string
+	Item                                  map[string]*ItemQuantity
+	HasSeller, HasEnemy, Visited, HasGate bool
+	Seller                                string
+	Enemy                                 *Character // ICI
+	X, Y                                  int
+	Gate                                  *Gate
+	CanGoTo                               []string
 }
 
 func (loc *Location) RemoveBattle() {

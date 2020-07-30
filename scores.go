@@ -61,24 +61,34 @@ func (score *ScoreSchema) scoreDammages(b bool, amount int) {
 }
 
 func (score *ScoreSchema) getSCORE() {
+	kills := ""
+	loot := ""
 	Output("white", DoubleTab+"SCORE")
-	Output("white", DoubleTab+"Kills:")
 	for name, obj := range SCORE.Enemies {
 		if obj.Quantity > 0 {
 			SCORE.Total += obj.Points * obj.Quantity
 			enemy := strconv.Itoa(obj.Quantity)
-			Output("white", Tab+CustomSpaceAlign(name+":", 22-len(enemy))+enemy)
+			kills += Tab + CustomSpaceAlign(name+":", 22-len(enemy)) + enemy + "\n"
 		}
 	}
-	Output("white", DoubleTab+"LOOT:")
+	if kills != "" {
+		Output("white", DoubleTab+"Kills:")
+		Output("white", kills)
+	}
 	for _, name := range ItemIndexList {
 		if SCORE.Items[name].Quantity > 0 {
 			SCORE.Total += SCORE.Items[name].Points * SCORE.Items[name].Quantity
 			item := strconv.Itoa(SCORE.Items[name].Quantity)
-			Output("white", Tab+CustomSpaceAlign(name+":", 22-len(item))+item)
+			loot += Tab + CustomSpaceAlign(name+":", 22-len(item)) + item + "\n"
 		}
 	}
-	Output("white", DoubleTab+"POINTS:")
+	if loot != "" {
+		Output("white", DoubleTab+"LOOT:")
+		Output("white", loot)
+	}
+	if SCORE.Dammages.Dealt > 0 || SCORE.Dammages.Taken > 0 {
+		Output("white", DoubleTab+"POINTS:")
+	}
 	dealt := strconv.Itoa(SCORE.Dammages.Dealt)
 	taken := strconv.Itoa(SCORE.Dammages.Taken)
 	Output("white", Tab+CustomSpaceAlign("DMG Dealt:", 22-len(dealt))+dealt)
@@ -86,5 +96,10 @@ func (score *ScoreSchema) getSCORE() {
 
 	total := strconv.Itoa(SCORE.Total)
 	Output("white", Tab+CustomSpaceAlign("TOTAL SCORE:", 22-len(total))+total)
+}
 
-} // SCORE.Enemies[name].Points*SCORE.Enemies[name].Quantity)
+func (score *ScoreSchema) removeBaseInventory(inv map[string]*ItemQuantity) {
+	for name, itemQ := range inv {
+		SCORE.Items[name].Quantity -= itemQ.Quantity
+	}
+}

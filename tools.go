@@ -303,6 +303,7 @@ var heroFromName = func(s string) *Character {
 	}
 	hero.BaseHealth = hero.Health
 	hero.setImage()
+	SCORE.removeBaseInventory(hero.Inventory)
 	return &hero
 }
 
