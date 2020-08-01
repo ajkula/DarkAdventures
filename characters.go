@@ -114,6 +114,11 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 	}
 
 	switch name {
+	case itemNames.Key:
+		if UseKey(p) {
+			p.Inventory[name].Quantity--
+		}
+		break
 	case itemNames.Potion:
 		if (p.Health + item.Type.Effect) > p.BaseHealth {
 			p.Health = p.BaseHealth
@@ -126,6 +131,8 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 	case itemNames.Moonstone:
 		p.Boost += item.Type.Effect
 		p.Inventory[name].Quantity--
+		Output("green", "The moonstone suddenly wraps and fuse in your arms, it's burning!\n")
+		Output("green", Tab+CalculateSpaceAlign("Strength +5 ->")+strconv.Itoa(p.Strength+p.Boost)+"\n")
 		break
 	case itemNames.Scroll:
 		enemy := enemyInArr[0].(*Character)

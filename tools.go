@@ -252,7 +252,7 @@ var heroFromName = func(s string) *Character {
 			Health:          rand.Intn(15) + 25,
 			Skill:           0,
 			Strength:        18,
-			Crit:            25,
+			Crit:            30,
 			Inventory:       map[string]*ItemQuantity{},
 		}
 		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(3)+1)
@@ -279,11 +279,11 @@ var heroFromName = func(s string) *Character {
 			Evasion:         15,
 			Health:          rand.Intn(25) + 25,
 			Skill:           3,
-			Strength:        15,
-			Crit:            10,
+			Strength:        20,
+			Crit:            15,
 			Inventory:       map[string]*ItemQuantity{},
 		}
-		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(3)+1)
+		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(3)+2)
 		hero.addItemTypeToInventory(ItemIndexList[1], rand.Intn(4)+2)
 		break
 	case "b":

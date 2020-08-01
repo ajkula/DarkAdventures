@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
+	"time"
 )
 
 type Gate struct {
@@ -112,4 +114,22 @@ func InitGates() {
 		WorldMap[y][x].Gate = pile.Gates[i]
 		WorldMap[y][x].Description += rootBell
 	}
+
+	fmt.Printf("gateA: %+v\n", gateA)
+	fmt.Printf("gateB: %+v\n", gateB)
+}
+
+func (gate *Gate) Warp(player *Character) {
+	player.CurrentLocation = []int{gate.TwoWay[ToggleIndexs(gate.Index)].Y, gate.TwoWay[ToggleIndexs(gate.Index)].X}
+	Output("green", warpText)
+	time.Sleep(2 * time.Second)
+	player.SetPlayerRoom()
+}
+
+func ToggleIndexs(i int) (index int) {
+	index = 0
+	if i == 0 {
+		index = 1
+	}
+	return index
 }

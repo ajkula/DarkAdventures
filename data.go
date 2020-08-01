@@ -18,6 +18,9 @@ const heroesDetailsSpacing int = 14
 const NearORC string = "There's an odd smell in this place...\n"
 const rootBell string = Tab + "A big deep-rooted tree stump is in front of you\n" +
 	Tab + "You hear a bell sound, and something is glowing from your bag..\n"
+const warpText string = Tab + "All the roots from around gather and climb your legs,\n" +
+	Tab + "a pain bites you and you faint as a white light engulfs everything\n" +
+	Tab + "\"wake up!\" a voice says in your mind... you are somewhere else~"
 
 var heroesDetails = map[string]string{
 	heroesList.Thieve:    " - High evasion, crits, can attack x2",
@@ -184,7 +187,7 @@ var enemiesSpecificsValues = map[string]Specifics{
 	},
 	enemiesList.ORC: {
 		Health:   func() int { return rand.Intn(25) + 35 },
-		Strength: 25,
+		Strength: 18,
 		Evasion:  3,
 		Crit:     25,
 	},

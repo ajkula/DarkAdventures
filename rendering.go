@@ -21,6 +21,11 @@ func PresentScene(p *Character) {
 		p.showHealth()
 	}
 
+	// if loc.HasGate {
+	// 	y, x := loc.Gate.Warp()
+	// 	Output("red", " y: ", y, " x: ", x)
+	// }
+
 	if loc.HasEnemy {
 		if loc.Enemy.Alive {
 			showActions(p, battleCommands)
