@@ -102,7 +102,7 @@ func Output(c string, args ...interface{}) {
 	case "red":
 		col = color.RedString
 	case "blue":
-		col = color.BlueString
+		col = color.CyanString
 	case "yellow":
 		col = color.YellowString
 	}
