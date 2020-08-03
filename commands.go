@@ -19,9 +19,9 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 	if len(tokens) > 1 {
 		itemName = tokens[1]
 	}
-	Output("yellow", "tokens ", tokens)
-	Output("yellow", "command ", command)
-	Output("yellow", "itemName ", itemName)
+	// Output("yellow", "tokens ", tokens)
+	// Output("yellow", "command ", command)
+	// Output("yellow", "itemName ", itemName)
 	loc := player.SetPlayerRoom()
 	dragon.shouldFreeze(Initial(command))
 	switch Initial(command) {
@@ -44,11 +44,11 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 		}
 
 	case Initial(commands.Use): // to do
-		Output("red", "in the use case")
+		// Output("red", "in the use case")
 		if itemName == itemNames.Scroll && player.hasItemInInventory(itemName) {
-			Output("red", "in the use if", args[0])
+			// Output("red", "in the use if", args[0])
 			enemy := loc.Enemy
-			Output("red", "enemy: ", enemy)
+			// Output("red", "enemy: ", enemy)
 			Output("yellow", "has "+itemName+": ", player.hasItemInInventory(itemName), " quantity: ", player.Inventory[itemName].Quantity)
 			ok := player.useItem(itemName, enemy)
 			if ok != true {

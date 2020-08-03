@@ -1,14 +1,14 @@
 package main
 
 type Location struct {
-	Description, Ephemeral                string
-	Item                                  map[string]*ItemQuantity
-	HasSeller, HasEnemy, Visited, HasGate bool
-	Seller                                string
-	Enemy                                 *Character // ICI
-	X, Y                                  int
-	Gate                                  *Gate
-	CanGoTo                               []string
+	Description, Ephemeral, treasure                string
+	Item, Chest                                     map[string]*ItemQuantity
+	HasSeller, HasEnemy, Visited, HasGate, HasChest bool
+	Seller                                          string
+	Enemy                                           *Character // ICI
+	X, Y                                            int
+	Gate                                            *Gate
+	CanGoTo                                         []string
 }
 
 func (loc *Location) RemoveBattle() {
@@ -43,7 +43,7 @@ func (loc *Location) RemoveItem(n string) {
 }
 
 func (loc *Location) addDescriptionToAdjacentRooms(add string) {
-	Output("green", loc.CanGoTo, " ", loc.Y, " ", loc.X)
+	// Output("green", loc.CanGoTo, " ", loc.Y, " ", loc.X)
 	for _, dir := range loc.CanGoTo {
 		// Output("green", dir)
 		switch dir {
@@ -67,7 +67,7 @@ func (loc *Location) ClearEphemeral() {
 	loc.HasEnemy = false
 	loc.Enemy = &NullifiedEnemy
 	// WorldMap[loc.Y][loc.X].Ephemeral = ""
-	Output("red", "ClearEphemeral() ", WorldMap[loc.Y][loc.X] == loc)
+	// Output("red", "ClearEphemeral() ", WorldMap[loc.Y][loc.X] == loc)
 	for _, dir := range loc.CanGoTo {
 		// Output("green", dir)
 		switch dir {

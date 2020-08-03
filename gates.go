@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 )
@@ -112,11 +111,10 @@ func InitGates() {
 		pile.Gates[i].TwoWay = pile.Gates
 		WorldMap[y][x].HasGate = true
 		WorldMap[y][x].Gate = pile.Gates[i]
-		WorldMap[y][x].Description += rootBell
 	}
 
-	fmt.Printf("gateA: %+v\n", gateA)
-	fmt.Printf("gateB: %+v\n", gateB)
+	// fmt.Printf("gateA: %+v\n", gateA)
+	// fmt.Printf("gateB: %+v\n", gateB)
 }
 
 func (gate *Gate) Warp(player *Character) {

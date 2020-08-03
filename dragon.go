@@ -21,10 +21,10 @@ func (dragon *Dragon) dragonMoves() {
 			dragon.PreviousLocation = []int{loc.Y, loc.X}
 
 			possibleWays := dragonPossibleWays()
-			Output("red", "dragon can go: ", possibleWays)
+			// Output("red", "dragon can go: ", possibleWays)
 			if len(possibleWays) > 0 {
 				goTo := possibleWays[rand.Intn(len(possibleWays))]
-				Output("red", "dragon moves to: ", goTo)
+				// Output("red", "dragon moves to: ", goTo)
 				loc.ClearEphemeral()
 				dragon.MoveTo(goTo)
 			}

@@ -76,7 +76,7 @@ func AnalyzeItemsRepartition() {
 		Output("green", DoubleTab+e+":")
 		for in, iq := range items {
 			if iq > 0 {
-				Output("yellow", Tab+CalculateSpaceAlign(in), iq)
+				Output("yellow", Tab+CustomSpaceAlign(in, 22-len(strconv.Itoa(iq))), iq)
 			}
 		}
 	}
@@ -120,7 +120,7 @@ func CreateMap() [Y][X]*Location {
 	showGameEnemies()
 	AnalyzeItemsRepartition()
 
-	fmt.Println("Difficulty", Difficulty+1, difficultyIndex[Difficulty])
+	Output("red", "\n"+Tab+"Difficulty", " ", Difficulty+1, " ", difficultyIndex[Difficulty], "\n")
 	return WorldMap
 }
 
@@ -139,11 +139,12 @@ func addOrcProximity(loc *Location) {
 // fmt.Println(loc.HasEnemy)
 // loc.Enemy.createEnemyInventory()
 // fmt.Printf("\nAFTER: %+v\n", loc.Enemy.Inventory)
+// Output("white", Tab+CustomSpaceAlign("TOTAL SCORE:", 22-len(total))+total)
 
 func showGameItems() {
 	fmt.Println(DoubleTab + CalculateSpaceAlign("Items:"))
 	for a, b := range aggregate {
-		fmt.Println(Tab+CalculateSpaceAlign(a), b)
+		fmt.Println(Tab+CustomSpaceAlign(a, 22-len(strconv.Itoa(b))), b)
 	}
 }
 
@@ -157,7 +158,7 @@ func showGameEnemies() {
 		}
 	}
 	for a, b := range aggregateEnemies {
-		fmt.Println(Tab+CalculateSpaceAlign(a), b)
+		fmt.Println(Tab+CustomSpaceAlign(a, 22-len(strconv.Itoa(b))), b)
 	}
 }
 

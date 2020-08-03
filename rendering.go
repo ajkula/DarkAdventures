@@ -1,8 +1,8 @@
 package main
 
 import (
-	"strconv"
 	"strings"
+	"unicode/utf8"
 )
 
 var started bool = false
@@ -14,10 +14,13 @@ func PresentScene(p *Character) {
 	if started {
 		loc.showImage()
 		Output("yellow", loc.Description)
+		if loc.HasGate {
+			Output("yellow", rootBell[p.hasItemInInventory(itemNames.Key)])
+		}
 		Output("yellow", loc.Ephemeral)
-		Output("red", loc.HasEnemy)
-		Output("green", getTurns())
-		Output("red", "dragon.Freeze "+strconv.FormatBool(dragon.Freeze))
+		// Output("red", loc.HasEnemy)
+		// Output("green", getTurns())
+		// Output("red", "dragon.Freeze "+strconv.FormatBool(dragon.Freeze))
 		p.showHealth()
 	}
 
@@ -79,8 +82,8 @@ func showUniversalCmds() {
 
 func CalculateSpaceAlign(str string) string {
 	var length int = 1
-	if Tabulation-len(str) > 1 {
-		length = Tabulation - len(str)
+	if Tabulation-utf8.RuneCountInString(str) > 1 {
+		length = Tabulation - utf8.RuneCountInString(str)
 	}
 	spaces := strings.Repeat(" ", length)
 	return str + spaces
@@ -88,8 +91,8 @@ func CalculateSpaceAlign(str string) string {
 
 func CustomSpaceAlign(str string, i int) string {
 	var length int = 1
-	if i-len(str) > 1 {
-		length = i - len(str)
+	if i-utf8.RuneCountInString(str) > 1 {
+		length = i - utf8.RuneCountInString(str)
 	}
 	spaces := strings.Repeat(" ", length)
 	return str + spaces

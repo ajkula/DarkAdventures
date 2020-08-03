@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type ItemQuantity struct {
@@ -15,6 +16,7 @@ type ItemQuantity struct {
 type DisplayImage struct {
 	Image string
 	Show  bool
+	Story string
 }
 
 type Character struct {
@@ -45,6 +47,10 @@ func (player *Character) setImage() {
 func (player *Character) getImage() {
 	if player.Display.Show {
 		Output("red", player.Display.Image)
+		if !player.Npc {
+			Output("blue", player.Display.Story)
+			time.Sleep(2 * time.Second)
+		}
 		player.Display.Show = false
 	}
 }

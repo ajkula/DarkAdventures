@@ -8,7 +8,7 @@ type ASCII struct {
 	SORCERER []string
 	ORC      []string
 	DRAGON   []string
-	HERO     []string
+	HERO     map[string][]string
 }
 
 var AsciiArts = &ASCII{
@@ -17,7 +17,12 @@ var AsciiArts = &ASCII{
 	SORCERER: []string{sorcererAscii, sorcererAsciiB},
 	ORC:      []string{orcAscii, orcAsciiB},
 	DRAGON:   []string{dragonAscii, dragonAsciiB},
-	HERO:     []string{heroAscii},
+	HERO: map[string][]string{
+		heroesList.Thieve:    []string{thieveAscii, thieveAsciiB, thieveAsciiC, thieveAsciiD},
+		heroesList.Paladin:   []string{paladinAscii, paladinAsciiB, paladinAsciiC, paladinAsciiD},
+		heroesList.Wizzard:   []string{wizardAscii, wizardAsciiB, wizardAsciiC, wizardAsciiD},
+		heroesList.Barbarian: []string{barbarianAscii, barbarianAsciiB, barbarianAsciiC, barbarianAsciiD},
+	},
 }
 
 func (a *ASCII) setImage(name string) *DisplayImage {
@@ -49,12 +54,61 @@ func (a *ASCII) setImage(name string) *DisplayImage {
 			Show:  true,
 		}
 	default:
+		index := rand.Intn(len(a.HERO[name]))
 		image = &DisplayImage{
-			Image: a.HERO[rand.Intn(len(a.HERO))],
+			Image: a.HERO[name][index],
+			Story: "\n" + storyFromImage(name, index),
 			Show:  true,
 		}
 	}
 	return image
+}
+
+func storyFromImage(name string, index int) string {
+	return heroStoryAndImages[name][index]
+}
+
+var heroStoryAndImages = map[string]map[int]string{
+	heroesList.Thieve: map[int]string{
+		0: Tab + "Member of the Thieves Guild of Novigrad, you've been hired\n" +
+			Tab + "by a mysterious contractor to retrieve a so-called treasure here...",
+		1: Tab + "Behind every Pirates story, there's a treasure map...\n" +
+			Tab + "The same goes for you, unfortunately...",
+		2: Tab + "A Rogue from the Hanging City of Szyan who left, with the final goal\n" +
+			Tab + "the Thieves Guild of Novigrad. Until your path lead you here...",
+		3: Tab + "As a memeber of the Leaf Walkers Order of female elfic guards,\n" +
+			Tab + "you go wherever the forest needs help and heard the trees calling.",
+	},
+	heroesList.Paladin: map[int]string{
+		0: Tab + "Amazon warrior from the Ionos Archipel, you have seen the Oracle.\n" +
+			Tab + "the constellations are clear, Darkness are rising. You must act.",
+		1: Tab + "Templar of the Red Star Fellowship, an oath a creed to follow,\n" +
+			Tab + "you will fight the darkness wherever they are, they sent you here.",
+		2: Tab + "Retired veteran of the Arisien Wars, the increasing rumors of evil\n" +
+			Tab + "reach you and pulled you out of retirement. Time to draw the sword.",
+		3: Tab + "Knight of the 3 Towers Citadel your duty is to stand as a wall,\n" +
+			Tab + "the rampart to protect the city of eelring, a menace is near...",
+	},
+	heroesList.Wizzard: map[int]string{
+		0: Tab + "The Elder scholar from Krispin Academy of Magic himself,\n" +
+			Tab + "you came for the rumors of a rising evil in these forsaken lands.",
+		1: Tab + "A Tiefling Wizard girl, speeking the lower planes language,\n" +
+			Tab + "that give you immense powers. You're seeking something here...",
+		2: Tab + "A beautiful but extremely powerful wizard girl in a white clothing,\n" +
+			Tab + "everyone has a strong reason to come there, yours? Vengence.",
+		3: Tab + "An old war veteran, who served under Tzar Krvovoj after leaving\n" +
+			Tab + "Krispin Academy of Magic with the highest honors. Why coming here?",
+	},
+	heroesList.Barbarian: map[int]string{
+		0: Tab + "A warrior women from the mount Zanarkan you seek treasures,\n" +
+			Tab + "at the Golden Horse Tavern you heard some rumors... Treasure!",
+		1: Tab + "A proud Warrior from the Dark Moon Gnoll clan, Zorik the Shaman\n" +
+			Tab + "asked you to search the last moon's hunters that never came back.",
+		2: Tab + "Fierce hunter of the Ionos Archipel, you seek glory...\n" +
+			Tab + "The ultimate prey is the one you fell prey to, and vanquisehd.",
+		3: Tab + "After 20 years fighting in the Coliseum of Styr, you are free.\n" +
+			Tab + "Looking for a place to settle, you arrived a weird looking place..",
+	},
 }
 
 const goblinAscii string = DoubleTab + "...................................\n" + DoubleTab +
@@ -256,30 +310,6 @@ const goblinAsciiB string = DoubleTab + "..................::,.........\n" + Dou
 	".....,=?I77IOO7+~~=,..........\n" + DoubleTab +
 	".......,::~=++=~~~~...........\n"
 
-const heroAscii string = DoubleTab + "........................................\n" + DoubleTab +
-	"...................::,..................\n" + DoubleTab +
-	"..................=???..................\n" + DoubleTab +
-	"..................+I?Z~.................\n" + DoubleTab +
-	".................,?$Z$?.................\n" + DoubleTab +
-	"................,=+?7$I~................\n" + DoubleTab +
-	"..............,::7===?+7,...............\n" + DoubleTab +
-	".............,~~:~7?++~=+,..............\n" + DoubleTab +
-	".............=~~~,7?==~,~=~:,...........\n" + DoubleTab +
-	"............:=~~:+I?==~~..~,............\n" + DoubleTab +
-	"............~=~~~++?+?==~...............\n" + DoubleTab +
-	"............===~=I=+?7+??,..............\n" + DoubleTab +
-	"............=====I77I7?I?:..............\n" + DoubleTab +
-	"............~+==..7+77+,,...............\n" + DoubleTab +
-	".............~~...~=?I,.................\n" + DoubleTab +
-	"..................,=++..................\n" + DoubleTab +
-	"..................:~=,..................\n" + DoubleTab +
-	"..................:~,...................\n" + DoubleTab +
-	"..................~=,...................\n" + DoubleTab +
-	"...................~~...................\n" + DoubleTab +
-	"...................==...................\n" + DoubleTab +
-	"...................:,...................\n" + DoubleTab +
-	"........................................\n"
-
 const GameOverAscii string = "\nNNNNNNNNNNNNNNNNNNNNNNNNNNNNMMMMNNMMNNNMMNNMMMMMNMMMMMMMMNNNNNNNNNNNNNNNNNNNNNNN\n" +
 	"NNNNNNNNNNNNNNNNNNNNNNNNNNDDMMNNNNDNMNN88NMNN8DNNNMMMMMNNNNNNNNNNNNNNNNNNNNNNNNN\n" +
 	"NNNNNNNNNNNNNNNNNNNNNNNNO=,,=ONND=~?$NDI,:7DDI,=ZI++?IONNNNNNNNNNNNNNNNNNNNNNNNN\n" +
@@ -303,3 +333,458 @@ const GameOverAscii string = "\nNNNNNNNNNNNNNNNNNNNNNNNNNNNNMMMMNNMMNNNMMNNMMMMM
 	"NNNNNNNNNNNNNNNNNNNNNNNNNNN8$$8NNNNO$$DNN8ZZ$$$DZI8N$~$NNNNNNNNNNNNNNNNNNNNNNNNN\n" +
 	"NNNNNNNNNNNNNNNNNNNNNNNNNNNMMMMNNNNMMMNNNMMMMMMNMMNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN\n" +
 	"DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDNDDDDDDDDDDDDDDDDDDD\n"
+
+const wizardAscii string = DoubleTab + ".......:,.....................\n" + DoubleTab +
+	".......I+.....................\n" + DoubleTab +
+	"....:~:7?.,.,.................\n" + DoubleTab +
+	"....+O?ZO7=ZZ$7~.....,,.......\n" + DoubleTab +
+	".....:=ID==8$$8D.....,~:......\n" + DoubleTab +
+	"........8$ZO$IZD=....~=~......\n" + DoubleTab +
+	"........?DZOZ?$DO....::,:.....\n" + DoubleTab +
+	".......:7+$$IZ78O+...::I~.....\n" + DoubleTab +
+	"......:OIIOZ7$O8ON7.:?+:......\n" + DoubleTab +
+	".....,Z$IN8N77O88NO7OI........\n" + DoubleTab +
+	".....,ZZ8M8DDDNNNNODMDI.......\n" + DoubleTab +
+	"......$DDN8DNNNNNMDDNNMO......\n" + DoubleTab +
+	".....~O8ODD8NDNNNMMND88NZ,....\n" + DoubleTab +
+	".....78ONZD88DNNMMMMNO7===....\n" + DoubleTab +
+	".....O8ON$ZNODNNMMMMMND8I:....\n" + DoubleTab +
+	"....,88ODZZNO8DNMMMMMNDNMN7...\n" + DoubleTab +
+	"....~D88DZON8O8DNMNMMNN8I?7?..\n" + DoubleTab +
+	"....~D88NOODN8ZONMNDMMND:.....\n" + DoubleTab +
+	"....~8OONNDDM8Z$8NN8NMNND:....\n" + DoubleTab +
+	"....:8OO8NDNMOO$Z8M8DMMNMD....\n" + DoubleTab +
+	"....:NNNNNNNMOZZOONN8NMM8?....\n" + DoubleTab +
+	"....:NNNMMMNM8Z8ZO8MND+:......\n" + DoubleTab +
+	".....DNDNNDNMDZ8O8DO+Z........\n" + DoubleTab +
+	".....+O8ND~NOIDD87I~.,........\n" + DoubleTab +
+	"......,8M?.:..O8DO7=..........\n" + DoubleTab +
+	"......?87.......?~~:..........\n"
+
+const wizardAsciiB string = DoubleTab + "..............................\n" + DoubleTab +
+	".............:+:.:............\n" + DoubleTab +
+	".............=D8O$........,...\n" + DoubleTab +
+	"..........,~+OO$8I.......:~...\n" + DoubleTab +
+	"......,..,7DNNZZD=......,O?...\n" + DoubleTab +
+	".....:.~.,?888$OO+:.....:7,...\n" + DoubleTab +
+	".....I7D+.=8OOZ$ZDZ.....?~....\n" + DoubleTab +
+	"......:7N?Z8888O88Z.....I.....\n" + DoubleTab +
+	"........ONDDD88O8DD~...=+.....\n" + DoubleTab +
+	"........:8DDDDD8DND87=~$,.....\n" + DoubleTab +
+	"........=8DDDDDDDD8++I$$......\n" + DoubleTab +
+	"........$8DD8888O8NO..=:......\n" + DoubleTab +
+	".......=O8DD8OOODZ8M7.I.......\n" + DoubleTab +
+	"......,ZODDDDD88NO8M$~=.......\n" + DoubleTab +
+	"......$O8DDDDDDDDDNM$+,.......\n" + DoubleTab +
+	"....,$OZ8DDDDDDDNDDMO=........\n" + DoubleTab +
+	"...~ZOZ8DDDNDNDDNDNMO,........\n" + DoubleTab +
+	"...,7OODD8DDDNDNDDNM$.........\n" + DoubleTab +
+	"...~OO8DDDD8DDDD88NN?.........\n" + DoubleTab +
+	"...+8DDDDNNNDDDNNN8I..........\n" + DoubleTab +
+	".....?DDNNMNDDDDNN$=..........\n" + DoubleTab +
+	"......:$MDOZZ8NDN8?:..........\n" + DoubleTab +
+	".......OD:...:==N$+...........\n" + DoubleTab +
+	"......~M?......,NZ:...........\n" + DoubleTab +
+	"......$M+......=M8............\n" + DoubleTab +
+	"......$D=......=NO............\n" + DoubleTab +
+	"..............................\n"
+
+const wizardAsciiC string = DoubleTab + "==============================\n" + DoubleTab +
+	"==============+I?=============\n" + DoubleTab +
+	"=============?DDDI============\n" + DoubleTab +
+	"=============OO~7D+===========\n" + DoubleTab +
+	"=============88?$M7===========\n" + DoubleTab +
+	"============+8NODN8+==========\n" + DoubleTab +
+	"============II+=+8O7=~~=======\n" + DoubleTab +
+	"============?~?++7DD8ZZZ======\n" + DoubleTab +
+	"~=~===~===~?7+:=I778OOD?~=~~~~\n" + DoubleTab +
+	"~~~~====~~+7IZI7O?:+I+=~~~~~~~\n" + DoubleTab +
+	"~~~=+???+??IZIZ+IOO=:~~~~~~~~~\n" + DoubleTab +
+	"~~~+III77I=7I~8~:O8?:~~~~~~~~~\n" + DoubleTab +
+	"::~+III7II+=~+8?.++=::::::::::\n" + DoubleTab +
+	"::~=?IIII?~+=?87,~:+::::::::::\n" + DoubleTab +
+	",,::=++==~:+=+8$~~:+~,:,,,,,:,\n" + DoubleTab +
+	",,,,,:::,,:~+?8$+~:=~,,,,,,,,,\n" + DoubleTab +
+	",,,,,,,,,,~~7$OO$~:==:,,,,,,,,\n" + DoubleTab +
+	",,,,,,,,,,~:$D8DD:,+=~,,,,,,,,\n" + DoubleTab +
+	".........:~:ZDOOO=:=+~:.......\n" + DoubleTab +
+	".........+I788Z?$?$Z7==,......\n" + DoubleTab +
+	".........~$$88OIO7$DD8?,......\n" + DoubleTab +
+	"..........+ZDD8DDDN8ZI:.......\n" + DoubleTab +
+	"............~$8ND8NI..........\n" + DoubleTab +
+	".........,:=+7DND8N7?+~,......\n" + DoubleTab +
+	"..........:=I$$77$$I+~:,......\n" + DoubleTab +
+	"..............................\n"
+
+const wizardAsciiD string = DoubleTab + "====================\n" + DoubleTab +
+	"=====~=====~========\n" + DoubleTab +
+	"=====+~==~=?========\n" + DoubleTab +
+	"====~Z$==+?OO=======\n" + DoubleTab +
+	"===~+8$==Z$$D7~=====\n" + DoubleTab +
+	"===~+8+~=$IIZD?~====\n" + DoubleTab +
+	"===~+Z~+$7=?$8OZ=~==\n" + DoubleTab +
+	"===~IZ~ZO$OZZZZOI===\n" + DoubleTab +
+	"===~7I~ZZ$Z77$77ZI~=\n" + DoubleTab +
+	"====ZZ7ZI$$7$7Z8ZI~=\n" + DoubleTab +
+	"===~ZZOO$$Z$$$8IZ8+~\n" + DoubleTab +
+	"====Z=~Z8OOZ7Z8I$N?~\n" + DoubleTab +
+	"==~=Z=IOOOOZ$$8$ID+~\n" + DoubleTab +
+	"==~+Z?88OO$7$$OZ78+~\n" + DoubleTab +
+	"==~?$I8OZZ$$$$OOZ7==\n" + DoubleTab +
+	"==~I$~$8$Z$$$$O8Z7~=\n" + DoubleTab +
+	"==~I7~Z8O$$Z7OZO8I~=\n" + DoubleTab +
+	"==~7I~ODZZOZ$888Z===\n" + DoubleTab +
+	"==~7?~ZDO88OZO88Z===\n" + DoubleTab +
+	"==~$?~O8ODDOZ88O8===\n" + DoubleTab +
+	"==~$+=O888OZ8D8O8+~=\n" + DoubleTab +
+	"==~$+?8888DD888O87~=\n" + DoubleTab +
+	"==~$==ODODD88O88D$~=\n" + DoubleTab +
+	"===$=~+Z8N$78ODD7===\n" + DoubleTab +
+	"===Z++788Z7?IIONO===\n" + DoubleTab +
+	"======??=~=====?I===\n"
+
+const thieveAscii string = "............................................................\n" +
+	"............................................................\n" +
+	"...............,:...........................................\n" +
+	"..............~OD?...............~I7~.......................\n" +
+	"..............IND?...........:+=?ZO88I......................\n" +
+	"..............+NN8I,.....~II?7$I$$ZOO8......................\n" +
+	"..............$+ZMNOI~::7OOO8D$788I?88~.....................\n" +
+	".............~7..ZMN8ZO8DD88DN8DN8Z8MOOZ~...................\n" +
+	".............?+...~$DNNNNDDNN88DDDNND8ZO:...................\n" +
+	".............7......,+?++:DNDDO88DDDOOZ?....................\n" +
+	"............,=..........~+ZD8D8O88D8O888+...................\n" +
+	".............,...........~$8DDD8O8888D8NZ...................\n" +
+	"..........................:ZZODD8DDMDD88$...................\n" +
+	"........................:7IDDZZ88O8D8OOO$,..................\n" +
+	".....................:+?78NDDDNDDD8DNMNDO,..................\n" +
+	"....................,$ODNNNNDDDNNNNDZ77?:...................\n" +
+	".....................ZD8888DDNNNMNDD8I~,....................\n" +
+	"...................I?$Z8888DDDNDNNDDDDD8Z=..................\n" +
+	"..................?ND8O8NDDMMMMMMNNDDDDDD8I,................\n" +
+	"..................8NDDDDDMMO+I+?8NNMMND8DDND:...............\n" +
+	"..................ONDDMMN8~.....,$$ZODMMNDDMI...............\n" +
+	"..................8NDDO=:.........+7I$+?DNNN8...............\n" +
+	".................,DNDMZ.............,...IMMNM?..............\n" +
+	".................:NNDO~..................~$MMN,.............\n" +
+	".................=MN8,.....................+NMO,............\n" +
+	".................7MD~.......................=MMN?...........\n" +
+	"................~NN7.........................8MMMN7:........\n" +
+	"...............+DNM7.........................,~=$8DO=.......\n" +
+	".............?NMMNO:........................................\n" +
+	"............:$$I?=..........................................\n" +
+	"............................................................\n"
+
+const thieveAsciiB string = DoubleTab + "...............:,.............\n" + DoubleTab +
+	".............,O8Z=............\n" + DoubleTab +
+	".............7MZZ8:...........\n" + DoubleTab +
+	"............=OM8O8+...........\n" + DoubleTab +
+	"..........:ZDNND8$OI..........\n" + DoubleTab +
+	"..........ZDZ88O88OZ..........\n" + DoubleTab +
+	".........,8O8NDDD888~.........\n" + DoubleTab +
+	".........INODMDDNDDNZ.........\n" + DoubleTab +
+	".........8N8DMNDDNND8,........\n" + DoubleTab +
+	".........7NODNND8DNDD,:~,.....\n" + DoubleTab +
+	"........:,Z8DDD88DOODIZD?,....\n" + DoubleTab +
+	"........:?7D8ND8DDDO7~,~......\n" + DoubleTab +
+	".........,$N8NN88ODI..........\n" + DoubleTab +
+	"......~+I$7$88OZD8?...........\n" + DoubleTab +
+	"......:~~:..=Z?7DN~...........\n" + DoubleTab +
+	"............=NOIIO~...........\n" + DoubleTab +
+	"............ODODDO7,..........\n" + DoubleTab +
+	"...........,DD8DM7~?~,........\n" + DoubleTab +
+	"............ZN8$N8=,~+~,......\n" + DoubleTab +
+	"............IMO.:7O=..,,......\n" + DoubleTab +
+	"............ZDZ...............\n" + DoubleTab +
+	"...........IND=...............\n" + DoubleTab +
+	"...........+O?................\n" + DoubleTab +
+	"..............................\n"
+
+const thieveAsciiC string = DoubleTab + "............................\n" + DoubleTab +
+	"............~++~............\n" + DoubleTab +
+	"...........+O?7Z,...........\n" + DoubleTab +
+	"............I7+$+...........\n" + DoubleTab +
+	".............I8ON$+~,.......\n" + DoubleTab +
+	"...........,IZOO8DND8+......\n" + DoubleTab +
+	"...........?DOOO8DD8N7......\n" + DoubleTab +
+	"...........$NDDDNNMN8$......\n" + DoubleTab +
+	"..........,DMNNNNM7OND:.....\n" + DoubleTab +
+	".........:ZNDDNNM7.~NNI.....\n" + DoubleTab +
+	".........$DDDDNNNI.=NDO.....\n" + DoubleTab +
+	".........OND8O8OO8,=D8=.....\n" + DoubleTab +
+	"........+NNNNNNDDN~?8$==....\n" + DoubleTab +
+	"...:::~+8MNDD8NNNM8DD7~.....\n" + DoubleTab +
+	"...~?====OND88MMNNM8+.......\n" + DoubleTab +
+	"........:NN88DMNNNM8........\n" + DoubleTab +
+	"........IN88DNDNDNDD:.......\n" + DoubleTab +
+	".......+D888NNN$8M8D$.......\n" + DoubleTab +
+	".......ZD8O8ND8?:DNN+.......\n" + DoubleTab +
+	".......=DD+ONN$..=NNZ,......\n" + DoubleTab +
+	"........7O.ZNNZ..,ND8=......\n" + DoubleTab +
+	"........,:.?MN+...7MD?......\n" + DoubleTab +
+	"...........+MO.....8M?......\n" + DoubleTab +
+	"...........IN$.....+M$......\n" + DoubleTab +
+	"..........~OOZ.....,DO:.....\n" + DoubleTab +
+	"......,~?ZDNNO=~~~=?O8:.....\n" + DoubleTab +
+	"......:=+++=~:::,,:$8Z:.....\n" + DoubleTab +
+	"............................\n"
+
+const thieveAsciiD string = DoubleTab + "...................................\n" + DoubleTab +
+	".................~=:...............\n" + DoubleTab +
+	"................7OOZ+..............\n" + DoubleTab +
+	"...............~Z$??7,.............\n" + DoubleTab +
+	"..............,I8?++I~~:...........\n" + DoubleTab +
+	".............?O88$?7$7Z7...........\n" + DoubleTab +
+	"...........+O888OZI7O88$=..........\n" + DoubleTab +
+	"..........,O7Z8O$?I+$$O$DO+........\n" + DoubleTab +
+	".........=D8OZ7IZ?=I$7ZO?78I,......\n" + DoubleTab +
+	".........:OOZZO888O88887,.:7?:.....\n" + DoubleTab +
+	".........~I?$8DDDDNDOZ8$~.,~~7,....\n" + DoubleTab +
+	"......:+??78DDDD8DD8O?7Z+?I..,.....\n" + DoubleTab +
+	"....,=+~..$888D888D8O$7OZ=.........\n" + DoubleTab +
+	"....,,...~88888DDZ$778OOZ=.........\n" + DoubleTab +
+	".........78O888DDDOODO877O.........\n" + DoubleTab +
+	"........:8O8OOOODDDNDOO$78:........\n" + DoubleTab +
+	"........$DOZZO88DD8DD8$I+O:........\n" + DoubleTab +
+	".......=8OZ$Z8DDD888Z8O$??.........\n" + DoubleTab +
+	"......,ZO7Z8DDD8888D?:NZI7,........\n" + DoubleTab +
+	"......?8O8DDDD88OOO8?.Z8=?I........\n" + DoubleTab +
+	".....:8888DD8888ZZ$8+.:ZO$Z$:......\n" + DoubleTab +
+	".....ZDD8DD8888OZ$$O=...INO$Z~.....\n" + DoubleTab +
+	"....IDDDDD8O8OOZ$7$Z~....ON8O$.....\n" + DoubleTab +
+	".,,+88DDDOOOOOO$77$$~....,$N88,....\n" + DoubleTab +
+	".:?ZZ8DD8OOOOOZ$$ZOZ7=:....IND~....\n" + DoubleTab +
+	"...,?8ND?++??I???+=:,.......7N$....\n" + DoubleTab +
+	"..:$88$?====~~~=~~::,,......:DD~...\n" + DoubleTab +
+	"..,+~,.........,,::~~~~~~~~~~887...\n" + DoubleTab +
+	"........................,,:~~ZDZ...\n" + DoubleTab +
+	".............................~ZI...\n" + DoubleTab +
+	"...................................\n"
+
+const paladinAscii string = DoubleTab + "........................................\n" + DoubleTab +
+	"...................::,..................\n" + DoubleTab +
+	"..................=???..................\n" + DoubleTab +
+	"..................+I?Z~.................\n" + DoubleTab +
+	".................,?$Z$?.................\n" + DoubleTab +
+	"................,=+?7$I~................\n" + DoubleTab +
+	"..............,::7===?+7,...............\n" + DoubleTab +
+	".............,~~:~7?++~=+,..............\n" + DoubleTab +
+	".............=~~~,7?==~,~=~:,...........\n" + DoubleTab +
+	"............:=~~:+I?==~~..~,............\n" + DoubleTab +
+	"............~=~~~++?+?==~...............\n" + DoubleTab +
+	"............===~=I=+?7+??,..............\n" + DoubleTab +
+	"............=====I77I7?I?:..............\n" + DoubleTab +
+	"............~+==..7+77+,,...............\n" + DoubleTab +
+	".............~~...~=?I,.................\n" + DoubleTab +
+	"..................,=++..................\n" + DoubleTab +
+	"..................:~=,..................\n" + DoubleTab +
+	"..................:~,...................\n" + DoubleTab +
+	"..................~=,...................\n" + DoubleTab +
+	"...................~~...................\n" + DoubleTab +
+	"...................==...................\n" + DoubleTab +
+	"...................:,...................\n" + DoubleTab +
+	"........................................\n"
+
+const paladinAsciiB string = DoubleTab + "..............:~,.............\n" + DoubleTab +
+	"........,+~.?DMID+............\n" + DoubleTab +
+	"........,MI.?DNZNZ............\n" + DoubleTab +
+	".........M+.~MNDNN:...........\n" + DoubleTab +
+	"........,N+.,8MODD?=:?I~......\n" + DoubleTab +
+	".......,=77~~?8NO?~==?O=......\n" + DoubleTab +
+	"......=OZDNI==7ZZO7=$8I.......\n" + DoubleTab +
+	"...~~+Z8888==:=8I7IZ8NZ.......\n" + DoubleTab +
+	".....?MMD.IN8Z?M8Z=?7D:.......\n" + DoubleTab +
+	".....,8MD.?MMMOO=~,.+?........\n" + DoubleTab +
+	"......:$O.+MM8DZI?+$:.........\n" + DoubleTab +
+	"........7,=MM?DODM$Z,..:......\n" + DoubleTab +
+	"........Z,=MIIOO7?I=.,$7+,....\n" + DoubleTab +
+	".......,D,=MZ:$O+.DN7OMD7,....\n" + DoubleTab +
+	".......~M,~MN,$O,=8+ODD+......\n" + DoubleTab +
+	".......7M:~MN,$O.$N.?M=.......\n" + DoubleTab +
+	".......ZM:~MM:$O.8M:IM,.......\n" + DoubleTab +
+	"......~+M~:MM~$O,8M:?N,.......\n" + DoubleTab +
+	".......:M=:MM~$O.OMN?==.......\n" + DoubleTab +
+	".....,.~M+,MM~$O.ZMMM~........\n" + DoubleTab +
+	".....,.+M+,MN,ZO.ZMNNO:++.....\n" + DoubleTab +
+	".......ZM?,M8.ZO.7M=7M7$$.....\n" + DoubleTab +
+	"......,MM7.MO.OO,~~.=M$.?.....\n" + DoubleTab +
+	"....,.ZD$?,MN=I7:....N7.=.....\n" + DoubleTab +
+	"....,=$,..,MM~.......N$.=.....\n" + DoubleTab +
+	"....,=....,MI........$8.?.....\n" + DoubleTab +
+	"....,...?O:M+........IM?7:....\n" + DoubleTab +
+	".....:$DMMIMI........ZO~:=,...\n" + DoubleTab +
+	".....,~::,,,..................\n"
+
+const paladinAsciiC string = DoubleTab + "~~==~=???I77?++I77777$DDDDD?7ZZZZ$77$7$Z\n" + DoubleTab +
+	"==++========~~~~=???I8DNNNMZ?$$$$$7$$7$Z\n" + DoubleTab +
+	"=+?+???I?+=~:::,:~~~~ONNMNN$+7777$$$777$\n" + DoubleTab +
+	"=~~~~~~~~~~~::::,,,,~$DNDD8$IIII77$$7$ZZ\n" + DoubleTab +
+	"~~====~==::::::,~+?$O888DDDOZZOZ$$II77$$\n" + DoubleTab +
+	"~=+I?==+++~::,,:$D8DDNNODMNDDDDDDD7=+777\n" + DoubleTab +
+	"???I7$$??I+=~:~IONDDDNNMMMNNNDDNND8$+?77\n" + DoubleTab +
+	"$$7IIIO77II++I7ZO8NNNNNNNNNNDNNN8DDO7?II\n" + DoubleTab +
+	"$77II?NZ=++=Z8IZ8OZ8NNNNNNNNND8O8NOOD+II\n" + DoubleTab +
+	"7IIII?DO~===ONOON88O8N8DNMN$7ZONMNDMN$+I\n" + DoubleTab +
+	"III?++DO~+=INDN8DNDNODZI8M8Z$O8DNMMMMO+I\n" + DoubleTab +
+	"I?+=~~NO:=?ZDDMOON88$8MNDMNMMDDNNNMMM7+?\n" + DoubleTab +
+	"?++~~8NOI$D88NMZ$ND8DOZ7DMMOZDNNMNNDD$~:\n" + DoubleTab +
+	"~::,+MMMMNDNM8?~=ZND8DOIOM877ZDMN=ONDO:,\n" + DoubleTab +
+	"~=?IIZMMMMD87,,::=NMNNNMMMNNMNMNI.ZN8D=,\n" + DoubleTab +
+	"~==~:=M8$$?:.:~=~ZMNMMMMMMMMMMMOZ.INDN?:\n" + DoubleTab +
+	"=:~~~+MI,,:~====IMD8DNMMMMNDDDNOD:+NNN?~\n" + DoubleTab +
+	"+===~+N7=====~~=DMDDZ$OODNNMNNNDN?+NND+=\n" + DoubleTab +
+	"??++=?N7~~:::::IMMDNDDO88MDOD8NMM$$NNNI?\n" + DoubleTab +
+	"????+?N7~~~::::8MNDNNNDDD888$?78N8ODND$7\n" + DoubleTab +
+	"+??+=?N$:::,:.IMMNDNDDDDDO888Z8Z8DNMM8$Z\n" + DoubleTab +
+	"==+?+?N?,,,,,~DMMNNNDDDNNMN$88OOMNNMMNZZ\n" + DoubleTab +
+	"++++??D7:::~~7MMMNNNDNDNNMM8Z88DDMMD8OZ$\n" + DoubleTab +
+	"I?++??D$=+=?IMMMND8NDDDDMMMMO88DDNMOI7$$\n" + DoubleTab +
+	"Z7II?IDZI7I?IZDMD8ONDN8DMMMMN8ND8ODD$ZZZ\n" + DoubleTab +
+	"8OOOZZDOZOO$7Z$ND8ONNN8NDMMMM8O8OOONZ8D8\n" + DoubleTab +
+	"DDDD88DOO88OOOOND88NNNNMDMMMMM88DDZ88ODD\n" + DoubleTab +
+	"DDDDDDOO8888O88NDDDNNNNNDNMMMMNNMDO8NODN\n"
+
+const paladinAsciiD string = DoubleTab + "...............:~:............\n" + DoubleTab +
+	"..............~$7Z=...........\n" + DoubleTab +
+	"..............78ON$...........\n" + DoubleTab +
+	"..............?OZD7...........\n" + DoubleTab +
+	".............=788OO$7,........\n" + DoubleTab +
+	"...........?$888D8DD$?~.......\n" + DoubleTab +
+	"..........I8OO?$$DDD8??=......\n" + DoubleTab +
+	".........+O8Z7=77DNDDZ??:.....\n" + DoubleTab +
+	"........,$ZD88ZDDOZ$7ZZZZ,....\n" + DoubleTab +
+	"........~7N8DNMO77OMOZZO?.....\n" + DoubleTab +
+	".......:78?+N888ODNN,.........\n" + DoubleTab +
+	".......I$Z,+DO8NMMN8+,........\n" + DoubleTab +
+	"......+O8NZ78NNNDN8O7.........\n" + DoubleTab +
+	"......7Z8NNDODDDDDDNN+........\n" + DoubleTab +
+	"......??8DDD8ODNDN88NN:.......\n" + DoubleTab +
+	"......$ZDDDD8O8ND88ODDO,......\n" + DoubleTab +
+	".....,IIDDD88O8DD88OD87Z......\n" + DoubleTab +
+	".....,7ZD88OO8NND8DOON+$7.....\n" + DoubleTab +
+	".....:ZOD888ODDZ?=NND8~.8=....\n" + DoubleTab +
+	".....~OO8D8D8M?...8DO8,.:Z,...\n" + DoubleTab +
+	".....=OODD888M=...INZ8=..=$...\n" + DoubleTab +
+	".....?8OD888DM~...:DO87...II..\n" + DoubleTab +
+	".....IO8N888N8.....$8OZ....=..\n" + DoubleTab +
+	".....$8DDD8OM?.....=8OZ.......\n" + DoubleTab +
+	".....ZDDDOZO8+:~===?OZZ~::,...\n" + DoubleTab +
+	".....ZDDDI7OO7I7777I$$$?~::...\n" + DoubleTab +
+	".....$MN8O8DZI?=:~~~I7O+..,,..\n" + DoubleTab +
+	".....~7I?==:,.......+7$~......\n"
+
+const barbarianAscii string = DoubleTab + "...............................\n" + DoubleTab +
+	"....,?+~??+:...................\n" + DoubleTab +
+	".....=O7I7$I?~.................\n" + DoubleTab +
+	".....:+7O77+??~................\n" + DoubleTab +
+	".....=$O8$7???7~...............\n" + DoubleTab +
+	"...=I+7ZIII?$Z?+=,~,...........\n" + DoubleTab +
+	"...,+II?~:~?887?$$N8+:.........\n" + DoubleTab +
+	"......I777$8DO$II,+N$?7I?=.....\n" + DoubleTab +
+	"......ID88MN8Z$ZZ778?.,?7+,....\n" + DoubleTab +
+	"......7M88NND8ONDDDM+..........\n" + DoubleTab +
+	"......8DNMND8OZNOD++,..........\n" + DoubleTab +
+	".....:MDMMDDDDONMMI............\n" + DoubleTab +
+	".....?M8DMNDO8DNMMN,...........\n" + DoubleTab +
+	".....8MN8DND$7O8MMM7...........\n" + DoubleTab +
+	"....=MMMDDDD8OODMMMM:..........\n" + DoubleTab +
+	"....IMNNMMNNNND8NMMMZ..........\n" + DoubleTab +
+	"....$MMMMMMMMNN88MMMM+.........\n" + DoubleTab +
+	"....8MMMMMMMMNNN8NMMMD,........\n" + DoubleTab +
+	"...~MMMMMMMMDNMMDDMMNMZ........\n" + DoubleTab +
+	"...7MNMMMMDD8DDDDNMMMNMI.......\n" + DoubleTab +
+	"..,DMMMMMMND8NDO$OMMMMMM$......\n" + DoubleTab +
+	"..?MMMMMMMNDMNNDMMMMMMMMMZ.....\n" + DoubleTab +
+	".,8MMMMMMMDDMNDDMMMMD8O88N7....\n" + DoubleTab +
+	".~MMMMNMMMDNMNDNMMO?,.....:,...\n" + DoubleTab +
+	"..?8DMM8=DMMNNN8=,.............\n" + DoubleTab +
+	".....:I,.=++ZMND7:.............\n" + DoubleTab +
+	"............,+?$OO+............\n" + DoubleTab +
+	"...............................\n"
+
+const barbarianAsciiB string = DoubleTab + "...................................\n" + DoubleTab +
+	"........................=?I~.......\n" + DoubleTab +
+	"......................:7DD+..:+....\n" + DoubleTab +
+	"......................+DD8$7~78,...\n" + DoubleTab +
+	".............,.,:~=~.?ZI?O888DO,...\n" + DoubleTab +
+	"...........,I$$ZODNI.Z=.7Z+ODO+....\n" + DoubleTab +
+	"..........:ZD888NNNDZ==I$,+Z~~.....\n" + DoubleTab +
+	".........+OD8888OOZODZO8Z$7~.......\n" + DoubleTab +
+	".......~$OO8OZ7$77ZO8ZOOO8O=.......\n" + DoubleTab +
+	"......:8OO887=+I888OODN8OZO8=......\n" + DoubleTab +
+	"......$OZZI7Z7I8D8OO8D88OZZZ$?.....\n" + DoubleTab +
+	"....,+7$?+I?IO8DNO8DDDD888DOOD=....\n" + DoubleTab +
+	"....:O7==$8$O8NDOONNNNNNNNNNDZ~....\n" + DoubleTab +
+	"....,77?IO88D8NO8NDNNNMO:78$~......\n" + DoubleTab +
+	"...,7OOO88DDDNOONDDNNNZ,..?,.......\n" + DoubleTab +
+	"....7ZOOZ8DDDDDDDDNNNMZ...,........\n" + DoubleTab +
+	"....Z77?Z888D8DNDNDNNNN+...........\n" + DoubleTab +
+	"....?8ZZOZI8NDDD88DNNND$:..........\n" + DoubleTab +
+	"....~88DD=ZDODNDO8NNNDNO...........\n" + DoubleTab +
+	"......,+++D7ZDND8DNNND8N~..........\n" + DoubleTab +
+	"........,I8$ONNNNN8$MDDM:..........\n" + DoubleTab +
+	".........,ONNDMZ7Z:.NNNI...........\n" + DoubleTab +
+	"...........~ONN8:...$MN7,..........\n" + DoubleTab +
+	"...........~ZDDNO$OOODDN8Z?:.......\n" + DoubleTab +
+	".......=?=+ODDDDDDDD8DNDNN8?,......\n" + DoubleTab +
+	".....,Z8NMDDND88OZZ$$777?~:........\n" + DoubleTab +
+	".....::.+=$+~~:::,,,,..............\n" + DoubleTab +
+	"...................................\n"
+
+const barbarianAsciiC string = DoubleTab + "................................\n" + DoubleTab +
+	"................,++,............\n" + DoubleTab +
+	"................$Z$I............\n" + DoubleTab +
+	"................I??I............\n" + DoubleTab +
+	"................I+7D?:,..~,.....\n" + DoubleTab +
+	"..............=ONODNDOZ$I,......\n" + DoubleTab +
+	".............7NND8D8ZZOOO?......\n" + DoubleTab +
+	".............ZD88$ZZ88$OZ?......\n" + DoubleTab +
+	".............788$O8O88NZ$I,.....\n" + DoubleTab +
+	".............+D88DZNDNI7O$~.....\n" + DoubleTab +
+	".............7MNNNONMI.?N8$.....\n" + DoubleTab +
+	".............8NNNO8DM7.?MN$.....\n" + DoubleTab +
+	"............7MMNND8MN8,:MM87....\n" + DoubleTab +
+	"...........+8DN8DMNND8~,ND8=....\n" + DoubleTab +
+	"...........ZZ?OZ8MMNDD?I8I~.....\n" + DoubleTab +
+	".........:7+.~MNNNNNNN8D$~......\n" + DoubleTab +
+	"........I$:..?MD8NNDDDNI........\n" + DoubleTab +
+	"......~Z$,...IMNNMNDN8DZ?.......\n" + DoubleTab +
+	".....?OI.....+NNNNMNNNNDI.......\n" + DoubleTab +
+	"...:7?,.......ZMNN7=NMN87,......\n" + DoubleTab +
+	"..:+:.........7MNN~.=MMMZ,......\n" + DoubleTab +
+	"..,...........=MN8...8MM7.......\n" + DoubleTab +
+	"...............DMZ...$MN+.......\n" + DoubleTab +
+	"..............:NMZ...+MD=.,.....\n" + DoubleTab +
+	"............,INMMZ...?MD,.,.....\n" + DoubleTab +
+	"............?8Z?,...,NMD:.......\n" + DoubleTab +
+	"....................,?I~........\n" + DoubleTab +
+	"................................\n"
+
+const barbarianAsciiD string = DoubleTab + "...............,..............\n" + DoubleTab +
+	"..............~+=~:,..........\n" + DoubleTab +
+	".............=$$7I?=~,........\n" + DoubleTab +
+	"............~77Z77$?:.........\n" + DoubleTab +
+	"............,77Z77Z$+,........\n" + DoubleTab +
+	".............+$Z$7OZI?+~......\n" + DoubleTab +
+	".............~O$$7ZZ7ZZ7+,....\n" + DoubleTab +
+	"...........,?78O$$8$?7Z8OOI,..\n" + DoubleTab +
+	"........,:,?ZZ7ZOO8Z7$8OODZZ?,\n" + DoubleTab +
+	".......:ZI$IZ$OOO$$ZZO8?.?D8$I\n" + DoubleTab +
+	".......+OZ8D?.IDOZ$$77$,~O8Z7~\n" + DoubleTab +
+	"......,$88DO.=ZDOZZZZ88.=?78+.\n" + DoubleTab +
+	".....,$8DMZ~I888DDDNOZZ?...~,.\n" + DoubleTab +
+	"....:ZDDD?,$DDNNNDDN8Z8D~.....\n" + DoubleTab +
+	"....,ODD7,IDNDNN88D888DD7.....\n" + DoubleTab +
+	".....IO$=ZDDNNMN88OO8O87=:....\n" + DoubleTab +
+	"...,I8O,I8DDNNND8DD8OZO8+:....\n" + DoubleTab +
+	"....?8?.7Z8DNDDNDDDD88ZZ7,....\n" + DoubleTab +
+	"....7$..IDDNMNNNO$ZDMDD8?=,...\n" + DoubleTab +
+	"...:O=..~DNMMMM8Z$Z+=:~?::,...\n" + DoubleTab +
+	"...I$....,~78MDZZ8?...........\n" + DoubleTab +
+	"..:Z+.......+ND8OD$...........\n" + DoubleTab +
+	"..?O........$8ODNDI...........\n" + DoubleTab +
+	"..O?........~O8DD8............\n" + DoubleTab +
+	".?O.........IDDNN$............\n" + DoubleTab +
+	",8?........,O8DN7.............\n" + DoubleTab +
+	"$8,.........$8DD7.............\n" + DoubleTab +
+	"I:..........:++++.............\n"

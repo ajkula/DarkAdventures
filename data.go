@@ -16,8 +16,13 @@ const LegendSpace int = 8
 const inventorySpace int = 38
 const heroesDetailsSpacing int = 14
 const NearORC string = "There's an odd smell in this place...\n"
-const rootBell string = Tab + "A big deep-rooted tree stump is in front of you\n" +
-	Tab + "You hear a bell sound, and something is glowing from your bag..\n"
+
+var rootBell = map[bool]string{
+	false: Tab + "A big deep-rooted tree stump is in front of you\n",
+	true: Tab + "A big deep-rooted tree stump is in front of you\n" +
+		Tab + "You hear a bell sound, and something is glowing from your bag..\n",
+}
+
 const warpText string = Tab + "All the roots from around gather and climb your legs,\n" +
 	Tab + "a pain bites you and you faint as a white light engulfs everything\n" +
 	Tab + "\"wake up!\" a voice says in your mind... you are somewhere else~"
@@ -34,6 +39,7 @@ var NullifiedEnemy Character
 var LegendArray []string = []string{
 	CustomSpaceAlign("You:", LegendSpace) + YourPosition,
 	CustomSpaceAlign("Shops:", LegendSpace) + Shop,
+	CustomSpaceAlign("Roots:", LegendSpace) + Root,
 	CustomSpaceAlign("Forest:", LegendSpace) + LettersFromLandscape["forest"],
 	CustomSpaceAlign("Plains:", LegendSpace) + LettersFromLandscape["plains"],
 	CustomSpaceAlign("Desert:", LegendSpace) + LettersFromLandscape["desert"],

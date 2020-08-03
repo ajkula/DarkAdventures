@@ -62,9 +62,9 @@ func init() {
 		}
 	}
 
-	for _, l := range Grid {
-		fmt.Println("grid", l)
-	}
+	// for _, l := range Grid {
+	// 	fmt.Println("grid", l)
+	// }
 	CreateMap()
 	InitGates()
 }
