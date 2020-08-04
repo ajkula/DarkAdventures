@@ -41,7 +41,8 @@ func (player *Character) SetPlayerRoom() *Location {
 }
 
 func (player *Character) setImage() {
-	player.Display = AsciiArts.setImage(player.Name)
+	fmt.Printf("player: %+v\n", player)
+	player.Display = AsciiArts.makeImage(player.Name)
 }
 
 func (player *Character) getImage() {

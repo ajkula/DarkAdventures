@@ -5,9 +5,22 @@ import (
 	"math/rand"
 	"strconv"
 	"strings"
+
+	lang "github.com/cloudfoundry/jibber_jabber"
 )
 
 var WorldMap [Y][X]*Location
+
+func getSysLang() (language string) {
+	language = englishLang
+	if lang, err := lang.DetectLanguage(); err == nil {
+		i := indexOf(supportedLanguages, lang)
+		if i != -1 {
+			language = supportedLanguages[i]
+		}
+	}
+	return language
+}
 
 // WhereCanYouGo location => []string
 func WhereCanYouGo(yourPlace *Location) []string {
@@ -31,9 +44,9 @@ func WhereCanYouGo(yourPlace *Location) []string {
 
 func Intro() {
 	Output("blue", gameIntro)
-	Output("blue", DoubleTab+"1 - Easy")
-	Output("blue", DoubleTab+"2 - Meddium")
-	Output("blue", DoubleTab+"3 - Hard")
+	Output("blue", translate(easyTR))
+	Output("blue", translate(meddiumTR))
+	Output("blue", translate(hardTR))
 	UserInput(&Difficulty)
 	if Difficulty > 3 || Difficulty < 1 {
 		Intro()
@@ -43,7 +56,7 @@ func Intro() {
 }
 
 func ChooseHero() {
-	Output("blue", DoubleTab+"Select your hero:")
+	Output("blue", translate(chooseHeroTR))
 	for index, name := range indexedHeroes {
 		Output("blue", Tab+CustomSpaceAlign(strconv.Itoa(index+1)+" - "+name, heroesDetailsSpacing)+heroesDetails[name])
 	}
@@ -74,9 +87,9 @@ var aggregateEnemies = map[string]int{
 func AnalyzeItemsRepartition() {
 	for e, items := range itemsByEnemy {
 		Output("green", DoubleTab+e+":")
-		for in, iq := range items {
-			if iq > 0 {
-				Output("yellow", Tab+CustomSpaceAlign(in, 22-len(strconv.Itoa(iq))), iq)
+		for in, iqty := range items {
+			if iqty > 0 {
+				Output("yellow", Tab+CustomSpaceAlign(in, 22-len(strconv.Itoa(iqty))), iqty)
 			}
 		}
 	}
@@ -92,7 +105,7 @@ func CreateMap() [Y][X]*Location {
 
 			item := getItem(hasItem)
 			WorldMap[y][x] = &Location{
-				Description: Tab + "You are" + RoomFromLandscape[Grid[y][x]][rand.Intn(len(RoomFromLandscape[Grid[y][x]]))] + Tab + Ambiance[rand.Intn(len(Ambiance))],
+				Description: Tab + youAre + RoomFromLandscape[Grid[y][x]][rand.Intn(len(RoomFromLandscape[Grid[y][x]]))] + Tab + Ambiance[rand.Intn(len(Ambiance))],
 				HasSeller:   hasItem,
 				Item:        item,
 				X:           x,
@@ -244,7 +257,7 @@ var heroFromName = func(s string) *Character {
 	// json.Unmarshal([]byte(`{"Name": "Thieve", "Health": 10}`), &player)
 	var hero Character
 	switch Initial(s) {
-	case "t":
+	case Initial(heroesList.Thieve):
 		hero = Character{
 			Name:            heroesList.Thieve,
 			Alive:           true,
@@ -258,7 +271,7 @@ var heroFromName = func(s string) *Character {
 		}
 		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(3)+1)
 		break
-	case "p":
+	case Initial(heroesList.Paladin):
 		hero = Character{
 			Name:            heroesList.Paladin,
 			Alive:           true,
@@ -272,9 +285,9 @@ var heroFromName = func(s string) *Character {
 		}
 		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(3)+3)
 		break
-	case "w":
+	case Initial(heroesList.Wizard):
 		hero = Character{
-			Name:            heroesList.Wizzard,
+			Name:            heroesList.Wizard,
 			Alive:           true,
 			CurrentLocation: []int{9, 4},
 			Evasion:         15,
@@ -287,7 +300,7 @@ var heroFromName = func(s string) *Character {
 		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(3)+2)
 		hero.addItemTypeToInventory(ItemIndexList[1], rand.Intn(4)+2)
 		break
-	case "b":
+	case Initial(heroesList.Barbarian):
 		hero = Character{
 			Name:            heroesList.Barbarian,
 			Alive:           true,

@@ -1,6 +1,8 @@
 package main
 
-import "math/rand"
+import (
+	"math/rand"
+)
 
 type ASCII struct {
 	GOBLIN   []string
@@ -18,14 +20,14 @@ var AsciiArts = &ASCII{
 	ORC:      []string{orcAscii, orcAsciiB},
 	DRAGON:   []string{dragonAscii, dragonAsciiB},
 	HERO: map[string][]string{
-		heroesList.Thieve:    []string{thieveAscii, thieveAsciiB, thieveAsciiC, thieveAsciiD},
-		heroesList.Paladin:   []string{paladinAscii, paladinAsciiB, paladinAsciiC, paladinAsciiD},
-		heroesList.Wizzard:   []string{wizardAscii, wizardAsciiB, wizardAsciiC, wizardAsciiD},
-		heroesList.Barbarian: []string{barbarianAscii, barbarianAsciiB, barbarianAsciiC, barbarianAsciiD},
+		heroesList.Thieve:    {thieveAscii, thieveAsciiB, thieveAsciiC, thieveAsciiD},
+		heroesList.Paladin:   {paladinAscii, paladinAsciiB, paladinAsciiC, paladinAsciiD},
+		heroesList.Wizard:    {wizardAscii, wizardAsciiB, wizardAsciiC, wizardAsciiD},
+		heroesList.Barbarian: {barbarianAscii, barbarianAsciiB, barbarianAsciiC, barbarianAsciiD},
 	},
 }
 
-func (a *ASCII) setImage(name string) *DisplayImage {
+func (a *ASCII) makeImage(name string) *DisplayImage {
 	var image *DisplayImage
 	switch name {
 	case enemiesList.GOBLIN:
@@ -89,7 +91,7 @@ var heroStoryAndImages = map[string]map[int]string{
 		3: Tab + "Knight of the 3 Towers Citadel your duty is to stand as a wall,\n" +
 			Tab + "the rampart to protect the city of eelring, a menace is near...",
 	},
-	heroesList.Wizzard: map[int]string{
+	heroesList.Wizard: map[int]string{
 		0: Tab + "The Elder scholar from Krispin Academy of Magic himself,\n" +
 			Tab + "you came for the rumors of a rising evil in these forsaken lands.",
 		1: Tab + "A Tiefling Wizard girl, speeking the lower planes language,\n" +

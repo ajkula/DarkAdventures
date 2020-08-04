@@ -3,7 +3,8 @@ package main
 import "math/rand"
 
 const DefaultLandscape = "ffffffffff\nffffddffff\nffdddddfff\nffdddlllff\nffddllllff\nfffllllfff\nfffffcclll\nfffllcclll\nffffllllll\nllllllllll"
-const gameIntro = "\tWelcome to Dark Adventures\n\tSelect a difficulty:"
+const englishLang string = "en"
+const frenchLang string = "fr"
 const Tabulation int = 22
 const EnemyChances int = 35
 const Tab string = "\t"
@@ -15,23 +16,24 @@ const YourPosition string = "@"
 const LegendSpace int = 8
 const inventorySpace int = 38
 const heroesDetailsSpacing int = 14
-const NearORC string = "There's an odd smell in this place...\n"
+
+var youAre string = translate(youAreTR)
+var supportedLanguages = []string{englishLang, frenchLang}
+var gameIntro string = translate(gameintroTR)
+var NearORC string = translate(NearORCTR)
 
 var rootBell = map[bool]string{
-	false: Tab + "A big deep-rooted tree stump is in front of you\n",
-	true: Tab + "A big deep-rooted tree stump is in front of you\n" +
-		Tab + "You hear a bell sound, and something is glowing from your bag..\n",
+	false: translate(rootBellFALSE),
+	true:  translate(rootBellTRUE),
 }
 
-const warpText string = Tab + "All the roots from around gather and climb your legs,\n" +
-	Tab + "a pain bites you and you faint as a white light engulfs everything\n" +
-	Tab + "\"wake up!\" a voice says in your mind... you are somewhere else~"
+var warpText string = translate(warpTextTR)
 
 var heroesDetails = map[string]string{
-	heroesList.Thieve:    " - High evasion, crits, can attack x2",
-	heroesList.Paladin:   " - High strength, health, more potions",
-	heroesList.Wizzard:   " - Potions and Scrolls from the start",
-	heroesList.Barbarian: " - High health, strength",
+	heroesList.Thieve:    translate(heroesDetailsTHIEVE),
+	heroesList.Paladin:   translate(heroesDetailsPALADIN),
+	heroesList.Wizard:    translate(heroesDetailsWIZARD),
+	heroesList.Barbarian: translate(heroesDetailsBARBARIAN),
 }
 
 var NullifiedEnemy Character
@@ -40,10 +42,10 @@ var LegendArray []string = []string{
 	CustomSpaceAlign("You:", LegendSpace) + YourPosition,
 	CustomSpaceAlign("Shops:", LegendSpace) + Shop,
 	CustomSpaceAlign("Roots:", LegendSpace) + Root,
-	CustomSpaceAlign("Forest:", LegendSpace) + LettersFromLandscape["forest"],
-	CustomSpaceAlign("Plains:", LegendSpace) + LettersFromLandscape["plains"],
-	CustomSpaceAlign("Desert:", LegendSpace) + LettersFromLandscape["desert"],
-	CustomSpaceAlign("Castle:", LegendSpace) + LettersFromLandscape["castle"],
+	CustomSpaceAlign(roomTypes.FOREST+":", LegendSpace) + LettersFromLandscape[roomTypes.FOREST],
+	CustomSpaceAlign(roomTypes.PLAINS+":", LegendSpace) + LettersFromLandscape[roomTypes.PLAINS],
+	CustomSpaceAlign(roomTypes.DESERT+":", LegendSpace) + LettersFromLandscape[roomTypes.DESERT],
+	CustomSpaceAlign(roomTypes.CASTLE+":", LegendSpace) + LettersFromLandscape[roomTypes.CASTLE],
 }
 
 type Directions struct{ North, South, East, West string }
@@ -58,9 +60,9 @@ var directions = Directions{
 type DifficultyNames struct{ Easy, Meddium, Hard string }
 
 var difficultyNames = DifficultyNames{
-	Easy:    "Easy",
-	Meddium: "Meddium",
-	Hard:    "Hard",
+	Easy:    translate(easyTR),
+	Meddium: translate(meddiumTR),
+	Hard:    translate(hardTR),
 }
 
 type Commands struct {
@@ -86,24 +88,24 @@ var universalCommands = []string{commands.Map, commands.Inv, commands.Help, comm
 var difficultyIndex = map[int]string{0: difficultyNames.Easy, 1: difficultyNames.Meddium, 2: difficultyNames.Hard}
 var GameDifficulty = map[string]int{difficultyNames.Easy: 15, difficultyNames.Meddium: 30, difficultyNames.Hard: 45}
 
-type HeroesList struct{ Thieve, Paladin, Wizzard, Barbarian string }
+type HeroesList struct{ Thieve, Paladin, Wizard, Barbarian string }
 type EnemiesList struct{ SKELETON, GOBLIN, SORCERER, ORC, DRAGON string }
 
-var indexedHeroes = []string{heroesList.Thieve, heroesList.Paladin, heroesList.Wizzard, heroesList.Barbarian}
+var indexedHeroes = []string{heroesList.Thieve, heroesList.Paladin, heroesList.Wizard, heroesList.Barbarian}
 var heroesList = HeroesList{
-	Thieve:    "Thieve",
-	Paladin:   "Paladin",
-	Wizzard:   "Wizzard",
-	Barbarian: "Barbarian",
+	Thieve:    translate(ThieveNAME),
+	Paladin:   translate(PaladinNAME),
+	Wizard:    translate(WizardNAME),
+	Barbarian: translate(BarbarianNAME),
 }
 
 var indexedEnemiesForRandomization = []string{enemiesList.SKELETON, enemiesList.GOBLIN, enemiesList.SORCERER, enemiesList.ORC}
 var enemiesList = EnemiesList{
-	SKELETON: "SKELETON",
-	GOBLIN:   "GOBLIN",
-	SORCERER: "SORCERER",
-	ORC:      "ORC",
-	DRAGON:   "DRAGON",
+	SKELETON: translate(skeletonNAME),
+	GOBLIN:   translate(goblinNAME),
+	SORCERER: translate(sorcererNAME),
+	ORC:      translate(orcNAME),
+	DRAGON:   translate(dragonNAME),
 }
 
 // nnnnnnnnnif (i > 98) return "doll";
@@ -200,39 +202,50 @@ var enemiesSpecificsValues = map[string]Specifics{
 }
 
 var dragonProximity = map[string]string{
-	"f": "Trees are burned the soil is ash...",
-	"l": "The air carries ashes flying in the wind...",
-	"d": "It's hotter than usual and so dry...",
-	"c": "It smells like burning from all directions...",
-	"x": "NO LUCK, A strong wind bursts all around the place,\n" +
-		Tab + "The sunlight dims before you heard the loudest of noises\n" +
-		Tab + "Humongous, wings deployed its scream tearing the sky,\n" +
-		Tab + "Here it is. The mightiest of all foes...",
+	"f": translate(forestTR),
+	"l": translate(landTR),
+	"d": translate(desertTR),
+	"c": translate(castleTR),
+	"x": translate(xTR),
 }
 
 // You are
 var introPlains = map[int]string{
-	0: " in an old foggy village, there's no soul here,\n",
-	1: " in the heath, you hear a weird music,\n" + Tab + "let's not waste any time here,\n",
-	2: " on a long road between green hills and a river,\n",
+	0: translate(introPlainsTR0),
+	1: translate(introPlainsTR1),
+	2: translate(introPlainsTR2),
 }
 
 var introDesert = map[int]string{
-	0: " in the wasteland, everything is dead and dry here,\n",
-	1: " on the swamp, nauseous and poisonous,\n" + Tab + "something is lurking here,\n",
-	2: " in the middle of dust..\n" + Tab + "of a long gone empire and a storm is at the horizon,\n",
+	0: translate(introDesertTR0),
+	1: translate(introDesertTR1),
+	2: translate(introDesertTR2),
 }
 
 var introCastle = map[int]string{
-	0: " in front of a castle ruin's gate, it barely stands,\n",
-	1: " at an old fort or what might have been one long ago,\n",
-	2: " below a huge tower, on top of which float an old flag,\n",
+	0: translate(introCastleTR0),
+	1: translate(introCastleTR1),
+	2: translate(introCastleTR2),
 }
 
 var introForest = map[int]string{
-	0: " near a forest, the trees seem to move by their own will,\n",
-	1: " unfortunately at the edge of the thorns wood,\n" + Tab + "no one comes back from it,\n",
-	2: " in a part of the forest all trees are rotten\n" + Tab + "and covered by poisonous mushrooms,\n",
+	0: translate(introForestTR0),
+	1: translate(introForestTR1),
+	2: translate(introForestTR2),
+}
+
+type RoomTypes struct {
+	FOREST string
+	PLAINS string
+	DESERT string
+	CASTLE string
+}
+
+var roomTypes = &RoomTypes{
+	FOREST: "forest",
+	PLAINS: "plains",
+	DESERT: "desert",
+	CASTLE: "castle",
 }
 
 var RoomFromLandscape = map[string]map[int]string{
@@ -242,33 +255,33 @@ var RoomFromLandscape = map[string]map[int]string{
 	"c": introCastle,
 }
 var LettersFromLandscape = map[string]string{
-	"forest": "f",
-	"plains": "l",
-	"desert": "d",
-	"castle": "c",
+	roomTypes.FOREST: "f",
+	roomTypes.PLAINS: "l",
+	roomTypes.DESERT: "d",
+	roomTypes.CASTLE: "c",
 }
 
 var Ambiance = map[int]string{
-	0: "there are nobody around, only the wind.\n",
-	1: "it's getting dark and you can see shadows moving..\n",
-	2: "all is silent, there's not even wind!\n",
-	3: "you don't feel safe but have to keep going on..\n",
-	4: "suddenly you feel shivers, a noise, voice or wind?\n",
-	5: "many noises around you, but can't see anyone...\n",
+	0: translate(AmbianceTR0),
+	1: translate(AmbianceTR1),
+	2: translate(AmbianceTR2),
+	3: translate(AmbianceTR3),
+	4: translate(AmbianceTR4),
+	5: translate(AmbianceTR5),
 }
 
 // There is
 var SellerList = map[int]string{
-	0: " a dwarf, with a bag full of goods\n",
-	1: " an elf, he holds something in his hand\n",
-	2: " a troll, he drops something in front of you\n",
+	0: translate(SellerListTR0),
+	1: translate(SellerListTR1),
+	2: translate(SellerListTR2),
 }
 
 var RoomTypeList = map[string]string{
-	"f": "forest",
-	"d": "desert",
-	"l": "plains",
-	"c": "castle",
+	"f": roomTypes.FOREST,
+	"d": roomTypes.DESERT,
+	"l": roomTypes.PLAINS,
+	"c": roomTypes.CASTLE,
 }
 
 var Event = map[int]string{0: "chest", 1: "enemy", 2: "seller"}
@@ -304,32 +317,32 @@ var UsableItems = map[string]bool{
 var ItemList = map[string]*Item{
 	itemNames.Doll: {
 		Name:        itemNames.Doll,
-		Description: "Will revive you with 30 HP",
+		Description: translate(DollTR),
 		Effect:      30,
 	},
 	itemNames.Moonstone: {
 		Name:        itemNames.Moonstone,
-		Description: "Increase your dammage by 5",
+		Description: translate(MoonstoneTR),
 		Effect:      5,
 	},
 	itemNames.Scroll: {
 		Name:        itemNames.Scroll,
-		Description: "20 Dammage to one enemy",
+		Description: translate(ScrollTR),
 		Effect:      20,
 	},
 	itemNames.Potion: {
 		Name:        itemNames.Potion,
-		Description: "Heal 20 HP",
+		Description: translate(PotionTR),
 		Effect:      20,
 	},
 	itemNames.Key: {
 		Name:        itemNames.Key,
-		Description: "To open locks, chests",
+		Description: translate(KeyTR),
 		Effect:      1,
 	},
 	itemNames.Coins: {
 		Name:        itemNames.Coins,
-		Description: "Golden coins",
+		Description: translate(CoinsTR),
 		Effect:      1,
 	},
 }
