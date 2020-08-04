@@ -36,7 +36,7 @@ Collect the best items to make it to through alive:
 - **Scrolls** are powerful spells you can use on enemies, they go to dust on cast.
 - **Potions** will instantly give you back a maximum of **20 HP**, it won't give you more health than your maximum.
 - ~~**Keys** to open chests or other mechanisms, will break on use.~~ 
-- **Moonstones** will instantly infuse into your arms and raise your strength by **5 Points**.
+- **Moonstones** once used will instantly infuse into your arms and raise your strength by **5 Points**.
 - **Dolls** are a weird unexplained find, owners of that unworldly curiosity have reported to wake up after they thought they died. Even the weakest of them felt stronger for a while! Will suddenly disappear and revive you instantly with **30 HP** no matter your base health.
 
 ### The mightiest of foes
