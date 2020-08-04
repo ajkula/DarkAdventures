@@ -58,42 +58,43 @@ func (player *Character) getImage() {
 func (player *Character) MoveTo(direction string) bool {
 	ok := false
 	switch strings.ToLower(direction) {
-	case "west":
+	case directions.West:
 		fallthrough
-	case "w":
+	case Initial(directions.West):
 		if player.CurrentLocation[1] > 0 {
 			player.CurrentLocation[1]--
 			ok = true
 		}
 		break
-	case "east":
+	case directions.East:
 		fallthrough
-	case "e":
+	case Initial(directions.East):
 		if player.CurrentLocation[1] < 9 {
 			player.CurrentLocation[1]++
 			ok = true
 		}
 		break
-	case "north":
+	case directions.North:
 		fallthrough
-	case "n":
+	case Initial(directions.North):
 		if player.CurrentLocation[0] > 0 {
 			player.CurrentLocation[0]--
 			ok = true
 		}
 		break
-	case "south":
+	case directions.South:
 		fallthrough
-	case "s":
+	case Initial(directions.South):
 		if player.CurrentLocation[0] < 9 {
 			player.CurrentLocation[0]++
 			ok = true
 		}
 		break
 	default:
-		Output("red", "\tCan't go ", direction)
+		if !player.Npc {
+			Output("red", translate(CanTGoTR)+vowelOrNot(direction, directionsArticlesVowelsTR, directionsArticlesConsonantTR)+direction)
+		}
 	}
-	// player.SetPlayerRoom()
 	return ok
 }
 
@@ -111,11 +112,11 @@ func (p *Character) addItemTypeToInventory(n string, i int) {
 func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 	item := p.Inventory[name]
 	if !p.Npc && (!p.hasItemInInventory(name) || item.Quantity < 1) {
-		Output("red", "You don't have a ", name)
+		Output("red", translate(youDontHaveATR), name)
 		return false
 	}
 	if !p.Npc && (!UsableItems[name]) && p.Alive {
-		Output("red", "You can't use a ", name)
+		Output("red", translate(youCanTUseATR), name)
 		return !UsableItems[name]
 	}
 
@@ -137,8 +138,8 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 	case itemNames.Moonstone:
 		p.Boost += item.Type.Effect
 		p.Inventory[name].Quantity--
-		Output("green", "The moonstone suddenly wraps and fuse in your arms, it's burning!\n")
-		Output("green", Tab+CalculateSpaceAlign("Strength +5 ->")+strconv.Itoa(p.Strength+p.Boost)+"\n")
+		Output("green", translate(moonstoneUsedTR))
+		Output("green", Tab+CalculateSpaceAlign(translate(strengthBoostAddTR))+strconv.Itoa(p.Strength+p.Boost)+"\n")
 		break
 	case itemNames.Scroll:
 		enemy := enemyInArr[0].(*Character)
@@ -149,10 +150,7 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 		p.Health = 30
 		p.Alive = true
 		p.Inventory[name].Quantity--
-		Output("green", Tab+"A dark force is devouring your body")
-		Output("green", Tab+"A chance has been given to youm or is it?")
-		Output("green", Tab+"You died... and revived.")
-		Output("green", Tab+"Health +30 HP")
+		Output("green", translate(dollUsedTR))
 	}
 	return true
 }
@@ -189,13 +187,13 @@ func (player *Character) calculateDammage(enemy *Character) int {
 	// fmt.Println("Boost ", player.Boost)
 	if rand.Intn(100) < player.Crit {
 		dmg = Abs(dmg + (dmg * player.Crit / 100) + (dmg * (player.Strength / 100)))
-		Output("red", "\t"+player.Name+" does "+strconv.Itoa(dmg)+" Critical DMG to "+enemy.Name)
+		Output("red", "\t"+player.Name+translate(doesTR)+strconv.Itoa(dmg)+translate(critDMGTR)+enemy.Name)
 		return dmg
 	}
-	Output("white", "\t"+player.Name+" does "+strconv.Itoa(dmg)+" DMG to "+enemy.Name)
+	Output("white", "\t"+player.Name+translate(doesTR)+strconv.Itoa(dmg)+translate(dmgToTR)+enemy.Name)
 	if (player.Name == heroesList.Thieve) && (PercentChances(60)) {
 		extra := ((dmg * 6) / 10)
-		Output("white", "\t"+player.Name+" does "+strconv.Itoa(extra)+" DMG to "+enemy.Name)
+		Output("white", "\t"+player.Name+translate(doesTR)+strconv.Itoa(extra)+translate(dmgToTR)+enemy.Name)
 		dmg += extra
 	}
 	return dmg
@@ -206,13 +204,13 @@ func (player *Character) showHealth() {
 	if loc.HasSeller {
 		var concat string = ""
 		for name, element := range loc.Item {
-			concat += DoubleTab + strconv.Itoa(element.Quantity) + " - " + name + " for " + strconv.Itoa(element.Type.Price) + " coins." + "\n"
+			concat += DoubleTab + strconv.Itoa(element.Quantity) + " - " + name + translate(forTR) + strconv.Itoa(element.Type.Price) + translate(forCoinsTR)
 		}
 		Output("yellow", loc.Seller)
-		Output("yellow", Tab+"He's proposing:\n"+concat)
+		Output("yellow", translate(HasSellerTR)+concat)
 	}
 	if loc.HasEnemy && loc.Enemy.isAlive() {
-		Output("red", DoubleTab+"There is "+Article(loc.Enemy.Name)+"ready to fight you!\n")
+		Output("red", translate(HasEnemyOrSellerTR0)+Article(loc.Enemy.Name)+translate(HasEnemyTR1))
 		loc.Enemy.showHP()
 	}
 	player.showHP()
@@ -228,10 +226,10 @@ func (player *Character) isAlive() bool {
 }
 
 func (player *Character) DisplayInvetory() {
-	Output("green", DoubleTab+"Your inventory:")
+	Output("green", translate(yourInventoryTR))
 	for _, item := range player.Inventory {
 		if item.Quantity > 0 {
-			Output("green", Tab+CustomSpaceAlign(item.Type.Name+": "+item.Type.Description, inventorySpace)+"Quantity: ", item.Quantity)
+			Output("green", Tab+CustomSpaceAlign(item.Type.Name+": "+item.Type.Description, inventorySpace)+translate(inventoryQuantityTR), item.Quantity)
 		}
 	}
 	fmt.Println()
@@ -257,9 +255,9 @@ func (player *Character) hasItemInInventory(name string) bool {
 
 func (player *Character) getEnemyItems(enemy *Character) {
 	if InventoryHasItem(enemy.Inventory) {
-		Output("green", DoubleTab+"You get:")
+		Output("green", translate(getEnemyItemsTR))
 	} else {
-		Output("green", Tab+"Enemy had nothing you could use...")
+		Output("green", translate(nothingYouCouldGetTR))
 	}
 	for name, item := range enemy.Inventory {
 		Output("green", Tab+CalculateSpaceAlign(name+": "+item.Type.Description+" -> "), item.Quantity)
@@ -294,7 +292,7 @@ func (enemy *Character) createEnemyInventory() {
 
 func evadeAttack(player, enemy *Character) bool {
 	if PercentChances(enemy.Evasion) {
-		Output("green", DoubleTab+player.Name+" MISSED!!")
+		Output("green", DoubleTab+player.Name+translate(missedTR))
 		return true
 	}
 	return false
@@ -325,7 +323,7 @@ func (player *Character) BuyFromShop(name string) bool {
 				if ok := player.spendMoney(itemQ.Type.Price); ok {
 					player.addItemTypeToInventory(name, 1)
 					loc.RemoveItem(name)
-					Output("green", Tab+"You baught "+Article(name))
+					Output("green", translate(youBaughtTR)+Article(name))
 					result = true
 				}
 			}

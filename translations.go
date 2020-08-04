@@ -16,6 +16,11 @@ var NearORCTR = map[string]string{
 	frenchLang:  "Il y a une odeur bizarre ici...\n",
 }
 
+var nearOrcSearchTR = map[string]string{
+	englishLang: "odd smell",
+	frenchLang:  "odeur bizarre",
+}
+
 var rootBellTRUE = map[string]string{
 	englishLang: Tab + "A big deep-rooted tree stump is in front of you\n" +
 		Tab + "You hear a bell sound, something is glowing from your bag..\n",
@@ -35,6 +40,71 @@ var warpTextTR = map[string]string{
 	frenchLang: Tab + "Des racines viennent de partout et enlacent vos jambes,\n" +
 		Tab + "soudain, une douleur pinçante et une forte lumière vous enveloppe\n" +
 		Tab + "\"réveillez-vous!\" vous dit une voix fantomatique... vous êtes ailleur~",
+}
+
+var noComandsReceivedTR = map[string]string{
+	englishLang: Tab + "No command received.",
+	frenchLang:  Tab + "Pas de commande reçu.",
+}
+
+var cantDoThatTR = map[string]string{
+	englishLang: Tab + "You can't do that here...",
+	frenchLang:  Tab + "Vous ne pouvez pas faire ça...",
+}
+
+var cantBuyTR = map[string]string{
+	englishLang: Tab + "Can't buy ",
+	frenchLang:  Tab + "Vous ne pouvez pas acheter de ",
+}
+
+var youCanGoTR = map[string]string{
+	englishLang: "You can Go:",
+	frenchLang:  "Vous pouvez aller:",
+}
+
+var CanTGoTR = map[string]string{
+	englishLang: "\tCan't go",
+	frenchLang:  "\tVous ne pouvez pas aller",
+}
+
+var fromHereTR = map[string]string{
+	englishLang: " from here.",
+	frenchLang:  " d'ici.",
+}
+
+var whatDoYouMeanTR = map[string]string{
+	englishLang: "What do you mean? ",
+	frenchLang:  "Que voulez-vous dire? ",
+}
+
+var youCanTR = map[string]string{
+	englishLang: "You can: ",
+	frenchLang:  "Vous pouvez: ",
+}
+
+var youCanUseTR = map[string]string{
+	englishLang: "You can use:",
+	frenchLang:  "Vous pouvez utiliser:",
+}
+
+var youCanTUseATR = map[string]string{
+	englishLang: "You can't use a ",
+	frenchLang:  "Vous ne pouvez pas utiliser de ",
+}
+
+var orTR = map[string]string{
+	englishLang: "...or: ",
+	frenchLang:  "...ou: ",
+}
+
+var hasBeenSlainTR = map[string]string{
+	englishLang: " has been slain",
+	frenchLang:  " a été vaincu",
+}
+
+var youDiedTR = map[string]string{
+	englishLang: "\tYou died\n",
+	frenchLang:  "\tVous êtes mort\n",
 }
 
 var chooseHeroTR = map[string]string{
@@ -65,6 +135,11 @@ var heroesDetailsBARBARIAN = map[string]string{
 var easyTR = map[string]string{
 	englishLang: DoubleTab + "1 - Easy",
 	frenchLang:  DoubleTab + "1 - Facile",
+}
+
+var difficultyTR = map[string]string{
+	englishLang: "\n" + Tab + "Difficulty",
+	frenchLang:  "\n" + Tab + "Difficulté",
 }
 
 var meddiumTR = map[string]string{
@@ -154,8 +229,8 @@ var xTR = map[string]string{
 }
 
 var youAreTR = map[string]string{
-	englishLang: "You are",
-	frenchLang:  "Vous êtes",
+	englishLang: Tab + "You are",
+	frenchLang:  Tab + "Vous êtes",
 }
 
 var introPlainsTR0 = map[string]string{
@@ -303,65 +378,206 @@ var CoinsTR = map[string]string{
 	frenchLang:  "Pièces d'or",
 }
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var potionNameTR = map[string]string{
+	englishLang: "potion",
+	frenchLang:  "potion",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var scrollNameTR = map[string]string{
+	englishLang: "scroll",
+	frenchLang:  "parchemin",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var dollNameTR = map[string]string{
+	englishLang: "doll",
+	frenchLang:  "poupée",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var keyNameTR = map[string]string{
+	englishLang: "key",
+	frenchLang:  "clé",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var moonstoneNameTR = map[string]string{
+	englishLang: "moonstone",
+	frenchLang:  "pierre de lune",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var coinsNameTR = map[string]string{
+	englishLang: "coins",
+	frenchLang:  "pièces",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var chestEventNameTR = map[string]string{
+	englishLang: "chest",
+	frenchLang:  "coffre",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var enemyEventNameTR = map[string]string{
+	englishLang: "enemy",
+	frenchLang:  "ennemi",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var sellerEventNameTR = map[string]string{
+	englishLang: "seller",
+	frenchLang:  "marchand",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var HasEnemyOrSellerTR0 = map[string]string{
+	englishLang: Tab + "There is ",
+	frenchLang:  Tab + "Il y a un ",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var HasEnemyTR1 = map[string]string{
+	englishLang: "ready to fight you!\n",
+	frenchLang:  " prêt à combattre!\n",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var HasSellerTR = map[string]string{
+	englishLang: Tab + "He's proposing:\n",
+	frenchLang:  Tab + "Il vous propose:\n",
+}
+
+var forTR = map[string]string{
+	englishLang: " for ",
+	frenchLang:  " pour ",
+}
+
+var forCoinsTR = map[string]string{
+	englishLang: " coins.\n",
+	frenchLang:  " pièces.\n",
+}
+
+var yourInventoryTR = map[string]string{
+	englishLang: DoubleTab + "Your inventory:",
+	frenchLang:  DoubleTab + "Votre inventaire:",
+}
+
+var inventoryQuantityTR = map[string]string{
+	englishLang: "Quantity: ",
+	frenchLang:  "Quantité: ",
+}
+
+var getEnemyItemsTR = map[string]string{
+	englishLang: DoubleTab + "You get:",
+	frenchLang:  DoubleTab + "Vous récupérez:",
+}
+
+var nothingYouCouldGetTR = map[string]string{
+	englishLang: Tab + "Enemy had nothing you could get...",
+	frenchLang:  Tab + "Il n'y a rien à récupérer...",
+}
+
+var missedTR = map[string]string{
+	englishLang: " MISSED!!",
+	frenchLang:  " A RATE!!",
+}
+
+var youBaughtTR = map[string]string{
+	englishLang: Tab + "You baught ",
+	frenchLang:  Tab + "Vous avez acheté ",
+}
+
+var doesTR = map[string]string{
+	englishLang: " does ",
+	frenchLang:  " fait ",
+}
+
+var critDMGTR = map[string]string{
+	englishLang: " Critical DMG to ",
+	frenchLang:  " DEGATS CRITIQUES à ",
+}
+
+var dmgToTR = map[string]string{
+	englishLang: " DMG to ",
+	frenchLang:  " dégats à ",
+}
+
+var dollUsedTR = map[string]string{
+	englishLang: Tab + "A dark force is devouring your body\n" +
+		Tab + "A chance has been given to you or is it?\n" +
+		Tab + "You died... and revived.\n" +
+		Tab + "Health +30 HP",
+	frenchLang: Tab + "Une force obscure enveloppe votre corp\n" +
+		Tab + "Une chance vous a été offerte ou en est-ce vraiment une?\n" +
+		Tab + "Vous êtes mort... et avez réssucité.\n" +
+		Tab + "Santé +30 HP",
+}
+
+var moonstoneUsedTR = map[string]string{
+	englishLang: "The moonstone suddenly wraps and fuse in your arms, it's burning!\n",
+	frenchLang:  "La moonstone encercle et fusionne à votre bras, c'est brûlant!\n",
+}
+
+var strengthBoostAddTR = map[string]string{
+	englishLang: "Strength +5 ->",
+	frenchLang:  "FORCE +5 ->",
+}
+
+var youDontHaveATR = map[string]string{
+	englishLang: "You don't have a ",
+	frenchLang:  "Vous n'avez pas de ",
+}
+
+var youTR = map[string]string{
+	englishLang: "You:",
+	frenchLang:  "Vous:",
+}
+
+var shopsTR = map[string]string{
+	englishLang: "Shops:",
+	frenchLang:  "Boutique:",
+}
+
+var rootsTR = map[string]string{
+	englishLang: "Roots:",
+	frenchLang:  "Racines:",
+}
+
+var northTR = map[string]string{
+	englishLang: "North",
+	frenchLang:  "Nord",
+}
+
+var eastTR = map[string]string{
+	englishLang: "East",
+	frenchLang:  "Est",
+}
+
+var westTR = map[string]string{
+	englishLang: "West",
+	frenchLang:  "Ouest",
+}
+
+var southTR = map[string]string{
+	englishLang: "South",
+	frenchLang:  "Sud",
+}
+
+var directionsArticlesVowelsTR = map[string]string{
+	englishLang: " ",
+	frenchLang:  " à l'",
+}
+
+var directionsArticlesConsonantTR = map[string]string{
+	englishLang: " ",
+	frenchLang:  " au ",
+}
+
+func vowelOrNot(word string, with, without map[string]string) string {
+	if hasVowel := VowelNextNun(word); hasVowel {
+		return translate(with)
+	}
+	return translate(without)
+}
+
+func VowelNextNun(str string) bool {
+	vowels := []string{"a", "e", "i", "o", "y", "u"}
+	if InitialsIndexOf(vowels, str) {
+		return true
+	}
+	return false
+}
 
 // var NAME = map[string]string{
 // 	englishLang: ,

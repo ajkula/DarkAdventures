@@ -47,7 +47,7 @@ func PresentScene(p *Character) {
 		if ok := arrayIncludesCommand(worldCommands, cmd); ok {
 			ProcessCommands(p, cmd)
 		} else {
-			Output("red", Tab+"You can't do that here...")
+			Output("red", translate(cantDoThatTR))
 		}
 	}
 
@@ -61,23 +61,23 @@ func PresentScene(p *Character) {
 		if ok := arrayIncludesCommand(sellerCommands, cmd); ok {
 			ProcessCommands(p, cmd)
 		} else {
-			Output("red", Tab+"You can't do that here...")
+			Output("red", translate(cantDoThatTR))
 		}
 	}
 	started = true
 }
 
 func showWhereCanGo(loc *Location) {
-	Output("blue", Tab+CalculateSpaceAlign("You can Go:"), WhereCanYouGo(loc))
+	Output("blue", Tab+CalculateSpaceAlign(translate(youCanGoTR)), WhereCanYouGo(loc))
 }
 
 func showActions(p *Character, arr []string) {
-	Output("white", Tab+CalculateSpaceAlign("You can: "), arr)
-	Output("white", Tab+CalculateSpaceAlign("You can use: "), p.DisplayItems())
+	Output("white", Tab+CalculateSpaceAlign(translate(youCanTR)), arr)
+	Output("white", Tab+CalculateSpaceAlign(translate(youCanUseTR)), p.DisplayItems())
 }
 
 func showUniversalCmds() {
-	Output("white", Tab+CalculateSpaceAlign("...or: ")+ArrayToString(universalCommands), "\n")
+	Output("white", Tab+CalculateSpaceAlign(translate(orTR))+ArrayToString(universalCommands), "\n")
 }
 
 func CalculateSpaceAlign(str string) string {
@@ -99,6 +99,9 @@ func CustomSpaceAlign(str string, i int) string {
 }
 
 func Article(str string) string {
+	if Lang == frenchLang {
+		return str
+	}
 	vowels := []string{"a", "e", "i", "o"}
 	if InitialsIndexOf(vowels, str) {
 		return "an " + str + " "

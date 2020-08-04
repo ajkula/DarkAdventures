@@ -37,23 +37,11 @@ func (dragon *Dragon) dragonMoves() {
 	}
 }
 
-// TO DO: fix dragon kill no score, add player coins on presentation
+// TO DO: add player coins on presentation
 
 func (dragon *Dragon) shouldFreeze(str string) {
 	dragon.Freeze = str == Initial(commands.Map)
 }
-
-// Character{
-// 	Health:     HP,
-// 	BaseHealth: HP,
-// 	Strength:   base.Strength,
-// 	Evasion:    base.Evasion,
-// 	Crit:       base.Crit,
-// 	Name:       name,
-// 	Alive:      true,
-// 	Npc:        true,
-// 	Inventory:  map[string]*ItemQuantity{},
-// }
 
 func CreateDragon() {
 	HP := rand.Intn(50) + 80

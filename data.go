@@ -13,11 +13,10 @@ const Unseen string = " "
 const Shop string = "#"
 const Root string = "π"
 const YourPosition string = "@"
-const LegendSpace int = 8
+const LegendSpace int = 10
 const inventorySpace int = 38
 const heroesDetailsSpacing int = 14
 
-var youAre string = translate(youAreTR)
 var supportedLanguages = []string{englishLang, frenchLang}
 var gameIntro string = translate(gameintroTR)
 var NearORC string = translate(NearORCTR)
@@ -39,9 +38,9 @@ var heroesDetails = map[string]string{
 var NullifiedEnemy Character
 
 var LegendArray []string = []string{
-	CustomSpaceAlign("You:", LegendSpace) + YourPosition,
-	CustomSpaceAlign("Shops:", LegendSpace) + Shop,
-	CustomSpaceAlign("Roots:", LegendSpace) + Root,
+	CustomSpaceAlign(translate(youTR), LegendSpace) + YourPosition,
+	CustomSpaceAlign(translate(shopsTR), LegendSpace) + Shop,
+	CustomSpaceAlign(translate(rootsTR), LegendSpace) + Root,
 	CustomSpaceAlign(roomTypes.FOREST+":", LegendSpace) + LettersFromLandscape[roomTypes.FOREST],
 	CustomSpaceAlign(roomTypes.PLAINS+":", LegendSpace) + LettersFromLandscape[roomTypes.PLAINS],
 	CustomSpaceAlign(roomTypes.DESERT+":", LegendSpace) + LettersFromLandscape[roomTypes.DESERT],
@@ -51,10 +50,10 @@ var LegendArray []string = []string{
 type Directions struct{ North, South, East, West string }
 
 var directions = Directions{
-	North: "North",
-	East:  "East",
-	West:  "West",
-	South: "South",
+	North: translate(northTR),
+	East:  translate(eastTR),
+	West:  translate(westTR),
+	South: translate(southTR),
 }
 
 type DifficultyNames struct{ Easy, Meddium, Hard string }
@@ -107,13 +106,6 @@ var enemiesList = EnemiesList{
 	ORC:      translate(orcNAME),
 	DRAGON:   translate(dragonNAME),
 }
-
-// nnnnnnnnnif (i > 98) return "doll";
-//     else if (i > 96) return "moonstone";
-//     else if (i > 94) return "scroll";
-//     else if (i > 92) return "potions";
-//     else if (i > 90) return "key";
-//     nnnnnnnnnnnnelse return "coins"
 
 var EnemyChancesByName map[string]int = map[string]int{
 	enemiesList.GOBLIN:   0,
@@ -284,17 +276,29 @@ var RoomTypeList = map[string]string{
 	"c": roomTypes.CASTLE,
 }
 
-var Event = map[int]string{0: "chest", 1: "enemy", 2: "seller"}
+type EventNames struct {
+	CHEST  string
+	ENEMY  string
+	SELLER string
+}
+
+var eventNames *EventNames = &EventNames{
+	CHEST:  translate(chestEventNameTR),
+	ENEMY:  translate(enemyEventNameTR),
+	SELLER: translate(sellerEventNameTR),
+}
+
+var Event = map[int]string{0: eventNames.CHEST, 1: eventNames.ENEMY, 2: eventNames.SELLER}
 
 type ItemNames struct{ Potion, Scroll, Doll, Key, Moonstone, Coins string }
 
 var itemNames = &ItemNames{
-	Potion:    "potion",
-	Scroll:    "scroll",
-	Doll:      "doll",
-	Key:       "key",
-	Moonstone: "moonstone",
-	Coins:     "coins",
+	Potion:    translate(potionNameTR),
+	Scroll:    translate(scrollNameTR),
+	Doll:      translate(dollNameTR),
+	Key:       translate(keyNameTR),
+	Moonstone: translate(moonstoneNameTR),
+	Coins:     translate(coinsNameTR),
 }
 
 var ItemIndexList = map[int]string{

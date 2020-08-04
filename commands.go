@@ -9,7 +9,7 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 	Output("yellow", "======================================================================")
 	tokens := strings.Fields(input)
 	if len(tokens) == 0 {
-		Output("red", "No command received.")
+		Output("red", translate(noComandsReceivedTR))
 		ResetTurns()
 		return
 	}
@@ -31,10 +31,10 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 			if InitialsIndexOf(loc.CanGoTo, itemName) && (!loc.HasEnemy || (loc.HasEnemy && !loc.Enemy.isAlive())) {
 				player.MoveTo(itemName)
 			} else {
-				Output("red", "Can't go to "+itemName+" from here.")
+				Output("red", translate(CanTGoTR)+vowelOrNot(itemName, directionsArticlesVowelsTR, directionsArticlesConsonantTR)+itemName+translate(fromHereTR))
 			}
 		} else {
-			Output("red", "What do you mean? ", command, " ", itemName)
+			Output("red", translate(whatDoYouMeanTR), command, " ", itemName)
 		}
 
 	case Initial(commands.Attack):
@@ -49,10 +49,10 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 			// Output("red", "in the use if", args[0])
 			enemy := loc.Enemy
 			// Output("red", "enemy: ", enemy)
-			Output("yellow", "has "+itemName+": ", player.hasItemInInventory(itemName), " quantity: ", player.Inventory[itemName].Quantity)
+			// Output("yellow", "has "+itemName+": ", player.hasItemInInventory(itemName), " quantity: ", player.Inventory[itemName].Quantity)
 			ok := player.useItem(itemName, enemy)
 			if ok != true {
-				Output("red", "Couldn't use the "+itemName)
+				Output("red", translate(youCanTUseATR)+itemName)
 				ResetTurns()
 			}
 		} else {
@@ -69,7 +69,7 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 		player.DisplayInvetory()
 	case Initial(commands.Buy):
 		if ok := player.BuyFromShop(itemName); !ok {
-			Output("red", Tab+"Can't buy "+Article(itemName))
+			Output("red", translate(cantBuyTR)+Article(itemName))
 		}
 	// case "get":
 	// 	err, index, itm := FindItemByName(itemName)

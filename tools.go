@@ -105,14 +105,14 @@ func CreateMap() [Y][X]*Location {
 
 			item := getItem(hasItem)
 			WorldMap[y][x] = &Location{
-				Description: Tab + youAre + RoomFromLandscape[Grid[y][x]][rand.Intn(len(RoomFromLandscape[Grid[y][x]]))] + Tab + Ambiance[rand.Intn(len(Ambiance))],
+				Description: translate(youAreTR) + RoomFromLandscape[Grid[y][x]][rand.Intn(len(RoomFromLandscape[Grid[y][x]]))] + Tab + Ambiance[rand.Intn(len(Ambiance))],
 				HasSeller:   hasItem,
 				Item:        item,
 				X:           x,
 				Y:           y,
 			}
 			if hasItem {
-				WorldMap[y][x].Seller = Tab + "There is" + getSeller(hasItem)
+				WorldMap[y][x].Seller = translate(HasEnemyOrSellerTR0) + getSeller(hasItem)
 			}
 			WorldMap[y][x].CanGoTo = WhereCanYouGo(WorldMap[y][x])
 			if !((y == 9) && (x == 4)) {
@@ -133,14 +133,14 @@ func CreateMap() [Y][X]*Location {
 	showGameEnemies()
 	AnalyzeItemsRepartition()
 
-	Output("red", "\n"+Tab+"Difficulty", " ", Difficulty+1, " ", difficultyIndex[Difficulty], "\n")
+	Output("white", translate(difficultyTR), difficultyIndex[Difficulty], "\n")
 	return WorldMap
 }
 
 func addOrcProximity(loc *Location) {
 	if loc.HasEnemy {
 		if loc.Enemy.Name == enemiesList.ORC {
-			if near := strings.Contains(loc.Description, "odd smell"); !near {
+			if near := strings.Contains(loc.Description, translate(nearOrcSearchTR)); !near {
 				loc.addDescriptionToAdjacentRooms(NearORC)
 			}
 		}

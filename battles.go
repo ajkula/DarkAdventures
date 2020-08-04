@@ -42,7 +42,7 @@ func Battle(player, enemy *Character) {
 		if ok := arrayIncludesCommand(battleCommands, cmd); ok {
 			ProcessCommands(player, cmd, enemy)
 		} else {
-			Output("red", Tab+"You can't do that here...")
+			Output("red", translate(cantDoThatTR))
 			ResetTurns()
 		}
 
@@ -56,14 +56,14 @@ func Battle(player, enemy *Character) {
 			ResetTurns()
 			switch opp.Npc {
 			case true:
-				Output("green", "\t", opp.Name, " has been slain")
+				Output("green", "\t", opp.Name, translate(hasBeenSlainTR))
 				// you got :
 				SCORE.scoreKills(opp.Name)
 				player.getEnemyItems(enemy)
 				return
 			case false:
 				if !opp.hasItemInInventory(itemNames.Doll) || (opp.hasItemInInventory(itemNames.Doll) && opp.Inventory[itemNames.Doll].Quantity < 1) {
-					Output("red", "\tYou died\n")
+					Output("red", translate(youDiedTR))
 					Output("red", GameOverAscii)
 					SCORE.getSCORE()
 					os.Exit(0)
