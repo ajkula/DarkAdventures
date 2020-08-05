@@ -72,44 +72,28 @@ func storyFromImage(name string, index int) string {
 
 var heroStoryAndImages = map[string]map[int]string{
 	heroesList.Thieve: map[int]string{
-		0: Tab + "Member of the Thieves Guild of Novigrad, you've been hired\n" +
-			Tab + "by a mysterious contractor to retrieve a so-called treasure here...",
-		1: Tab + "Behind every Pirates story, there's a treasure map...\n" +
-			Tab + "The same goes for you, unfortunately...",
-		2: Tab + "A Rogue from the Hanging City of Szyan who left, with the final goal\n" +
-			Tab + "the Thieves Guild of Novigrad. Until your path lead you here...",
-		3: Tab + "As a memeber of the Leaf Walkers Order of female elfic guards,\n" +
-			Tab + "you go wherever the forest needs help and heard the trees calling.",
+		0: translate(heroStoryThieveTR0),
+		1: translate(heroStoryThieveTR1),
+		2: translate(heroStoryThieveTR2),
+		3: translate(heroStoryThieveTR3),
 	},
 	heroesList.Paladin: map[int]string{
-		0: Tab + "Amazon warrior from the Ionos Archipel, you have seen the Oracle.\n" +
-			Tab + "the constellations are clear, Darkness are rising. You must act.",
-		1: Tab + "Templar of the Red Star Fellowship, an oath a creed to follow,\n" +
-			Tab + "you will fight the darkness wherever they are, they sent you here.",
-		2: Tab + "Retired veteran of the Arisien Wars, the increasing rumors of evil\n" +
-			Tab + "reach you and pulled you out of retirement. Time to draw the sword.",
-		3: Tab + "Knight of the 3 Towers Citadel your duty is to stand as a wall,\n" +
-			Tab + "the rampart to protect the city of eelring, a menace is near...",
+		0: translate(heroStoryPaladinTR0),
+		1: translate(heroStoryPaladinTR1),
+		2: translate(heroStoryPaladinTR2),
+		3: translate(heroStoryPaladinTR3),
 	},
 	heroesList.Wizard: map[int]string{
-		0: Tab + "The Elder scholar from Krispin Academy of Magic himself,\n" +
-			Tab + "you came for the rumors of a rising evil in these forsaken lands.",
-		1: Tab + "A Tiefling Wizard girl, speeking the lower planes language,\n" +
-			Tab + "that give you immense powers. You're seeking something here...",
-		2: Tab + "A beautiful but extremely powerful wizard girl in a white clothing,\n" +
-			Tab + "everyone has a strong reason to come there, yours? Vengence.",
-		3: Tab + "An old war veteran, who served under Tzar Krvovoj after leaving\n" +
-			Tab + "Krispin Academy of Magic with the highest honors. Why coming here?",
+		0: translate(heroStoryWizardTR0),
+		1: translate(heroStoryWizardTR1),
+		2: translate(heroStoryWizardTR2),
+		3: translate(heroStoryWizardTR3),
 	},
 	heroesList.Barbarian: map[int]string{
-		0: Tab + "A warrior women from the mount Zanarkan you seek treasures,\n" +
-			Tab + "at the Golden Horse Tavern you heard some rumors... Treasure!",
-		1: Tab + "A proud Warrior from the Dark Moon Gnoll clan, Zorik the Shaman\n" +
-			Tab + "asked you to search the last moon's hunters that never came back.",
-		2: Tab + "Fierce hunter of the Ionos Archipel, you seek glory...\n" +
-			Tab + "The ultimate prey is the one you fell prey to, and vanquisehd.",
-		3: Tab + "After 20 years fighting in the Coliseum of Styr, you are free.\n" +
-			Tab + "Looking for a place to settle, you arrived a weird looking place..",
+		0: translate(heroStoryBarbarianTR0),
+		1: translate(heroStoryBarbarianTR1),
+		2: translate(heroStoryBarbarianTR2),
+		3: translate(heroStoryBarbarianTR3),
 	},
 }
 

@@ -3,7 +3,10 @@ package main
 var Lang string = getSysLang()
 
 func translate(text map[string]string) string {
-	return text[Lang]
+	if _, ok := text[Lang]; ok {
+		return text[Lang]
+	}
+	return text[englishLang]
 }
 
 var gameintroTR = map[string]string{
@@ -578,6 +581,233 @@ func VowelNextNun(str string) bool {
 	}
 	return false
 }
+
+var heroStoryThieveTR0 = map[string]string{
+	englishLang: Tab + "Member of the Thieves Guild of Novigrad, you've been hired\n" +
+		Tab + "by a mysterious contractor to retrieve a so-called treasure here...",
+	frenchLang: Tab + "Membre de la Guilde des voleurs de Novigrad, on vous a engagé\n" +
+		Tab + "par un homme mystérieux pour retrouver un soi-disant trésor ici...",
+}
+
+var heroStoryThieveTR1 = map[string]string{
+	englishLang: Tab + "Behind every Pirates story, there's a treasure map...\n" +
+		Tab + "The same goes for you, unfortunately...",
+	frenchLang: Tab + "Pour toute histoire de Pirates, il y a une carte au trésor...\n" +
+		Tab + "Il en va de même pour la votre, malheureusement...",
+}
+
+var heroStoryThieveTR2 = map[string]string{
+	englishLang: Tab + "A Rogue from the Hanging City of Szyan who left, with the final goal\n" +
+		Tab + "the Thieves Guild of Novigrad. Until your path lead you here...",
+	frenchLang: Tab + "Voyou ayant quitté votre cité suspendue Szyan, avec pour destination\n" +
+		Tab + "la Guilde des voleurs de Novigrad. votre chemin vous a mené ici...",
+}
+
+var heroStoryThieveTR3 = map[string]string{
+	englishLang: Tab + "As a memeber of the Leaf Walkers Order of female elfic guards,\n" +
+		Tab + "you go wherever the forest needs help and heard the trees calling.",
+	frenchLang: Tab + "En tant que membre de l'ordre elfique des Marcheuses de feuilles,\n" +
+		Tab + "vous allez partout où la forêt à besoin et les arbres ont appelé.",
+}
+
+var heroStoryPaladinTR0 = map[string]string{
+	englishLang: Tab + "Amazon warrior from the Ionos Archipel, you have seen the Oracle,\n" +
+		Tab + "the constellations are clear, Darkness are rising. You must act.",
+	frenchLang: Tab + "Guerrière amazonne de l'Archipel Ionos, l'Oracle à parlé,\n" +
+		Tab + "les étoiles sont clair, Les ténèbres s’élèvent. Vous devez agir.",
+}
+
+var heroStoryPaladinTR1 = map[string]string{
+	englishLang: Tab + "Templar of the Crimson Star Fellowship, an oath a creed to follow,\n" +
+		Tab + "you will fight the darkness wherever they are, they sent you here.",
+	frenchLang: Tab + "Templier de la confrérie de l'étoile écarlate, un serment vous lie,\n" +
+		Tab + "vous combattrez les ténèbres où qu'elles soient, ils vous ont envoyé là.",
+}
+
+var heroStoryPaladinTR2 = map[string]string{
+	englishLang: Tab + "Retired veteran of the Risen Wars, the increasing rumors of evil\n" +
+		Tab + "reach you and pulled you out of retirement. Time to draw the sword.",
+	frenchLang: Tab + "Vétéran des guerres des relevés, les rumeurs d'un mal croissant\n" +
+		Tab + "vous ont atteintes et quitté votre retraite. Le moment de l'épée.",
+}
+
+var heroStoryPaladinTR3 = map[string]string{
+	englishLang: Tab + "Knight of the 3 Towers Citadel your duty: stand as a wall,\n" +
+		Tab + "the rampart to protect the city of Eelring, a menace is near...",
+	frenchLang: Tab + "Chevalier de la Citadelle des 3 tours votre devoir: faire mur,\n" +
+		Tab + "le rempart protégeant la cité d'Eelring, une menace approche...",
+}
+
+var heroStoryWizardTR0 = map[string]string{
+	englishLang: Tab + "The Elder scholar from Krispin Academy of Magic himself,\n" +
+		Tab + "you came for the rumors of a rising evil in these forsaken lands.",
+	frenchLang: Tab + "L’érudit aîné de l'Academy de Magie Krispin lui-même,\n" +
+		Tab + "venu suite aux rumeurs d'un mal croissant dans ces terres abandonnées.",
+}
+
+var heroStoryWizardTR1 = map[string]string{
+	englishLang: Tab + "A Tiefling Wizard girl, speeking the lower planes language,\n" +
+		Tab + "that give you immense powers. You're seeking something here...",
+	frenchLang: Tab + "Magicienne Tiefling, parlant la langue des plans inférieurs,\n" +
+		Tab + "cela vous donne d'immenses pouvoirs. Vous êtes venue chercher quelque chose...",
+}
+
+var heroStoryWizardTR2 = map[string]string{
+	englishLang: Tab + "A beautiful but extremely powerful wizard girl in a white clothing,\n" +
+		Tab + "everyone has a strong reason to come there, yours? Vengence.",
+	frenchLang: Tab + "Très belle mais extrêmement puissante magicienne en robe blanche,\n" +
+		Tab + "chacun a une bonne raison de venir, la votre? La vengence.",
+}
+
+var heroStoryWizardTR3 = map[string]string{
+	englishLang: Tab + "An old war veteran, who served under Tzar Krvovoj after leaving\n" +
+		Tab + "Krispin Academy of Magic with the highest honors. Why coming here?",
+	frenchLang: Tab + "Vétéran de l'ancienne guerre, ayant servi sous le Tzar Krvovoj après avoir\n" +
+		Tab + "quitté l'Academie de magie Krispin avec les honneurs. Que faites vous là?",
+}
+
+var heroStoryBarbarianTR0 = map[string]string{
+	englishLang: Tab + "A warrior women from the mount Zanarkan you seek treasures,\n" +
+		Tab + "at the Golden Horse Tavern you heard some rumors... Richnesses!",
+	frenchLang: Tab + "Guerrière du Mont Zanarkan à la recherche de trésors,\n" +
+		Tab + "vous avez entendu une rumeur à la Tavern du cheval doré... Richesses!",
+}
+
+var heroStoryBarbarianTR1 = map[string]string{
+	englishLang: Tab + "A proud Warrior from the Dark Moon Gnoll clan, Zorik the Shaman\n" +
+		Tab + "asked you to search the last moon's hunters that never came back.",
+	frenchLang: Tab + "Fière guerrier Gnoll du clan de la Lune Noire, Zorik le Shaman\n" +
+		Tab + "vous envois rechercher les chasseurs disparus de la dernière lune.",
+}
+
+var heroStoryBarbarianTR2 = map[string]string{
+	englishLang: Tab + "Fierce hunter of the Ionos Archipel, you seek glory...\n" +
+		Tab + "The ultimate prey is the one you fell prey to, and vanquisehd.",
+	frenchLang: Tab + "Féroce chasseur de l'Archipel Ionos, vous cherchez la gloire...\n" +
+		Tab + "La proie ultime est celle dont vous étiez la proie avant la victoire.",
+}
+
+var heroStoryBarbarianTR3 = map[string]string{
+	englishLang: Tab + "After 20 years fighting in the Coliseum of Styr, you are free.\n" +
+		Tab + "Looking for a place to settle, you arrived a weird foreign place..",
+	frenchLang: Tab + "Après 20 ans dans le Colisée de Styr, vous êtes libre.\n" +
+		Tab + "Cherchant un lieu pour s’installer, vous tombé sur ces terres étranges..",
+}
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
 
 // var NAME = map[string]string{
 // 	englishLang: ,
