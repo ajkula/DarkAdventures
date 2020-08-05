@@ -24,6 +24,21 @@ var nearOrcSearchTR = map[string]string{
 	frenchLang:  "odeur bizarre",
 }
 
+var youSeeTR = map[string]string{
+	englishLang: "\tYou see ",
+	frenchLang:  "\tVous voyez ",
+}
+
+var deadOnTheGroundTR = map[string]string{
+	englishLang: "dead on the ground\n",
+	frenchLang:  "mort sur le sol\n",
+}
+
+var someoneWasHereTR = map[string]string{
+	englishLang: Tab + "There was someone here, it's empty now.",
+	frenchLang:  Tab + "Il y avait quelqu'un ici, il n'est plus là.",
+}
+
 var rootBellTRUE = map[string]string{
 	englishLang: Tab + "A big deep-rooted tree stump is in front of you\n" +
 		Tab + "You hear a bell sound, something is glowing from your bag..\n",
@@ -201,23 +216,23 @@ var dragonNAME = map[string]string{
 }
 
 var forestTR = map[string]string{
-	englishLang: "Trees are burned the soil is ash...",
-	frenchLang:  "Les arbres sont brûlés le sol est couvert de cendres...",
+	englishLang: "Trees are burned the soil is ash...\n",
+	frenchLang:  "Les arbres sont brûlés le sol est couvert de cendres...\n",
 }
 
 var landTR = map[string]string{
-	englishLang: "The air carries ashes flying in the wind...",
-	frenchLang:  "L'air est chargé de cendres porté par le vent...",
+	englishLang: "The air carries ashes flying in the wind...\n",
+	frenchLang:  "L'air est chargé de cendres porté par le vent...\n",
 }
 
 var desertTR = map[string]string{
-	englishLang: "It's hotter than usual and so dry...",
-	frenchLang:  "Il fait très sec et trop chaud pour ce lieu...",
+	englishLang: "It's hotter than usual and so dry...\n",
+	frenchLang:  "Il fait très sec et trop chaud pour ce lieu...\n",
 }
 
 var castleTR = map[string]string{
-	englishLang: "It smells like burning from all directions...",
-	frenchLang:  "Ca sent le brûlé de toutes les directions...",
+	englishLang: "It smells like burning from all directions...\n",
+	frenchLang:  "Ca sent le brûlé de toutes les directions...\n",
 }
 
 var xTR = map[string]string{
@@ -279,12 +294,12 @@ var introCastleTR0 = map[string]string{
 
 var introCastleTR1 = map[string]string{
 	englishLang: " at an old fort or what might have been one long ago,\n",
-	frenchLang:  " prêt d'un vieu fort ou ce qui devait en être un il y a longtemps,\n",
+	frenchLang:  " prêt d'un vieux fort ou ce qui en a été un il y a longtemps,\n",
 }
 
 var introCastleTR2 = map[string]string{
 	englishLang: " below a huge tower, on top of which float an old flag,\n",
-	frenchLang:  " en bas d'une tour très énorme, sur laquelle flotte un vieu drapeau,\n",
+	frenchLang:  " en bas d'une tour énorme, avec un vieux drapeau,\n",
 }
 
 var introForestTR0 = map[string]string{
@@ -353,7 +368,7 @@ var SellerListTR2 = map[string]string{
 
 var DollTR = map[string]string{
 	englishLang: "Will revive you with 30 HP",
-	frenchLang:  "Vous ramène à la vie avec 30 HP",
+	frenchLang:  "Vous ramène avec 30 HP",
 }
 
 var MoonstoneTR = map[string]string{
@@ -393,22 +408,22 @@ var scrollNameTR = map[string]string{
 
 var dollNameTR = map[string]string{
 	englishLang: "doll",
-	frenchLang:  "poupée",
+	frenchLang:  "poupee",
 }
 
 var keyNameTR = map[string]string{
 	englishLang: "key",
-	frenchLang:  "clé",
+	frenchLang:  "cle",
 }
 
 var moonstoneNameTR = map[string]string{
 	englishLang: "moonstone",
-	frenchLang:  "pierre de lune",
+	frenchLang:  "moonstone",
 }
 
 var coinsNameTR = map[string]string{
 	englishLang: "coins",
-	frenchLang:  "pièces",
+	frenchLang:  "pieces",
 }
 
 var chestEventNameTR = map[string]string{
@@ -509,7 +524,7 @@ var dollUsedTR = map[string]string{
 
 var moonstoneUsedTR = map[string]string{
 	englishLang: "The moonstone suddenly wraps and fuse in your arms, it's burning!\n",
-	frenchLang:  "La moonstone encercle et fusionne à votre bras, c'est brûlant!\n",
+	frenchLang:  "La pierre de lune encercle et fusionne à votre bras, c'est brûlant!\n",
 }
 
 var strengthBoostAddTR = map[string]string{

@@ -100,7 +100,7 @@ func CustomSpaceAlign(str string, i int) string {
 
 func Article(str string) string {
 	if Lang == frenchLang {
-		return str
+		return str + " "
 	}
 	vowels := []string{"a", "e", "i", "o"}
 	if InitialsIndexOf(vowels, str) {

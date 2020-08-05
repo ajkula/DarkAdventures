@@ -14,7 +14,7 @@ type Location struct {
 func (loc *Location) RemoveBattle() {
 	if loc.HasEnemy && !loc.Enemy.isAlive() {
 		loc.HasEnemy = false
-		loc.Description += "\tYou see " + Article(loc.Enemy.Name) + "dead on the ground\n"
+		loc.Description += translate(youSeeTR) + Article(loc.Enemy.Name) + translate(deadOnTheGroundTR)
 	}
 }
 
@@ -38,7 +38,7 @@ func (loc *Location) RemoveItem(n string) {
 	}
 	if !b {
 		loc.HasSeller = false
-		loc.Description += Tab + "There was someone here, it's empty now."
+		loc.Description += translate(someoneWasHereTR)
 	}
 }
 
