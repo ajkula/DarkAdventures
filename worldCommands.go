@@ -4,7 +4,7 @@ import "fmt"
 
 func DisplayWorldMap(p *Character) {
 	defer ResetTurns()
-	var result [10][10]string
+	var result [][]string = create2DStringArray(Y, X, Unseen)
 
 	for y, line := range Grid {
 		for x := range line {
@@ -39,4 +39,20 @@ func DisplayWorldMap(p *Character) {
 		Output("yellow", Tab+CustomSpaceAlign(OffsetLegend(LegendArray, 2, index), 20), l)
 	}
 	fmt.Println()
+}
+
+func create2DStringArray(Y, X int, Unseen string) [][]string {
+	total := 0
+	var tempo []string
+	var w [][]string
+
+	for y := 0; y < Y; y++ {
+		for x := 0; x < X; x++ {
+			tempo = append(tempo, Unseen)
+
+		}
+		total += X
+		w = append(w, tempo[total-X:total])
+	}
+	return w
 }

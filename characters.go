@@ -20,7 +20,7 @@ type DisplayImage struct {
 }
 
 type Leveling struct {
-	Rates                     map[string]int
+	Rates                     *Specifics
 	Exp, CurrentExp, NextRank int
 }
 

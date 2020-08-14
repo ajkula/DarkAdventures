@@ -285,6 +285,18 @@ var heroFromName = func(s string) *Character {
 			Strength:        18,
 			Crit:            30,
 			Inventory:       map[string]*ItemQuantity{},
+			LevelUp: &Leveling{
+				NextRank: 5,
+				Rates: &Specifics{
+					Health: func() int {
+						return rand.Intn(2) + 1
+					},
+					Crit:     1,
+					Evasion:  1,
+					Skill:    1,
+					Strength: 1,
+				},
+			},
 		}
 		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(3)+1)
 		break
@@ -299,6 +311,18 @@ var heroFromName = func(s string) *Character {
 			Strength:        25,
 			Crit:            20,
 			Inventory:       map[string]*ItemQuantity{},
+			LevelUp: &Leveling{
+				NextRank: 5,
+				Rates: &Specifics{
+					Health: func() int {
+						return rand.Intn(2) + 1
+					},
+					Crit:     2,
+					Evasion:  1,
+					Skill:    1,
+					Strength: 1,
+				},
+			},
 		}
 		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(3)+3)
 		break
@@ -313,6 +337,18 @@ var heroFromName = func(s string) *Character {
 			Strength:        20,
 			Crit:            15,
 			Inventory:       map[string]*ItemQuantity{},
+			LevelUp: &Leveling{
+				NextRank: 5,
+				Rates: &Specifics{
+					Health: func() int {
+						return rand.Intn(3) + 1
+					},
+					Crit:     2,
+					Evasion:  2,
+					Skill:    1,
+					Strength: 1,
+				},
+			},
 		}
 		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(3)+2)
 		hero.addItemTypeToInventory(ItemIndexList[1], rand.Intn(4)+2)
@@ -328,6 +364,18 @@ var heroFromName = func(s string) *Character {
 			Strength:        30,
 			Crit:            20,
 			Inventory:       map[string]*ItemQuantity{},
+			LevelUp: &Leveling{
+				NextRank: 5,
+				Rates: &Specifics{
+					Health: func() int {
+						return rand.Intn(2) + 1
+					},
+					Crit:     1,
+					Evasion:  2,
+					Skill:    2,
+					Strength: 1,
+				},
+			},
 		}
 		hero.addItemTypeToInventory(ItemIndexList[0], rand.Intn(2)+1)
 		break
