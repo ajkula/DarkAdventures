@@ -65,12 +65,13 @@ var difficultyNames = DifficultyNames{
 }
 
 type Commands struct {
-	Attack, Use, Go, Map, Buy, Inv, Help, Quit string
+	Attack, Use, Escape, Go, Map, Buy, Inv, Help, Quit string
 }
 
 var commands = &Commands{
 	Attack: "Attack",
 	Use:    "Use",
+	Escape: "Escape",
 	Go:     "Go",
 	Map:    "Map",
 	Buy:    "Buy",
@@ -80,7 +81,7 @@ var commands = &Commands{
 }
 
 var allCommands = []string{commands.Attack, commands.Use, commands.Go, commands.Buy, commands.Help, commands.Quit}
-var battleCommands = []string{commands.Attack, commands.Use}
+var battleCommands = []string{commands.Attack, commands.Use, commands.Escape /*, commands.Skill*/}
 var worldCommands = []string{commands.Go, commands.Use}
 var sellerCommands = []string{commands.Go, commands.Use, commands.Buy}
 var universalCommands = []string{commands.Map, commands.Inv, commands.Help, commands.Quit}
@@ -90,13 +91,13 @@ var GameDifficulty = map[string]int{difficultyNames.Easy: 15, difficultyNames.Me
 type HeroesList struct{ Thieve, Paladin, Wizard, Barbarian string }
 type EnemiesList struct{ SKELETON, GOBLIN, SORCERER, ORC, DRAGON string }
 
-var indexedHeroes = []string{heroesList.Thieve, heroesList.Paladin, heroesList.Wizard, heroesList.Barbarian}
 var heroesList = HeroesList{
 	Thieve:    translate(ThieveNAME),
 	Paladin:   translate(PaladinNAME),
 	Wizard:    translate(WizardNAME),
 	Barbarian: translate(BarbarianNAME),
 }
+var indexedHeroes = []string{heroesList.Thieve, heroesList.Paladin, heroesList.Wizard, heroesList.Barbarian}
 
 var indexedEnemiesForRandomization = []string{enemiesList.SKELETON, enemiesList.GOBLIN, enemiesList.SORCERER, enemiesList.ORC}
 var enemiesList = EnemiesList{
@@ -348,5 +349,31 @@ var ItemList = map[string]*Item{
 		Name:        itemNames.Coins,
 		Description: translate(CoinsTR),
 		Effect:      1,
+	},
+}
+
+type EscapeResults struct{ OK, RAND, KO string }
+
+var escapeResults = &EscapeResults{OK: "ok", RAND: "rand", KO: "ko"}
+var escapeCases map[string]map[string]string = map[string]map[string]string{
+	heroesList.Thieve: map[string]string{
+		escapeResults.OK:   translate(ThieveEscapeOK),
+		escapeResults.RAND: translate(ThieveEscapeRAND),
+		escapeResults.KO:   translate(ThieveEscapeKO),
+	},
+	heroesList.Paladin: map[string]string{
+		escapeResults.OK:   translate(PaladinEscapeOK),
+		escapeResults.RAND: translate(PaladinEscapeRAND),
+		escapeResults.KO:   translate(PaladinEscapeKO),
+	},
+	heroesList.Wizard: map[string]string{
+		escapeResults.OK:   translate(WizardEscapeOK),
+		escapeResults.RAND: translate(WizardEscapeRAND),
+		escapeResults.KO:   translate(WizardEscapeKO),
+	},
+	heroesList.Barbarian: map[string]string{
+		escapeResults.OK:   translate(BarbarianEscapeOK),
+		escapeResults.RAND: translate(BarbarianEscapeRAND),
+		escapeResults.KO:   translate(BarbarianEscapeKO),
 	},
 }

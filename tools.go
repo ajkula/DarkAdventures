@@ -9,7 +9,7 @@ import (
 	lang "github.com/cloudfoundry/jibber_jabber"
 )
 
-var WorldMap [Y][X]*Location
+var WorldMap [][]*Location
 
 func getSysLang() (language string) {
 	language = englishLang
@@ -29,14 +29,14 @@ func WhereCanYouGo(yourPlace *Location) []string {
 	if yourPlace.X >= 1 {
 		youCanGo = append(youCanGo, directions.West)
 	}
-	if yourPlace.X <= 8 {
+	if yourPlace.X <= X-2 {
 		youCanGo = append(youCanGo, directions.East)
 	}
 
 	if yourPlace.Y >= 1 {
 		youCanGo = append(youCanGo, directions.North)
 	}
-	if yourPlace.Y <= 8 {
+	if yourPlace.Y <= Y-2 {
 		youCanGo = append(youCanGo, directions.South)
 	}
 	return youCanGo
@@ -95,7 +95,10 @@ func AnalyzeItemsRepartition() {
 	}
 }
 
-func CreateMap() [Y][X]*Location {
+func makeWorldMapSizes(Y, X int) [][]*Location {
+	var w [][]*Location
+	total := 0
+	var tempo []*Location
 	for y := 0; y < Y; y++ {
 		for x := 0; x < X; x++ {
 			hasItem := false
@@ -104,24 +107,40 @@ func CreateMap() [Y][X]*Location {
 			}
 
 			item := getItem(hasItem)
-			WorldMap[y][x] = &Location{
+			tempo = append(tempo, &Location{
 				Description: translate(youAreTR) + RoomFromLandscape[Grid[y][x]][rand.Intn(len(RoomFromLandscape[Grid[y][x]]))] + Tab + Ambiance[rand.Intn(len(Ambiance))],
 				HasSeller:   hasItem,
 				Item:        item,
 				X:           x,
 				Y:           y,
-			}
-			if hasItem {
-				WorldMap[y][x].Seller = translate(HasEnemyOrSellerTR0) + getSeller(hasItem)
+			})
+		}
+		total += X
+		w = append(w, tempo[total-X:total])
+	}
+	return w
+}
+
+func CreateMap() [][]*Location {
+	// var temporary []*Location
+	WorldMap = makeWorldMapSizes(Y, X)
+
+	for y := 0; y < Y; y++ {
+		for x := 0; x < X; x++ {
+
+			if WorldMap[y][x].HasSeller {
+				WorldMap[y][x].Seller = translate(HasEnemyOrSellerTR0) + getSeller()
 			}
 			WorldMap[y][x].CanGoTo = WhereCanYouGo(WorldMap[y][x])
-			if !((y == 9) && (x == 4)) {
+			if !((y == Y-1) && (x == ((X / 2) - (X % 2)))) {
 				enemyProbability(WorldMap[y][x])
 			}
 			if WorldMap[y][x].HasEnemy {
 				WorldMap[y][x].Enemy.createEnemyInventory()
 			}
+			// temporary = append(temporary, &room)
 		}
+		// WorldMap = append(WorldMap, temporary)
 	}
 	for b := 0; b < Y; b++ {
 		for a := 0; a < Y; a++ {
@@ -208,11 +227,9 @@ func itemAmounts(n string) int {
 	}
 }
 
-func getSeller(b bool) string {
+func getSeller() string {
 	var str string
-	if b {
-		str = SellerList[rand.Intn(3)]
-	}
+	str = SellerList[rand.Intn(3)]
 	return str
 }
 
@@ -261,7 +278,7 @@ var heroFromName = func(s string) *Character {
 		hero = Character{
 			Name:            heroesList.Thieve,
 			Alive:           true,
-			CurrentLocation: []int{9, 4},
+			CurrentLocation: []int{Y - 1, (X / 2) - (X % 2)},
 			Evasion:         30,
 			Health:          rand.Intn(15) + 25,
 			Skill:           0,
@@ -275,7 +292,7 @@ var heroFromName = func(s string) *Character {
 		hero = Character{
 			Name:            heroesList.Paladin,
 			Alive:           true,
-			CurrentLocation: []int{9, 4},
+			CurrentLocation: []int{Y - 1, (X / 2) - (X % 2)},
 			Evasion:         20,
 			Health:          rand.Intn(30) + 30,
 			Skill:           2,
@@ -289,7 +306,7 @@ var heroFromName = func(s string) *Character {
 		hero = Character{
 			Name:            heroesList.Wizard,
 			Alive:           true,
-			CurrentLocation: []int{9, 4},
+			CurrentLocation: []int{Y - 1, (X / 2) - (X % 2)},
 			Evasion:         15,
 			Health:          rand.Intn(25) + 25,
 			Skill:           3,
@@ -304,7 +321,7 @@ var heroFromName = func(s string) *Character {
 		hero = Character{
 			Name:            heroesList.Barbarian,
 			Alive:           true,
-			CurrentLocation: []int{9, 4},
+			CurrentLocation: []int{Y - 1, (X / 2) - (X % 2)},
 			Evasion:         10,
 			Health:          rand.Intn(30) + 40,
 			Skill:           0,

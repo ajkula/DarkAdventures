@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"math/rand"
 	"os"
 	"strings"
 )
@@ -44,11 +46,8 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 		}
 
 	case Initial(commands.Use): // to do
-		// Output("red", "in the use case")
 		if itemName == itemNames.Scroll && player.hasItemInInventory(itemName) {
-			// Output("red", "in the use if", args[0])
 			enemy := loc.Enemy
-			// Output("red", "enemy: ", enemy)
 			// Output("yellow", "has "+itemName+": ", player.hasItemInInventory(itemName), " quantity: ", player.Inventory[itemName].Quantity)
 			ok := player.useItem(itemName, enemy)
 			if ok != true {
@@ -61,6 +60,12 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 				ResetTurns()
 			}
 		}
+	case Initial(commands.Escape):
+		enemy := loc.Enemy
+		fmt.Println("calcul evade chances: ", int(GetAPercentageOfB(minusOrSquash(enemy.Strength, player.Evasion), minusOrSquash(player.Strength, enemy.Evasion)))+player.Evasion+rand.Intn(player.Evasion))
+		canEvade := PercentChances(int(GetAPercentageOfB(minusOrSquash(enemy.Strength, player.Evasion), minusOrSquash(player.Strength, enemy.Evasion))) + player.Evasion + rand.Intn(player.Evasion))
+		player.escapeBattle(canEvade)
+		// ResetTurns()
 	case Initial(commands.Map):
 		ResetTurns()
 		DisplayWorldMap(player)
@@ -107,4 +112,11 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 	default:
 		Output("red", "I didn't understand -> ", command)
 	}
+}
+
+func minusOrSquash(a, b int) int {
+	if a-b > 0 {
+		return a - b
+	}
+	return 1
 }

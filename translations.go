@@ -170,6 +170,90 @@ var hardTR = map[string]string{
 	frenchLang:  DoubleTab + "3 - Difficile",
 }
 
+var ThieveEscapeOK = map[string]string{
+	englishLang: Tab + "Using tricks and tools, you make a dark suffocating smoke cloud\n" +
+		Tab + "Giving you an opportunity to fall back",
+	frenchLang: Tab + "Utilisant vos gadgets et tours, vous créez un nuage noir\n" +
+		Tab + "de fumée suffocante vous donnant l'opportunité de battre en retraite",
+}
+
+var ThieveEscapeRAND = map[string]string{
+	englishLang: Tab + "Parrying the enemy's attacks and throw a handful of darts\n" +
+		Tab + "they fly straight to their face as you jump wherever you can",
+	frenchLang: Tab + "Parrant les attaques ennemies vous jetez une poignée de flechettes\n" +
+		Tab + "qui volent droit à leur visage tandis que vous fuiyez où ce peut",
+}
+
+var ThieveEscapeKO = map[string]string{
+	englishLang: Tab + "After a clumsy parry you trigger agrenade off your arm-canon\n" +
+		Tab + "it blocks and your step trips giving the enemy an opportunity to hit",
+	frenchLang: Tab + "Après avoir maladroitement parré vous tantez de tirer une grenade\n" +
+		Tab + "votre bras-canon s'enraille et vous trébuchez à la mercie de l'ennemi",
+}
+
+var PaladinEscapeOK = map[string]string{
+	englishLang: Tab + "The god Triglav shows a happy face, you're in their grace\n" +
+		Tab + "a huge pillar of light chases darkness around, you fallback safely",
+	frenchLang: Tab + "Le dieu Triglav montre un visage souriant, vous êtes en grâce\n" +
+		Tab + "un énorme pilier de lumière chasse l'obscurité, battez en retraite",
+}
+
+var PaladinEscapeRAND = map[string]string{
+	englishLang: Tab + "The god Triglav shows a sad face, parrying from all sides\n" +
+		Tab + "you roll dodge a heavy one and run to escape where you can...",
+	frenchLang: Tab + "Le dieu Triglav montre un visage triste, parant de tout côtés\n" +
+		Tab + "vous roulez évitant un mauvais coup et courrez où vous pouvez...",
+}
+
+var PaladinEscapeKO = map[string]string{
+	englishLang: Tab + "The god Triglav shows an angry face, you try to run away\n" +
+		Tab + "your first step slides on a wet stone bad timing, but why?",
+	frenchLang: Tab + "Le dieu Triglav montre un visage fâché, vous tantez de fuir\n" +
+		Tab + "glissez sur une pierre humide, mauvais timing, pourquoi?",
+}
+
+var WizardEscapeOK = map[string]string{
+	englishLang: Tab + "By a slight move the spells in your hand switches\n" +
+		Tab + "a magic shield appears in front of you, time to retreat",
+	frenchLang: Tab + "D'un geste légé vous changez de sorts en mains\n" +
+		Tab + "un bouclier magique apparaît devant vous, il est temp de fuir",
+}
+
+var WizardEscapeRAND = map[string]string{
+	englishLang: Tab + "No time for sofisticated spell you were off guaard\n" +
+		Tab + "throwing a teleport vial rapidly on the ground you vanish",
+	frenchLang: Tab + "Pas le temp d'un sort complexe on vous a surpris\n" +
+		Tab + "jetant vite une fiole de teleportation vous disparaîssez",
+}
+
+var WizardEscapeKO = map[string]string{
+	englishLang: Tab + "you start to cast a defense spell but suddenly...\n" +
+		Tab + "caughing makes it fail, too late.. the enemy took the chance",
+	frenchLang: Tab + "Vous démarrer un sort défensif mais soudain...\n" +
+		Tab + "une quinte de toux, échec... trop tard l'ennemi saisi l'ouverture",
+}
+
+var BarbarianEscapeOK = map[string]string{
+	englishLang: Tab + "Dazbog, Wolf God of the Hunt is here, Ô luck!\n" +
+		Tab + "Raising from your guts his scream knocks enemies, run!",
+	frenchLang: Tab + "Dazbog, le Dieu Loup de la chasse est là, Ô grace!\n" +
+		Tab + "Venant de vos trippes son cri étourdi les ennemis, courez!",
+}
+
+var BarbarianEscapeRAND = map[string]string{
+	englishLang: Tab + "The fight is unfair, time to escape, an oppening!\n" +
+		Tab + "You charge the enemy up front and end up somewhere else...",
+	frenchLang: Tab + "Le combat est inégal, il faut fuir, une ouverture!\n" +
+		Tab + "Vous chargez l'ennemi plein front et atterissez ailleurs...",
+}
+
+var BarbarianEscapeKO = map[string]string{
+	englishLang: Tab + "Dazbog, Wolf God of the hunt is not in this place.\n" +
+		Tab + "You try to run but no luck you're cornere...d",
+	frenchLang: Tab + "Dazbog, le Dieu Loup de la chasse n'est pas ici.\n" +
+		Tab + "Vous courez mais pas de chance vous êtes acculé...",
+}
+
 var ThieveNAME = map[string]string{
 	englishLang: "Thieve",
 	frenchLang:  "Voleur",
@@ -606,9 +690,9 @@ var heroStoryThieveTR0 = map[string]string{
 
 var heroStoryThieveTR1 = map[string]string{
 	englishLang: Tab + "Behind every Pirates story, there's a treasure map...\n" +
-		Tab + "The same goes for you, unfortunately...",
+		Tab + "The same goes for yours, unfortunately...",
 	frenchLang: Tab + "Pour toute histoire de Pirates, il y a une carte au trésor...\n" +
-		Tab + "Il en va de même pour la votre, malheureusement...",
+		Tab + "Vous en avez également trouvé une, malheureusement...",
 }
 
 var heroStoryThieveTR2 = map[string]string{
@@ -641,9 +725,9 @@ var heroStoryPaladinTR1 = map[string]string{
 
 var heroStoryPaladinTR2 = map[string]string{
 	englishLang: Tab + "Retired veteran of the Risen Wars, the increasing rumors of evil\n" +
-		Tab + "reach you and pulled you out of retirement. Time to draw the sword.",
+		Tab + "reach you and pulled you out of retirement. Time to draw the sword!",
 	frenchLang: Tab + "Vétéran des guerres des relevés, les rumeurs d'un mal croissant\n" +
-		Tab + "vous ont atteintes et quitté votre retraite. Le moment de l'épée.",
+		Tab + "vous ont atteintes et fait quitter votre retraite. Brandissez l'épée!",
 }
 
 var heroStoryPaladinTR3 = map[string]string{
@@ -664,7 +748,7 @@ var heroStoryWizardTR1 = map[string]string{
 	englishLang: Tab + "A Tiefling Wizard girl, speeking the lower planes language,\n" +
 		Tab + "that give you immense powers. You're seeking something here...",
 	frenchLang: Tab + "Magicienne Tiefling, parlant la langue des plans inférieurs,\n" +
-		Tab + "cela vous donne d'immenses pouvoirs. Vous êtes venue chercher quelque chose...",
+		Tab + "vous donnant d'immenses pouvoirs. Qu'êtes-vous êtes venue chercher?",
 }
 
 var heroStoryWizardTR2 = map[string]string{
@@ -677,7 +761,7 @@ var heroStoryWizardTR2 = map[string]string{
 var heroStoryWizardTR3 = map[string]string{
 	englishLang: Tab + "An old war veteran, who served under Tzar Krvovoj after leaving\n" +
 		Tab + "Krispin Academy of Magic with the highest honors. Why coming here?",
-	frenchLang: Tab + "Vétéran de l'ancienne guerre, ayant servi sous le Tzar Krvovoj après avoir\n" +
+	frenchLang: Tab + "Vétéran de l'ancienne guerre ayant servi le Tzar Krvovoj après avoir\n" +
 		Tab + "quitté l'Academie de magie Krispin avec les honneurs. Que faites vous là?",
 }
 
@@ -709,7 +793,7 @@ var heroStoryBarbarianTR3 = map[string]string{
 		Tab + "Cherchant un lieu pour s’installer, vous tombé sur ces terres étranges..",
 }
 
-// var NAME = map[string]string{
+// var escapeCmd = map[string]string{
 // 	englishLang: ,
 // 	frenchLang: ,
 // }

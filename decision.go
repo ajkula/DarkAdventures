@@ -91,9 +91,7 @@ func doHeal(p, e *Character) {
 }
 
 func doSkill(p, e *Character) {
-	if e.hasItemInInventory("potion") {
-		e.useItem("potion")
-	}
+	// do skill
 }
 
 func doAttack(p, e *Character) {

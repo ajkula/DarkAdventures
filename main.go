@@ -15,10 +15,10 @@ import (
 var Out *os.File
 var In *os.File
 
-const X = 10
-const Y = 10
+var X = 10
+var Y = 10
 
-var Grid [10][10]string
+var Grid [][]string
 var player Character
 var Difficulty int
 var Hero int
@@ -54,13 +54,22 @@ func init() {
 
 	Intro()
 	var lines = strings.Split(string(file), "\n")
+	cols := strings.Split(lines[0], "")
+	var temporary []string
+	temporary = append(temporary, cols...)
+	Y = len(lines)
+	X = len(cols)
+	fmt.Println("Grid", Grid)
 	for index := range lines {
 		cols := strings.Split(lines[index], "")
-		for rank, element := range cols {
-
-			Grid[index][rank] = element
-		}
+		// for rank, element := range cols {
+		temporary = cols
+		Grid = append(Grid, temporary)
+		// Grid[index] = append(Grid[index], cols...)
+		// Grid[index][rank] = element
+		// }
 	}
+	fmt.Println("Grid", Grid)
 
 	// for _, l := range Grid {
 	// 	fmt.Println("grid", l)

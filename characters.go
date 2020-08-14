@@ -19,12 +19,19 @@ type DisplayImage struct {
 	Story string
 }
 
+type Leveling struct {
+	Rates                     map[string]int
+	Exp, CurrentExp, NextRank int
+}
+
 type Character struct {
-	Welcome, Name, Details                                    string
-	Health, Evasion, Strength, Boost, Skill, BaseHealth, Crit int
-	Alive, Npc                                                bool
-	Inventory                                                 map[string]*ItemQuantity
-	Display                                                   *DisplayImage
+	Welcome, Name, Details, From            string
+	Health, Evasion, Strength, Boost, Skill int
+	BaseHealth, Crit, LVL, ExpValue         int
+	Alive, Npc                              bool
+	Inventory                               map[string]*ItemQuantity
+	Display                                 *DisplayImage
+	LevelUp                                 *Leveling
 
 	CurrentLocation []int
 }
@@ -58,36 +65,40 @@ func (player *Character) getImage() {
 func (player *Character) MoveTo(direction string) bool {
 	ok := false
 	switch strings.ToLower(direction) {
-	case directions.West:
+	case strings.ToLower(directions.West):
 		fallthrough
 	case Initial(directions.West):
 		if player.CurrentLocation[1] > 0 {
 			player.CurrentLocation[1]--
 			ok = true
+			player.From = directions.East
 		}
 		break
-	case directions.East:
+	case strings.ToLower(directions.East):
 		fallthrough
 	case Initial(directions.East):
-		if player.CurrentLocation[1] < 9 {
+		if player.CurrentLocation[1] < X-1 {
 			player.CurrentLocation[1]++
 			ok = true
+			player.From = directions.West
 		}
 		break
-	case directions.North:
+	case strings.ToLower(directions.North):
 		fallthrough
 	case Initial(directions.North):
 		if player.CurrentLocation[0] > 0 {
 			player.CurrentLocation[0]--
 			ok = true
+			player.From = directions.South
 		}
 		break
-	case directions.South:
+	case strings.ToLower(directions.South):
 		fallthrough
 	case Initial(directions.South):
-		if player.CurrentLocation[0] < 9 {
+		if player.CurrentLocation[0] < Y-1 {
 			player.CurrentLocation[0]++
 			ok = true
+			player.From = directions.North
 		}
 		break
 	default:
@@ -96,6 +107,27 @@ func (player *Character) MoveTo(direction string) bool {
 		}
 	}
 	return ok
+}
+
+func (p *Character) escapeBattle(b bool) {
+	if b {
+		if p.From != "" {
+			// escaped!
+			Output("green", escapeCases[p.Name][escapeResults.OK])
+			time.Sleep(1 * time.Second)
+			p.MoveTo(p.From)
+		} else {
+			// escaped randomly
+			canGo := p.SetPlayerRoom().CanGoTo
+			p.MoveTo(canGo[rand.Intn(len(canGo))])
+			Output("green", escapeCases[p.Name][escapeResults.RAND])
+			time.Sleep(1 * time.Second)
+		}
+	} else {
+		// missed escape
+		Output("green", escapeCases[p.Name][escapeResults.KO])
+		time.Sleep(1 * time.Second)
+	}
 }
 
 func (p *Character) addItemTypeToInventory(n string, i int) {
@@ -256,12 +288,12 @@ func (player *Character) hasItemInInventory(name string) bool {
 func (player *Character) getEnemyItems(enemy *Character) {
 	if InventoryHasItem(enemy.Inventory) {
 		Output("green", translate(getEnemyItemsTR))
+		for name, item := range enemy.Inventory {
+			Output("green", Tab+CalculateSpaceAlign(name+": "+item.Type.Description+" -> "), item.Quantity)
+			player.addItemTypeToInventory(name, item.Quantity)
+		}
 	} else {
 		Output("green", translate(nothingYouCouldGetTR))
-	}
-	for name, item := range enemy.Inventory {
-		Output("green", Tab+CalculateSpaceAlign(name+": "+item.Type.Description+" -> "), item.Quantity)
-		player.addItemTypeToInventory(name, item.Quantity)
 	}
 }
 
