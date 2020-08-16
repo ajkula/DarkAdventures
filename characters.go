@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 type ItemQuantity struct {
@@ -20,8 +21,9 @@ type DisplayImage struct {
 }
 
 type Leveling struct {
-	Rates                     *Specifics
-	Exp, CurrentExp, NextRank int
+	Rates                   *Specifics
+	NextBase, NextRank, Exp int
+	achievedLevelsChain     []int
 }
 
 type Character struct {
@@ -242,7 +244,7 @@ func (player *Character) showHealth() {
 		Output("yellow", translate(HasSellerTR)+concat)
 	}
 	if loc.HasEnemy && loc.Enemy.isAlive() {
-		Output("red", translate(HasEnemyOrSellerTR0)+Article(loc.Enemy.Name)+translate(HasEnemyTR1))
+		Output("red", translate(HasEnemyOrSellerTR0)+Article(loc.Enemy.Name+" LVL "+strconv.Itoa(loc.Enemy.LVL))+translate(HasEnemyTR1))
 		loc.Enemy.showHP()
 	}
 	player.showHP()
@@ -363,3 +365,149 @@ func (player *Character) BuyFromShop(name string) bool {
 	}
 	return result
 }
+
+// ***************************************************************************************************
+//                                            LEVEL UP
+// ***************************************************************************************************
+
+func (player *Character) calcLVL() {
+	next := player.LevelUp.NextRank
+	xp := player.getXPtoNext()
+	if xp-next >= 0 {
+		player.passLvl()
+		// Output LEVEL UP
+	} else {
+		// Output ENEMY LEVEL
+		return
+	}
+	player.calcLVL()
+}
+
+func (player *Character) passLvl() {
+	next := player.getTheNext()
+	player.LVL++
+	player.setNewNext()
+	player.LevelUp.achievedLevelsChain = append(player.LevelUp.achievedLevelsChain, next)
+	player.applyRates()
+}
+
+func (player *Character) getXPtoNext() (res int) {
+	allCaps := 0
+	for i := 0; i < len(player.LevelUp.achievedLevelsChain); i++ {
+		allCaps += player.LevelUp.achievedLevelsChain[i]
+	}
+	res = player.LevelUp.Exp - allCaps
+	return res
+}
+
+func (player *Character) getTheNext() (res int) {
+	res = player.LevelUp.NextBase
+	for i := 0; i < player.LVL; i++ {
+		res = res + res*20/100
+	}
+	return res
+}
+
+func (player *Character) setNewNext() {
+	player.LevelUp.NextRank = player.LevelUp.NextRank + player.LevelUp.NextRank*20/100
+}
+
+func (player *Character) applyRates() {
+	for i := 0; i < 2; i++ {
+		operator := lvlRatesMap[rand.Intn(len(lvlRatesMap))]
+		switch operator {
+		case LevelingNames.Health:
+			HPMaxAdd := player.LevelUp.Rates.Health()
+			player.BaseHealth += HPMaxAdd
+			if !player.Npc {
+				Output("white", Tab+CalculateSpaceAlign(translate(HealthUP))+"+ "+strconv.Itoa(HPMaxAdd))
+			}
+			break
+		case LevelingNames.Crit:
+			player.Crit += player.LevelUp.Rates.Crit
+			if !player.Npc {
+				Output("white", Tab+CalculateSpaceAlign(translate(CritsUP))+"+ "+strconv.Itoa(player.LevelUp.Rates.Crit))
+			}
+			break
+		case LevelingNames.Evasion:
+			player.Evasion += player.LevelUp.Rates.Evasion
+			if !player.Npc {
+				Output("white", Tab+CalculateSpaceAlign(translate(EvasionUP))+"+ "+strconv.Itoa(player.LevelUp.Rates.Evasion))
+			}
+			break
+		case LevelingNames.Skill:
+			player.Skill += player.LevelUp.Rates.Skill
+			if !player.Npc {
+				Output("white", Tab+CalculateSpaceAlign(translate(SkillsUP))+"+ "+strconv.Itoa(player.LevelUp.Rates.Skill))
+			}
+			break
+		case LevelingNames.Strength:
+			player.Strength += player.LevelUp.Rates.Strength
+			if !player.Npc {
+				Output("white", Tab+CalculateSpaceAlign(translate(StrengthUP))+"+ "+strconv.Itoa(player.LevelUp.Rates.Strength))
+			}
+			break
+		}
+	}
+}
+
+var lvlRatesMap []string = []string{LevelingNames.Health, LevelingNames.Crit, LevelingNames.Evasion, LevelingNames.Skill, LevelingNames.Strength}
+
+type LevelingNamesStruct struct {
+	Health   string
+	Crit     string
+	Evasion  string
+	Skill    string
+	Strength string
+}
+
+var LevelingNames *LevelingNamesStruct = &LevelingNamesStruct{
+	Health:   "Health",
+	Crit:     "Crit",
+	Evasion:  "Evasion",
+	Skill:    "Skill",
+	Strength: "Strength",
+}
+
+func (player *Character) DisplayExpGauge() {
+	next := player.LevelUp.NextRank
+	xp := player.getXPtoNext()
+	length := xp * gaugeSize / next
+	if length > gaugeSize {
+		length = gaugeSize
+	}
+	partA := strings.Repeat(expChar, length)
+	partB := strings.Repeat(emptyGauge, gaugeSize-length)
+
+	Output("green", Tab+"LVL: "+strconv.Itoa(player.LVL)+strings.Repeat(" ", 3-utf8.RuneCountInString(strconv.Itoa(player.LVL)))+" ["+partA+partB+"]")
+}
+
+func (player *Character) DisplayStats() {
+	exp := player.getXPtoNext()
+	r := 0
+	tm := 0
+	for _, y := range WorldMap {
+		for _, loc := range y {
+			tm++
+			if loc.Visited {
+				r++
+			}
+		}
+	}
+	Output("cyan", "\n"+DoubleTab+"================= "+translate(Status)+" =================\n")
+	Output("stats", Tab+CalculateSpaceAlign(translate(Health)+":")+strconv.Itoa(player.Health)+"/"+strconv.Itoa(player.BaseHealth)+"  "+
+		Tab+CalculateSpaceAlign(translate(CritsUP))+strconv.Itoa(player.Crit))
+	Output("stats", Tab+CalculateSpaceAlign(translate(StrengthUP))+strconv.Itoa(player.Strength)+"  "+
+		Tab+CalculateSpaceAlign(translate(BoostTR)+":")+strconv.Itoa(player.Boost))
+	Output("stats", Tab+CalculateSpaceAlign(translate(Level)+":")+strconv.Itoa(player.LVL)+"  "+
+		Tab+CalculateSpaceAlign(translate(EvasionUP))+strconv.Itoa(player.Evasion))
+	Output("stats", Tab+CalculateSpaceAlign(translate(Exp)+":")+strconv.Itoa(exp)+"/"+strconv.Itoa(player.LevelUp.NextRank)+"  "+
+		Tab+CalculateSpaceAlign(translate(Rooms)+":")+strconv.Itoa(r)+"/"+strconv.Itoa(tm))
+	Output("stats", Tab+CalculateSpaceAlign(translate(Enemies)+":")+strconv.Itoa(EnemiesKilled)+"/"+strconv.Itoa(EnemiesCount)+"  "+
+		Tab+CalculateSpaceAlign(translate(SkillsUP))+strconv.Itoa(player.Skill))
+	Output("stats", Tab+CalculateSpaceAlign(translate(Skill)+":")+translate(heroesSkillDescription[player.Name]))
+
+	fmt.Println()
+}
+
+// sante, crit, strength, evade,

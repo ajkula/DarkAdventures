@@ -136,6 +136,7 @@ func CreateMap() [][]*Location {
 				enemyProbability(WorldMap[y][x])
 			}
 			if WorldMap[y][x].HasEnemy {
+				EnemiesCount++
 				WorldMap[y][x].Enemy.createEnemyInventory()
 			}
 			// temporary = append(temporary, &room)
@@ -153,7 +154,12 @@ func CreateMap() [][]*Location {
 	AnalyzeItemsRepartition()
 
 	Output("white", translate(difficultyTR), difficultyIndex[Difficulty], "\n")
+	pile.forEachEnemy(makeEnemiesLVL)
 	return WorldMap
+}
+
+func makeEnemiesLVL(enemi *Character) {
+	enemi.calcLVL()
 }
 
 func addOrcProximity(loc *Location) {
@@ -284,12 +290,16 @@ var heroFromName = func(s string) *Character {
 			Skill:           0,
 			Strength:        18,
 			Crit:            30,
+			ExpValue:        8,
 			Inventory:       map[string]*ItemQuantity{},
 			LevelUp: &Leveling{
-				NextRank: 5,
+				NextRank:            5,
+				NextBase:            5,
+				Exp:                 0,
+				achievedLevelsChain: []int{},
 				Rates: &Specifics{
 					Health: func() int {
-						return rand.Intn(2) + 1
+						return rand.Intn(4) + 1
 					},
 					Crit:     1,
 					Evasion:  1,
@@ -310,12 +320,16 @@ var heroFromName = func(s string) *Character {
 			Skill:           2,
 			Strength:        25,
 			Crit:            20,
+			ExpValue:        12,
 			Inventory:       map[string]*ItemQuantity{},
 			LevelUp: &Leveling{
-				NextRank: 5,
+				NextRank:            5,
+				NextBase:            5,
+				Exp:                 0,
+				achievedLevelsChain: []int{},
 				Rates: &Specifics{
 					Health: func() int {
-						return rand.Intn(2) + 1
+						return rand.Intn(3) + 1
 					},
 					Crit:     2,
 					Evasion:  1,
@@ -336,12 +350,16 @@ var heroFromName = func(s string) *Character {
 			Skill:           3,
 			Strength:        20,
 			Crit:            15,
+			ExpValue:        10,
 			Inventory:       map[string]*ItemQuantity{},
 			LevelUp: &Leveling{
-				NextRank: 5,
+				NextRank:            5,
+				NextBase:            5,
+				Exp:                 0,
+				achievedLevelsChain: []int{},
 				Rates: &Specifics{
 					Health: func() int {
-						return rand.Intn(3) + 1
+						return rand.Intn(5) + 1
 					},
 					Crit:     2,
 					Evasion:  2,
@@ -363,12 +381,16 @@ var heroFromName = func(s string) *Character {
 			Skill:           0,
 			Strength:        30,
 			Crit:            20,
+			ExpValue:        12,
 			Inventory:       map[string]*ItemQuantity{},
 			LevelUp: &Leveling{
-				NextRank: 5,
+				NextRank:            5,
+				NextBase:            5,
+				Exp:                 0,
+				achievedLevelsChain: []int{},
 				Rates: &Specifics{
 					Health: func() int {
-						return rand.Intn(2) + 1
+						return rand.Intn(4) + 1
 					},
 					Crit:     1,
 					Evasion:  2,
@@ -411,10 +433,26 @@ func makeNewEnemy() *Character {
 		Strength:   base.Strength,
 		Evasion:    base.Evasion,
 		Crit:       base.Crit,
+		ExpValue:   base.ExpValue,
 		Name:       name,
 		Alive:      true,
 		Npc:        true,
 		Inventory:  map[string]*ItemQuantity{},
+		LevelUp: &Leveling{
+			NextRank:            5,
+			NextBase:            5,
+			Exp:                 base.Exp,
+			achievedLevelsChain: []int{},
+			Rates: &Specifics{
+				Health: func() int {
+					return rand.Intn(2) + 1
+				},
+				Crit:     1,
+				Evasion:  1,
+				Skill:    1,
+				Strength: 1,
+			},
+		},
 	}
 	enemy.setImage()
 	return &enemy
@@ -425,6 +463,8 @@ func enemyProbability(loc *Location) {
 		if rand.Intn(100) <= GameDifficulty[difficultyIndex[Difficulty]] {
 			loc.HasEnemy = true
 			loc.Enemy = makeNewEnemy()
+			// ICI
+			pile.PushCharacters(loc.Enemy)
 		}
 	}
 }

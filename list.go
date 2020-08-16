@@ -28,3 +28,9 @@ func (pile *Pile) PopGate() *Gate {
 	pile.Gates = pile.Gates[1:]
 	return gate
 }
+
+func (pile *Pile) forEachEnemy(apply func(*Character)) {
+	for _, enemi := range pile.Enemies {
+		apply(enemi)
+	}
+}

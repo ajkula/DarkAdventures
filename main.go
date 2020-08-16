@@ -59,7 +59,6 @@ func init() {
 	temporary = append(temporary, cols...)
 	Y = len(lines)
 	X = len(cols)
-	fmt.Println("Grid", Grid)
 	for index := range lines {
 		cols := strings.Split(lines[index], "")
 		// for rank, element := range cols {
@@ -69,7 +68,6 @@ func init() {
 		// Grid[index][rank] = element
 		// }
 	}
-	fmt.Println("Grid", Grid)
 
 	// for _, l := range Grid {
 	// 	fmt.Println("grid", l)
@@ -109,11 +107,15 @@ func Output(c string, args ...interface{}) {
 	case "green":
 		col = color.GreenString
 	case "red":
-		col = color.RedString
+		col = color.HiRedString
 	case "blue":
-		col = color.CyanString
+		col = color.HiCyanString
 	case "yellow":
 		col = color.YellowString
+	case "white":
+		col = color.HiWhiteString
+	case "stats":
+		col = color.HiYellowString
 	}
 	fmt.Fprintln(Out, col(s))
 }

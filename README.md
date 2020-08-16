@@ -3,6 +3,9 @@ A simple text adventure game I build in Go for fun...
 
 ## Installation
 It's as simple as clone/compile/run...
+You might want to **go get**:
+ - github.com/fatih/color
+ - github.com/cloudfoundry/jibber_jabber
 There are a few steps to make the experience much better however:
  - GDrive URL to download the game:
  **https://tinyurl.com/y4v69bsn**

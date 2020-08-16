@@ -59,7 +59,10 @@ func Battle(player, enemy *Character) {
 				Output("green", "\t", opp.Name, translate(hasBeenSlainTR))
 				// you got :
 				SCORE.scoreKills(opp.Name)
+				EnemiesKilled++
+				player.LevelUp.Exp += opp.ExpValue
 				player.getEnemyItems(enemy)
+				player.calcLVL()
 				return
 			case false:
 				if !opp.hasItemInInventory(itemNames.Doll) || (opp.hasItemInInventory(itemNames.Doll) && opp.Inventory[itemNames.Doll].Quantity < 1) {
@@ -69,7 +72,9 @@ func Battle(player, enemy *Character) {
 					os.Exit(0)
 				}
 				if opp.hasItemInInventory(itemNames.Doll) && opp.Inventory[itemNames.Doll].Quantity >= 1 {
+					enemy.LevelUp.Exp += player.ExpValue
 					opp.useItem(itemNames.Doll)
+					enemy.calcLVL()
 				}
 			}
 		}

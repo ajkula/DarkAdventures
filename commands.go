@@ -72,6 +72,9 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 	case Initial(commands.Inv):
 		ResetTurns()
 		player.DisplayInvetory()
+	case Initial(commands.Stats):
+		ResetTurns()
+		player.DisplayStats()
 	case Initial(commands.Buy):
 		if ok := player.BuyFromShop(itemName); !ok {
 			Output("red", translate(cantBuyTR)+Article(itemName))

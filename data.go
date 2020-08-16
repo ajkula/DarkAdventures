@@ -16,7 +16,15 @@ const YourPosition string = "@"
 const LegendSpace int = 10
 const inventorySpace int = 38
 const heroesDetailsSpacing int = 14
+const gaugeSize int = 40
+const expChar string = "="
+const emptyGauge string = " "
 
+var expByDifficulty map[int]int = map[int]int{
+	0: 5,
+	1: 10,
+	2: 15,
+}
 var supportedLanguages = []string{englishLang, frenchLang}
 var gameIntro string = translate(gameintroTR)
 var NearORC string = translate(NearORCTR)
@@ -33,6 +41,13 @@ var heroesDetails = map[string]string{
 	heroesList.Paladin:   translate(heroesDetailsPALADIN),
 	heroesList.Wizard:    translate(heroesDetailsWIZARD),
 	heroesList.Barbarian: translate(heroesDetailsBARBARIAN),
+}
+
+var heroesSkillDescription = map[string]map[string]string{
+	heroesList.Thieve:    ThiefSkill,
+	heroesList.Paladin:   PaladinSkill,
+	heroesList.Wizard:    WizardSkill,
+	heroesList.Barbarian: BarbarianSkill,
 }
 
 var NullifiedEnemy Character
@@ -64,8 +79,11 @@ var difficultyNames = DifficultyNames{
 	Hard:    translate(hardTR),
 }
 
+var EnemiesCount int = 0
+var EnemiesKilled int = 0
+
 type Commands struct {
-	Attack, Use, Escape, Go, Map, Buy, Inv, Help, Quit string
+	Attack, Use, Escape, Go, Map, Buy, Inv, Stats, Help, Quit string
 }
 
 var commands = &Commands{
@@ -76,6 +94,7 @@ var commands = &Commands{
 	Map:    "Map",
 	Buy:    "Buy",
 	Inv:    "Inv",
+	Stats:  "Stats",
 	Help:   "Help",
 	Quit:   "Quit",
 }
@@ -84,7 +103,7 @@ var allCommands = []string{commands.Attack, commands.Use, commands.Go, commands.
 var battleCommands = []string{commands.Attack, commands.Use, commands.Escape /*, commands.Skill*/}
 var worldCommands = []string{commands.Go, commands.Use}
 var sellerCommands = []string{commands.Go, commands.Use, commands.Buy}
-var universalCommands = []string{commands.Map, commands.Inv, commands.Help, commands.Quit}
+var universalCommands = []string{commands.Map, commands.Inv, commands.Stats, commands.Help, commands.Quit}
 var difficultyIndex = map[int]string{0: difficultyNames.Easy, 1: difficultyNames.Meddium, 2: difficultyNames.Hard}
 var GameDifficulty = map[string]int{difficultyNames.Easy: 15, difficultyNames.Meddium: 30, difficultyNames.Hard: 45}
 
@@ -164,6 +183,8 @@ type Specifics struct {
 	Evasion  int
 	Skill    int
 	Crit     int
+	ExpValue int
+	Exp      int
 }
 
 var enemiesSpecificsValues = map[string]Specifics{
@@ -172,12 +193,16 @@ var enemiesSpecificsValues = map[string]Specifics{
 		Strength: 20,
 		Evasion:  5,
 		Crit:     35,
+		ExpValue: 3,
+		Exp:      rand.Intn(5) + rand.Intn(10) + expByDifficulty[Difficulty],
 	},
 	enemiesList.GOBLIN: {
 		Health:   func() int { return rand.Intn(20) + 10 },
 		Strength: 15,
 		Evasion:  15,
 		Crit:     10,
+		ExpValue: 5,
+		Exp:      rand.Intn(5) + rand.Intn(5) + expByDifficulty[Difficulty],
 	},
 	enemiesList.SORCERER: {
 		Health:   func() int { return rand.Intn(30) + 10 },
@@ -185,12 +210,16 @@ var enemiesSpecificsValues = map[string]Specifics{
 		Evasion:  10,
 		Skill:    2,
 		Crit:     15,
+		ExpValue: 4,
+		Exp:      rand.Intn(5) + rand.Intn(15) + expByDifficulty[Difficulty],
 	},
 	enemiesList.ORC: {
 		Health:   func() int { return rand.Intn(25) + 35 },
 		Strength: 18,
 		Evasion:  3,
 		Crit:     25,
+		ExpValue: 10,
+		Exp:      rand.Intn(5) + rand.Intn(8) + expByDifficulty[Difficulty],
 	},
 }
 

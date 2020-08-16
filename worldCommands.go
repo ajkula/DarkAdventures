@@ -49,7 +49,6 @@ func create2DStringArray(Y, X int, Unseen string) [][]string {
 	for y := 0; y < Y; y++ {
 		for x := 0; x < X; x++ {
 			tempo = append(tempo, Unseen)
-
 		}
 		total += X
 		w = append(w, tempo[total-X:total])

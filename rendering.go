@@ -22,8 +22,8 @@ func PresentScene(p *Character) {
 		// Output("green", getTurns())
 		// Output("red", "dragon.Freeze "+strconv.FormatBool(dragon.Freeze))
 		p.showHealth()
+		p.DisplayExpGauge()
 	}
-
 	// if loc.HasGate {
 	// 	y, x := loc.Gate.Warp()
 	// 	Output("red", " y: ", y, " x: ", x)

@@ -1,5 +1,10 @@
 package main
 
+import (
+	"strings"
+	"unicode/utf8"
+)
+
 var Lang string = getSysLang()
 
 func translate(text map[string]string) string {
@@ -793,105 +798,121 @@ var heroStoryBarbarianTR3 = map[string]string{
 		Tab + "Cherchant un lieu pour s’installer, vous tombé sur ces terres étranges..",
 }
 
-// var escapeCmd = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var HealthUP = map[string]string{
+	englishLang: "Max Health:",
+	frenchLang:  "Santé Max:",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var CritsUP = map[string]string{
+	englishLang: "Crit Chances:",
+	frenchLang:  "Chances Crit:",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var EvasionUP = map[string]string{
+	englishLang: "Evasion:",
+	frenchLang:  "Esquive:",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var StrengthUP = map[string]string{
+	englishLang: "Strength:",
+	frenchLang:  "Force:",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var SkillsUP = map[string]string{
+	englishLang: "Skills:",
+	frenchLang:  "Compétences:",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var Health = map[string]string{
+	englishLang: "Health",
+	frenchLang:  "Santé",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var Crit = map[string]string{
+	englishLang: "Crit Chances",
+	frenchLang:  "Chances Crit",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var Evasion = map[string]string{
+	englishLang: "Evasion",
+	frenchLang:  "Esquive",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var Strength = map[string]string{
+	englishLang: "Strength",
+	frenchLang:  "Force",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var Skill = map[string]string{
+	englishLang: "Special",
+	frenchLang:  "Spécial",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var Exp = map[string]string{
+	englishLang: "Experience",
+	frenchLang:  "Experience",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var Level = map[string]string{
+	englishLang: "Level",
+	frenchLang:  "Niveau",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var Rooms = map[string]string{
+	englishLang: "Rooms",
+	frenchLang:  "Lieux",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var Enemies = map[string]string{
+	englishLang: "Enemies killed",
+	frenchLang:  "Ennemis tués",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var BoostTR = map[string]string{
+	englishLang: "Moonstones UP",
+	frenchLang:  "Gain de Force",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var ThiefSkill = map[string]string{
+	englishLang: "The tief, a skilled agent of deception,\n" +
+		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
+		Tab + "will steal one object of value the enemy carries.",
+	frenchLang: "Le voleur, un compétent agent de la ruse,\n" +
+		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
+		Tab + "volera un des objet précieux de l'ennemi.",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var PaladinSkill = map[string]string{
+	englishLang: "The Paladin Knight is a holy master of combat,\n" +
+		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
+		Tab + "undead dies instantly, others get HP halfed.",
+	frenchLang: "Le Paladin est un maître du combat sacré,\n" +
+		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
+		Tab + "les mort-vivants meurent, les autres ont -50% HP.",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var WizardSkill = map[string]string{
+	englishLang: "A powerful spell does 10 area dmg near you,\n" +
+		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
+		Tab + "the enemy you fight gets a fire status for 3 turns.",
+	frenchLang: "Un sort puissant cause 10 dmg de zone,\n" +
+		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
+		Tab + "l'ennemi prend le statut enflammé pour 3 tours.",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var BarbarianSkill = map[string]string{
+	englishLang: "A skilled hunter, the map is revealed around,\n" +
+		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
+		Tab + "the enemy you fight is terrified for 3 turns.",
+	frenchLang: "Un chasseur hors pairs, carte révélée alentour,\n" +
+		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
+		Tab + "l'ennemi est terrifié pour 3 tours.",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var Status = map[string]string{
+	englishLang: "Status",
+	frenchLang:  "Statut",
+}
 
 // var NAME = map[string]string{
 // 	englishLang: ,
