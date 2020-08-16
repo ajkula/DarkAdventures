@@ -914,10 +914,10 @@ var Status = map[string]string{
 	frenchLang:  "Statut",
 }
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var LevelUPTR = map[string]string{
+	englishLang: "LEVEL UP!",
+	frenchLang:  "Niveau Supérieur!",
+}
 
 // var NAME = map[string]string{
 // 	englishLang: ,

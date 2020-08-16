@@ -20,6 +20,9 @@ const gaugeSize int = 40
 const expChar string = "="
 const emptyGauge string = " "
 
+var EnemiesCount int = 1
+var EnemiesKilled int = 0
+
 var expByDifficulty map[int]int = map[int]int{
 	0: 5,
 	1: 10,
@@ -78,9 +81,6 @@ var difficultyNames = DifficultyNames{
 	Meddium: translate(meddiumTR),
 	Hard:    translate(hardTR),
 }
-
-var EnemiesCount int = 0
-var EnemiesKilled int = 0
 
 type Commands struct {
 	Attack, Use, Escape, Go, Map, Buy, Inv, Stats, Help, Quit string

@@ -160,6 +160,7 @@ func CreateMap() [][]*Location {
 
 func makeEnemiesLVL(enemi *Character) {
 	enemi.calcLVL()
+	enemi.Health = enemi.BaseHealth
 }
 
 func addOrcProximity(loc *Location) {

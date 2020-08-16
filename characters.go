@@ -244,7 +244,7 @@ func (player *Character) showHealth() {
 		Output("yellow", translate(HasSellerTR)+concat)
 	}
 	if loc.HasEnemy && loc.Enemy.isAlive() {
-		Output("red", translate(HasEnemyOrSellerTR0)+Article(loc.Enemy.Name+" LVL "+strconv.Itoa(loc.Enemy.LVL))+translate(HasEnemyTR1))
+		Output("red", translate(HasEnemyOrSellerTR0)+Article(loc.Enemy.Name+" lvl."+strconv.Itoa(loc.Enemy.LVL))+translate(HasEnemyTR1))
 		loc.Enemy.showHP()
 	}
 	player.showHP()
@@ -374,10 +374,12 @@ func (player *Character) calcLVL() {
 	next := player.LevelUp.NextRank
 	xp := player.getXPtoNext()
 	if xp-next >= 0 {
-		player.passLvl()
 		// Output LEVEL UP
+		if !player.Npc {
+			Output("cyan", DoubleTab+CalculateSpaceAlign(translate(LevelUPTR))+"LVL "+strconv.Itoa(player.LVL+1)+" !!")
+		}
+		player.passLvl()
 	} else {
-		// Output ENEMY LEVEL
 		return
 	}
 	player.calcLVL()
@@ -509,5 +511,3 @@ func (player *Character) DisplayStats() {
 
 	fmt.Println()
 }
-
-// sante, crit, strength, evade,
