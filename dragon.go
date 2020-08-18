@@ -12,7 +12,26 @@ type Dragon struct {
 
 var dragon *Dragon
 
+type DragonLanding struct {
+	isFirst bool
+}
+
+var dragonLanding = &DragonLanding{
+	isFirst: true,
+}
+
+func (landing *DragonLanding) shouldSayIt() bool {
+	return landing.isFirst
+}
+func (landing *DragonLanding) saidIt() {
+	landing.isFirst = false
+}
+func (landing *DragonLanding) reset() {
+	landing.isFirst = true
+}
+
 func (dragon *Dragon) dragonMoves() {
+	dragonLanding.reset()
 	// ICI
 	// fmt.Printf("DRAGON SHOULD FREEZE: %+v\n", dragon.Freeze)
 	if !dragon.Freeze {
@@ -40,7 +59,7 @@ func (dragon *Dragon) dragonMoves() {
 // TO DO: add player coins on presentation
 
 func (dragon *Dragon) shouldFreeze(str string) {
-	dragon.Freeze = str == Initial(commands.Map)
+	dragon.Freeze = InitialsIndexOf([]string{commands.Map}, str)
 }
 
 func CreateDragon() {
@@ -82,6 +101,7 @@ func CreateDragon() {
 	var loc *Location
 	dragon.createEnemyInventory()
 	dragon.setImage()
+	pile.PushCharacters(dragon.Character)
 	loc = dragon.SetPlayerRoom()
 	loc.AddEphemeral()
 }

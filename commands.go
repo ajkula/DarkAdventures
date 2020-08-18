@@ -45,6 +45,16 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 			player.attack(enemy)
 		}
 
+	case Initial(commands.Skill):
+		enemy := loc.Enemy
+		if enemy != nil {
+			if enemiesList.DRAGON == enemy.Name {
+				player.useSkillSet(dragon.Character)
+				break
+			}
+			player.useSkillSet(enemy)
+		}
+
 	case Initial(commands.Use): // to do
 		if itemName == itemNames.Scroll && player.hasItemInInventory(itemName) {
 			enemy := loc.Enemy

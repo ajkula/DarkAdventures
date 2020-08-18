@@ -155,6 +155,7 @@ func CreateMap() [][]*Location {
 
 	Output("white", translate(difficultyTR), difficultyIndex[Difficulty], "\n")
 	pile.forEachEnemy(makeEnemiesLVL)
+
 	return WorldMap
 }
 
@@ -347,7 +348,7 @@ var heroFromName = func(s string) *Character {
 			Alive:           true,
 			CurrentLocation: []int{Y - 1, (X / 2) - (X % 2)},
 			Evasion:         15,
-			Health:          rand.Intn(25) + 25,
+			Health:          rand.Intn(15) + rand.Intn(10) + 25,
 			Skill:           3,
 			Strength:        20,
 			Crit:            15,
@@ -405,6 +406,9 @@ var heroFromName = func(s string) *Character {
 	}
 	hero.BaseHealth = hero.Health
 	hero.setImage()
+	hero.StatusEffects = &StatusEffectsBlueprint{
+		AllStatus: []*Blueprint{},
+	}
 	SCORE.removeBaseInventory(hero.Inventory)
 	return &hero
 }
@@ -435,6 +439,7 @@ func makeNewEnemy() *Character {
 		Evasion:    base.Evasion,
 		Crit:       base.Crit,
 		ExpValue:   base.ExpValue,
+		Skill:      rand.Intn(3),
 		Name:       name,
 		Alive:      true,
 		Npc:        true,
@@ -453,6 +458,9 @@ func makeNewEnemy() *Character {
 				Skill:    1,
 				Strength: 1,
 			},
+		},
+		StatusEffects: &StatusEffectsBlueprint{
+			AllStatus: []*Blueprint{},
 		},
 	}
 	enemy.setImage()
@@ -475,7 +483,9 @@ func getRandPrice() int {
 }
 
 func PercentChances(n int) bool {
-	return rand.Intn(101) < n
+	r := (rand.Intn(100) + 1)
+	// fmt.Println("percentChances: ", r, n)
+	return r < n
 }
 
 func GetAPercentageOfB(a, b int) float32 {

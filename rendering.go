@@ -17,7 +17,13 @@ func PresentScene(p *Character) {
 		if loc.HasGate {
 			Output("yellow", rootBell[p.hasItemInInventory(itemNames.Key)])
 		}
-		Output("yellow", loc.Ephemeral)
+		sayIt := dragonLanding.shouldSayIt()
+		if loc.HasEnemy && loc.Enemy.Name == enemiesList.DRAGON && sayIt {
+			Output("yellow", loc.Ephemeral)
+			dragonLanding.saidIt()
+		} else {
+			Output("yellow", loc.Ephemeral)
+		}
 		// Output("red", loc.HasEnemy)
 		// Output("green", getTurns())
 		// Output("red", "dragon.Freeze "+strconv.FormatBool(dragon.Freeze))

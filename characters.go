@@ -18,12 +18,28 @@ type DisplayImage struct {
 	Image string
 	Show  bool
 	Story string
+	Race  string
 }
 
 type Leveling struct {
 	Rates                   *Specifics
 	NextBase, NextRank, Exp int
 	achievedLevelsChain     []int
+}
+
+type Special struct {
+	Action     func(*Character)
+	ShowAction func()
+}
+
+type Blueprint struct {
+	Name      string
+	Counter   int
+	Timestamp time.Duration
+}
+
+type StatusEffectsBlueprint struct {
+	AllStatus []*Blueprint
 }
 
 type Character struct {
@@ -34,6 +50,8 @@ type Character struct {
 	Inventory                               map[string]*ItemQuantity
 	Display                                 *DisplayImage
 	LevelUp                                 *Leveling
+	Special                                 *Special
+	StatusEffects                           *StatusEffectsBlueprint
 
 	CurrentLocation []int
 }
@@ -51,6 +69,10 @@ func (player *Character) SetPlayerRoom() *Location {
 
 func (player *Character) setImage() {
 	player.Display = AsciiArts.makeImage(player.Name)
+}
+
+func (player *Character) showAction() {
+	AsciiArts.showSkillAction(player.Name)
 }
 
 func (player *Character) getImage() {
@@ -206,7 +228,26 @@ func (player *Character) attack(enemy *Character) {
 }
 
 func (player *Character) calculateDammage(enemy *Character) int {
-	// calc := enemy.BaseHealth*player.Strength/100*(player.Strength+player.Boost)/10 - (rand.Intn(10) + 5)
+	var modifier float32 = .0
+	if enemy.Name == enemiesList.DRAGON {
+		if player.Name == heroesList.Barbarian {
+			chance := 5
+			if player.Display.Race == races.Gnoll {
+				chance = 15
+			}
+			if PercentChances(chance) {
+				dmg := int(float32(dragon.BaseHealth) * .35)
+				Output("white", translate(BarbarianLuckDragonTR)+strconv.Itoa(dmg)+translate(DamageTR))
+				return dmg
+			}
+		}
+		if player.Name == heroesList.Wizard {
+			if player.Display.Race == races.Tiefling {
+				modifier = .02
+			}
+		}
+	}
+
 	calc := ((player.Strength * 80) / ((100 + enemy.Evasion) - (rand.Intn(10) + 5) - player.Boost)) * 7 / 10
 	if calc > 20 {
 		calc = (calc * 8) / 10
@@ -215,13 +256,10 @@ func (player *Character) calculateDammage(enemy *Character) int {
 		calc = calc / 2
 	}
 	dmg := Abs(calc)
-	// ICI
-	// fmt.Println("calc ", calc)
-	// fmt.Println("dmg ", dmg)
-	// fmt.Println("Boost ", player.Boost)
 	if rand.Intn(100) < player.Crit {
 		dmg = Abs(dmg + (dmg * player.Crit / 100) + (dmg * (player.Strength / 100)))
 		Output("red", "\t"+player.Name+translate(doesTR)+strconv.Itoa(dmg)+translate(critDMGTR)+enemy.Name)
+		dmg = dmg + int(float32(dmg)*modifier)
 		return dmg
 	}
 	Output("white", "\t"+player.Name+translate(doesTR)+strconv.Itoa(dmg)+translate(dmgToTR)+enemy.Name)
@@ -230,6 +268,7 @@ func (player *Character) calculateDammage(enemy *Character) int {
 		Output("white", "\t"+player.Name+translate(doesTR)+strconv.Itoa(extra)+translate(dmgToTR)+enemy.Name)
 		dmg += extra
 	}
+	dmg = dmg + int(float32(dmg)*modifier)
 	return dmg
 }
 
@@ -283,6 +322,8 @@ func (player *Character) hasItemInInventory(name string) bool {
 	_, ok := player.Inventory[name]
 	if ok {
 		ok = player.Inventory[name].Quantity >= 1
+	} else {
+		ok = false
 	}
 	return ok
 }
@@ -415,7 +456,21 @@ func (player *Character) setNewNext() {
 }
 
 func (player *Character) applyRates() {
-	for i := 0; i < 2; i++ {
+	var odd int = player.LVL % 2
+	// To activate depending on how hard mode behaves
+	// if player.Npc {
+	// 	odd = player.LVL % 3
+	// 	if odd == 2 {
+	// 		odd = 0
+	// 	}
+	// }
+	if odd == 1 {
+		player.Skill += player.LevelUp.Rates.Skill
+		if !player.Npc {
+			Output("white", Tab+CalculateSpaceAlign(translate(SkillsUP))+"+ "+strconv.Itoa(player.LevelUp.Rates.Skill))
+		}
+	}
+	for i := 0; i < (2 - odd); i++ {
 		operator := lvlRatesMap[rand.Intn(len(lvlRatesMap))]
 		switch operator {
 		case LevelingNames.Health:
@@ -507,7 +562,157 @@ func (player *Character) DisplayStats() {
 		Tab+CalculateSpaceAlign(translate(Rooms)+":")+strconv.Itoa(r)+"/"+strconv.Itoa(tm))
 	Output("stats", Tab+CalculateSpaceAlign(translate(Enemies)+":")+strconv.Itoa(EnemiesKilled)+"/"+strconv.Itoa(EnemiesCount)+"  "+
 		Tab+CalculateSpaceAlign(translate(SkillsUP))+strconv.Itoa(player.Skill))
-	Output("stats", Tab+CalculateSpaceAlign(translate(Skill)+":")+translate(heroesSkillDescription[player.Name]))
 
+	Output("cyan", "\n"+DoubleTab+"================= "+translate(Skill)+" ================\n")
+	Output("stats", translate(heroesSkillDescription[player.Name]))
+
+	Output("cyan", "\n"+DoubleTab+"============== Status Effects ============\n")
+	var allStatus []string
+	for _, bp := range player.StatusEffects.AllStatus {
+		allStatus = append(allStatus, bp.Name)
+	}
+	Output("stats", Tab+ArrayToString(allStatus))
 	fmt.Println()
 }
+
+// **************************************************************************************
+//                                    Skills
+// **************************************************************************************
+
+func (player *Character) oneOfRandItem() (string, *ItemQuantity) {
+	for name, itemQ := range player.Inventory {
+		ok := PercentChances(30)
+		if ok {
+			if itemQ.Quantity == 0 {
+				continue
+			}
+			return name, itemQ
+		}
+	}
+	var nameR string
+	var itemQR *ItemQuantity
+	for name, itemQ := range player.Inventory {
+		nameR, itemQR = name, itemQ
+		break
+	}
+	return nameR, itemQR
+}
+
+func (player *Character) useSkillSet(e *Character) {
+	can := player.checkSkills()
+	if !can {
+		return
+	}
+	player.Skill--
+	player.showAction()
+
+	switch player.Name {
+
+	case enemiesList.GOBLIN:
+		fallthrough
+	case heroesList.Thieve:
+		name, itemQ := e.oneOfRandItem()
+		ok := e.hasItemInInventory(name)
+		if ok {
+			ok = itemQ.Quantity > 0
+		}
+		if !ok && !e.Npc {
+			Output("red", Tab+translate(TheTR)+player.Name+translate(StealFailTR))
+			return
+		}
+		if name == itemNames.Coins {
+			player.addItemTypeToInventory(name, itemQ.Quantity)
+			e.Inventory[name].Quantity = 0
+		}
+		player.addItemTypeToInventory(name, 1)
+		e.Inventory[name].Quantity--
+
+		Output(playerEnemyColor[player.Npc], Tab+player.Name+translate(StealSuccessTR)+name+"\n")
+		break
+
+	case enemiesList.SORCERER:
+		reducer := .50
+		firstLine := ""
+		finalSentence := translate(DarkEnergyNormalTR)
+		if e.Name == heroesList.Paladin {
+			reducer = .25
+			finalSentence = translate(DarkEnergyOnPaladinTR)
+			firstLine = translate(GraceProtectsYouTR)
+		}
+		e.Health = e.Health - int(float64(e.Health)*reducer)
+		Output("red", firstLine+translate(DarkEnergyTR)+finalSentence)
+		break
+
+	case enemiesList.DRAGON:
+		dmg := rand.Intn(10) + 15
+		Output("red", translate(DragonSkillFireTR)+strconv.Itoa(dmg)+translate(HPTR))
+		// Apply reducers here
+		if e.Name == heroesList.Wizard {
+			Output("green", translate(SorcererDragonFireTR))
+			dmg = dmg - int(float32(dmg)*.30)
+		}
+		e.Health = e.Health - dmg
+		time.Sleep(3 * time.Second)
+	}
+}
+
+func (player *Character) checkSkills() bool {
+	b := true
+	if player.Skill < 1 {
+		b = false
+		if !player.Npc {
+			Output("red", Tab+translate(NoSkillTR))
+		} else {
+			Output("yellow", Tab+player.Name+translate(StealFailTR))
+		}
+	}
+	return b
+}
+
+// ***********************************************************************************
+//																	Status Effects
+// ***********************************************************************************
+
+func (ste *StatusEffectsBlueprint) Add(args ...*Blueprint) {
+	statuses := args
+	ste.AllStatus = append(ste.AllStatus, statuses...)
+}
+
+func (ste *StatusEffectsBlueprint) remove(name string) {
+	i := indexOfBlueprint(ste.AllStatus, name)
+	ste.AllStatus = append(ste.AllStatus[:i], ste.AllStatus[i+1:]...)
+}
+
+func indexOfBlueprint(arr []*Blueprint, item string) int {
+	for index, elem := range arr {
+		if elem.Name == item {
+			return index
+		}
+	}
+	return -1
+}
+
+func (player *Character) applyStatusesEffect() {
+	for _, status := range player.StatusEffects.AllStatus {
+		fmt.Printf(status.Name+": ", status.Counter, status.Timestamp.Seconds)
+	}
+}
+
+// panic: runtime error: invalid memory address or nil pointer dereference
+// [signal 0xc0000005 code=0x1 addr=0x0 pc=0x4d4353]
+
+// goroutine 1 [running]:
+// main.(*ScoreSchema).scoreItems(...)
+//         C:/dev/GO/DarkAdventures/scores.go:52
+// main.(*Character).addItemTypeToInventory(...)
+//         C:/dev/GO/DarkAdventures/characters.go:158
+// main.(*Character).useSkillSet(0xc000158270, 0xc0001581a0)
+//         C:/dev/GO/DarkAdventures/characters.go:582 +0xe53
+// main.ProcessCommands(0xc000158270, 0xc0000ed033, 0x3, 0xc00006fe68, 0x1, 0x1)
+//         C:/dev/GO/DarkAdventures/commands.go:51 +0x17ea
+// main.Battle(0xc000158270, 0xc0001581a0)
+//         C:/dev/GO/DarkAdventures/battles.go:43 +0xb14
+// main.PresentScene(0xc000158270)
+//         C:/dev/GO/DarkAdventures/rendering.go:36 +0x6fc
+// main.main()
+//         C:/dev/GO/DarkAdventures/main.go:91 +0xea

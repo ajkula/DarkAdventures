@@ -19,6 +19,11 @@ func MakeEnemyDecision(p1, p2 *Character) {
 		e = p1
 	}
 
+	var enemyOrDragon int = 20
+	if e.Name == enemiesList.DRAGON {
+		enemyOrDragon = 35
+	}
+
 	Tree := Node{
 		Leaf:  false,
 		Label: "health",
@@ -29,7 +34,7 @@ func MakeEnemyDecision(p1, p2 *Character) {
 				Leaf:  false,
 				Label: "random",
 				Name:  e.Name,
-				Value: 60,
+				Value: 40,
 				Children: []Node{
 					Node{
 						Leaf:   true,
@@ -47,9 +52,9 @@ func MakeEnemyDecision(p1, p2 *Character) {
 			},
 			Node{
 				Leaf:  false,
-				Label: "random",
+				Label: "skill",
 				Name:  e.Name,
-				Value: 80,
+				Value: enemyOrDragon,
 				Children: []Node{
 					Node{
 						Leaf:   true,
@@ -61,6 +66,7 @@ func MakeEnemyDecision(p1, p2 *Character) {
 						Leaf:  false,
 						Label: "skill",
 						Name:  e.Name,
+						Value: enemyOrDragon,
 						Children: []Node{
 							Node{
 								Leaf:   true,
@@ -91,7 +97,7 @@ func doHeal(p, e *Character) {
 }
 
 func doSkill(p, e *Character) {
-	// do skill
+	e.useSkillSet(p)
 }
 
 func doAttack(p, e *Character) {
@@ -100,7 +106,7 @@ func doAttack(p, e *Character) {
 
 func TreeVector(tree Node, p, e *Character) {
 	// ICI
-	Output("red", Tab+tree.Label+" leaf: ", tree.Leaf)
+	Output("red", Tab+tree.Label+" leaf: ", tree.Leaf, " value: ", tree.Value)
 
 	if tree.Leaf {
 		tree.Action(p, e)
@@ -119,13 +125,15 @@ func getTreeIndexNavigation(tree Node, e *Character) int {
 		}
 		break
 	case "random":
-		if !PercentChances(tree.Value) {
+		if PercentChances(tree.Value) {
 			index = 1
 		}
 		break
 	case "skill":
 		if e.Skill > 0 {
-			index = 1
+			if PercentChances(tree.Value) {
+				index = 1
+			}
 		}
 		break
 	default:

@@ -1,10 +1,5 @@
 package main
 
-import (
-	"strings"
-	"unicode/utf8"
-)
-
 var Lang string = getSysLang()
 
 func translate(text map[string]string) string {
@@ -142,7 +137,7 @@ var heroesDetailsTHIEVE = map[string]string{
 
 var heroesDetailsPALADIN = map[string]string{
 	englishLang: " - High strength, health, more potions",
-	frenchLang:  " - Force, shanté élevée, plus de potions",
+	frenchLang:  " - Force, santé élevée, plus de potions",
 }
 
 var heroesDetailsWIZARD = map[string]string{
@@ -874,39 +869,31 @@ var BoostTR = map[string]string{
 }
 
 var ThiefSkill = map[string]string{
-	englishLang: "The tief, a skilled agent of deception,\n" +
-		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
-		Tab + "will steal one object of value the enemy carries.",
-	frenchLang: "Le voleur, un compétent agent de la ruse,\n" +
-		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
-		Tab + "volera un des objet précieux de l'ennemi.",
+	englishLang: DoubleTab + "The tief, a skilled agent of deception,\n" +
+		DoubleTab + "will steal one object of value the enemy carries.",
+	frenchLang: DoubleTab + "Le voleur, un compétent agent de la ruse,\n" +
+		DoubleTab + "volera un des objet précieux de l'ennemi.",
 }
 
 var PaladinSkill = map[string]string{
-	englishLang: "The Paladin Knight is a holy master of combat,\n" +
-		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
-		Tab + "undead dies instantly, others get HP halfed.",
-	frenchLang: "Le Paladin est un maître du combat sacré,\n" +
-		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
-		Tab + "les mort-vivants meurent, les autres ont -50% HP.",
+	englishLang: DoubleTab + "The Paladin Knight is a holy master of combat,\n" +
+		DoubleTab + "undead dies instantly, others get HP halfed.",
+	frenchLang: DoubleTab + "Le Paladin est un maître du combat sacré,\n" +
+		DoubleTab + "les mort-vivants meurent, les autres ont -50% HP.",
 }
 
 var WizardSkill = map[string]string{
-	englishLang: "A powerful spell does 10 area dmg near you,\n" +
-		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
-		Tab + "the enemy you fight gets a fire status for 3 turns.",
-	frenchLang: "Un sort puissant cause 10 dmg de zone,\n" +
-		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
-		Tab + "l'ennemi prend le statut enflammé pour 3 tours.",
+	englishLang: DoubleTab + "A powerful spell does 10 area dmg near you,\n" +
+		DoubleTab + "the enemy you fight gets a fire status for 3 turns.",
+	frenchLang: DoubleTab + "Un sort puissant cause 10 dmg de zone,\n" +
+		DoubleTab + "l'ennemi prend le statut enflammé pour 3 tours.",
 }
 
 var BarbarianSkill = map[string]string{
-	englishLang: "A skilled hunter, the map is revealed around,\n" +
-		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
-		Tab + "the enemy you fight is terrified for 3 turns.",
-	frenchLang: "Un chasseur hors pairs, carte révélée alentour,\n" +
-		strings.Repeat(" ", utf8.RuneCountInString(Tab+CalculateSpaceAlign(translate(Skill)+":"))) +
-		Tab + "l'ennemi est terrifié pour 3 tours.",
+	englishLang: DoubleTab + "A skilled hunter, the map is revealed around,\n" +
+		DoubleTab + "the enemy you fight is terrified for 3 turns.",
+	frenchLang: DoubleTab + "Un chasseur hors pairs, carte révélée alentour,\n" +
+		DoubleTab + "l'ennemi est terrifié pour 3 tours.",
 }
 
 var Status = map[string]string{
@@ -919,10 +906,98 @@ var LevelUPTR = map[string]string{
 	frenchLang:  "Niveau Supérieur!",
 }
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var NoSkillTR = map[string]string{
+	englishLang: "You seem too tired to do that...",
+	frenchLang:  "Vous avez l'air trop épuisé pour faire ça...",
+}
+
+var StealFailTR = map[string]string{
+	englishLang: " couldn't steal anything...",
+	frenchLang:  " n'a rien pu voler...",
+}
+
+var TheTR = map[string]string{
+	englishLang: "The ",
+	frenchLang:  "Le ",
+}
+
+var StealSuccessTR = map[string]string{
+	englishLang: " has successfully stolen ",
+	frenchLang:  " a réussi a voler ",
+}
+
+var DarkEnergyTR = map[string]string{
+	englishLang: Tab + "A huge Dark Energy ball descends the sky above you\n" +
+		Tab + "Your life is Reduced by ",
+	frenchLang: Tab + "Une énorme boule d'énergie noir vous descend dessus\n" +
+		Tab + "Votre santé est Réduite de ",
+}
+
+var DarkEnergyOnPaladinTR = map[string]string{
+	englishLang: "a Quarter!",
+	frenchLang:  "un Quart!",
+}
+
+var DarkEnergyNormalTR = map[string]string{
+	englishLang: "Half!",
+	frenchLang:  "Moitié!",
+}
+
+var GraceProtectsYouTR = map[string]string{
+	englishLang: Tab + "Grace protects you from Darkness!\n",
+	frenchLang:  Tab + "La Grâce vous protège des Ténèbres!\n",
+}
+
+var DragonSkillFireTR = map[string]string{
+	englishLang: Tab + "This is the reason a Dragon is terrible to encounter!\n" +
+		Tab + "It suddenly spits fire towards you for a duration...\n" +
+		Tab + "You barely find cover, Oh no! Are you still Alive?..\n" +
+		DoubleTab + "Cost of the flames blow ",
+	frenchLang: Tab + "Voici la raison pour laquelle rencontrer un dragon\n" +
+		Tab + "est si terrible!\n" +
+		Tab + "Tout d'un coup il crache un torrent de feu vers vous...\n" +
+		Tab + "Vous avez à peine le temp de vous protéger, êtes-vous en vie?..\n" +
+		DoubleTab + "Coup du déluge de flames ",
+}
+
+var HPTR = map[string]string{
+	englishLang: " HP",
+	frenchLang:  " HP",
+}
+
+var SorcererDragonFireTR = map[string]string{
+	englishLang: Tab + "Seeing it coming, you quickly whistle a protection spell\n",
+	frenchLang:  Tab + "Voyant ce qui arrive, vous souffler un sort de protection\n",
+}
+
+var BarbarianLuckDragonTR = map[string]string{
+	englishLang: Tab + "Opportunity! You seize the Dragon's wing and jump down,\n" +
+		Tab + "using the velocity you dive your weapon first on its neck...\n" +
+		DoubleTab + "Dealing -> ",
+	frenchLang: Tab + "Opportunité! Vous saisissez l'aile au passage et sautez,\n" +
+		Tab + "utilisant la vélocité vous plongez arme en avant sur son cou...\n" +
+		DoubleTab + "Causant -> ",
+}
+
+var DamageTR = map[string]string{
+	englishLang: " Damage!\n",
+	frenchLang:  " de Dégats!\n",
+}
+
+var GnollTR = map[string]string{
+	englishLang: "Gnoll",
+	frenchLang:  "Gnoll",
+}
+
+var HumanTR = map[string]string{
+	englishLang: "Human",
+	frenchLang:  "Humain",
+}
+
+var TieflingTR = map[string]string{
+	englishLang: "Tiefling",
+	frenchLang:  "Tiefling",
+}
 
 // var NAME = map[string]string{
 // 	englishLang: ,

@@ -2,6 +2,7 @@ package main
 
 import (
 	"math/rand"
+	"time"
 )
 
 type ASCII struct {
@@ -11,6 +12,7 @@ type ASCII struct {
 	ORC      []string
 	DRAGON   []string
 	HERO     map[string][]string
+	SKILLS   map[string][]string
 }
 
 var AsciiArts = &ASCII{
@@ -24,6 +26,9 @@ var AsciiArts = &ASCII{
 		heroesList.Paladin:   {paladinAscii, paladinAsciiB, paladinAsciiC, paladinAsciiD},
 		heroesList.Wizard:    {wizardAscii, wizardAsciiB, wizardAsciiC, wizardAsciiD},
 		heroesList.Barbarian: {barbarianAscii, barbarianAsciiB, barbarianAsciiC, barbarianAsciiD},
+	},
+	SKILLS: map[string][]string{
+		enemiesList.DRAGON: {dragonSkillFireAsciiA, dragonSkillFireAsciiB},
 	},
 }
 
@@ -57,13 +62,33 @@ func (a *ASCII) makeImage(name string) *DisplayImage {
 		}
 	default:
 		index := rand.Intn(len(a.HERO[name]))
+		race := races.Human
+		if index == 1 {
+			if name == heroesList.Wizard {
+				race = races.Tiefling
+			}
+			if name == heroesList.Barbarian {
+				race = races.Gnoll
+			}
+		}
 		image = &DisplayImage{
 			Image: a.HERO[name][index],
 			Story: "\n" + storyFromImage(name, index),
 			Show:  true,
+			Race:  race,
 		}
 	}
 	return image
+}
+
+type Races struct {
+	Gnoll, Tiefling, Human string
+}
+
+var races = &Races{
+	Gnoll:    translate(GnollTR),
+	Human:    translate(HumanTR),
+	Tiefling: translate(TieflingTR),
 }
 
 func storyFromImage(name string, index int) string {
@@ -95,6 +120,18 @@ var heroStoryAndImages = map[string]map[int]string{
 		2: translate(heroStoryBarbarianTR2),
 		3: translate(heroStoryBarbarianTR3),
 	},
+}
+
+func (a *ASCII) showSkillAction(name string) {
+	switch name {
+	case enemiesList.DRAGON:
+		index := rand.Intn(len(a.SKILLS[name]))
+		Output("red", a.SKILLS[name][index])
+		time.Sleep(2 * time.Second)
+		break
+	default:
+		break
+	}
 }
 
 const goblinAscii string = DoubleTab + "...................................\n" + DoubleTab +
@@ -774,3 +811,66 @@ const barbarianAsciiD string = DoubleTab + "...............,..............\n" + 
 	",8?........,O8DN7.............\n" + DoubleTab +
 	"$8,.........$8DD7.............\n" + DoubleTab +
 	"I:..........:++++.............\n"
+
+const dragonSkillFireAsciiA string = "II??I??II$Z88888OOOOOOO88DDDDDD8$?+++++=++++++++++==?7O8DD8888888OOZZZZ$$Z$7I??I\n" +
+	"7I?+?I7$ZOO88OOOOOOOO88888888DDDD8$?+===++++++++++?$O88888888888OOZZ$I????I??+++\n" +
+	"7I++?I7$ZOOOZZZZZZZOO888OOOO888888887+++++++++++?$8DD8888888O8888OZ$?+??I??++???\n" +
+	"7I?+??I??77II?I7$$ZZOOOOOZOO8OOOOOO88OI====++++IODD8888888888Z$$ZOZ7???IIII?????\n" +
+	"7I?+??++=+?+++???7ZZOOZ$ZZZO8OOOOOO888DO7?I$$7ZODD8888888888Z???I7$7IIII77IIIII?\n" +
+	"I?++++==+++????I??7OZ7?II$ZO8OOZZ$ZZO8DDDOO88O8DDDD88OOO888OIIIIIIIIIIIII???????\n" +
+	"?++++++???++?IIII?I7I??I?I$OOOZ7I??II$ODD888ZO88Z$7777$ZO88$II7IIIIIIII??++++++?\n" +
+	"+???????????+?II???I??IIII7OO$I?III7I?I$888OZOZII???????7$8$III77II??+++++++++++\n" +
+	"?II?IIIIIIII??IIII????II7I7Z$I?IIIIII???$8OZZZIII7777IIIII7$II??????++++?+++??++\n" +
+	"III?IIII77777II77III??IIII7$777I?IIIIIII$8Z+7O77777777777777III?????????????????\n" +
+	"III?I777777777777777IIIIII777777777777I7OOI~+777777777$777III??II?????IIIIIIIIII\n" +
+	"77IIIIII77$777777777777II777I7777777777$O$?==+III7777III7I??IIII77I7777IIIIIIIII\n" +
+	"777777IIII7$$$$$77777777777777II77777777$$+~+=IZ7??????IIII7777I77777IIIII??IIII\n" +
+	"777777777777777777777777777777II7777IIII7Z?=+=+7I??III777777777?I777IIIII???IIII\n" +
+	"777777777777777I7IIIII77777IIIII7777IIII$ZI?+=~+IIIIIII77IIIIII7$7?IIIIIIIIIIII+\n" +
+	"7777777777777777777IIIIIIIIIIIIIIIIIIIIIII?I++=+??III7$ZZ$I????II?IIIIIIIIII?+++\n" +
+	"7777777I7777IIIIIIIIIIIIIIIIIIIIIIIIIIIIII??+I++IIIIII777I+???++?+?7IIIIIII?+=++\n" +
+	"II7IIIIIIIII7IIIIIIIIIIIIIIIIIIIIIIIIIIII?+==I++III??????+++++++++?IIIIIIII?++++\n" +
+	"77IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII7777IIIII?++??+??++=+==+++?+==+++III????II+++++\n" +
+	"ZZ$777IIIII???II??IIIIIIIIIIII???I77I?III???I???+?+++?++?+=++++??II?II?++++???=+\n" +
+	"ZZZ$$$7I????+++?++?I$$7??IIII??+++?++?IIII?+???7?+=+II??II?+?+???????III?+?III?=\n" +
+	"ZZZ$77I++????++++??I$$7???????+?+++++?????++?+II?+==+?+++??++++++++?II77?=?$77?+\n" +
+	"ZOZ$$I???++???+++??????++++++?++++++?I???+===+??++====++++?+??+++++III777?+I7I?=\n" +
+	"OOZ$I?77$I?I?+??I77??III?++??+++++?II7I?+==~~===++++??++??I??+++==+?II7$$7?III7I\n" +
+	"D8O$$$$7$77II?$OO88OZ$ZZ7I???+++=+?III?+===+=++++++????+????++++????7$7III7ZO8D8\n" +
+	"D88O8OZZOOOOO88DD8OOOOZZZZ$77II???II77???++????+++??++????I7$$$$ZZZO888ZZO88DD88\n" +
+	"88D8DDOZ8888OZ$$O888OOO8OO88OZZOOOZOO$7IIIIIII7$$$ZZZZZZOO8O888D888DDD8DDDDDDD88\n" +
+	"8888O88ZOO88Z7??ZD888D8888888OO88888OZOOZZOZZZZOO8888888888OOOOO88888O888D8888DD\n" +
+	"8DD88888888D8OOO88888888888888888OO8888OOOOOOOOOO88888O888888888888888O88DDDDDDD\n" +
+	"D88DNDOOOO8DDDDD88888888888888888O8DD8888888888O888888888888888888OZO888D8DNNNNN\n"
+
+const dragonSkillFireAsciiB string = "NNNNNNNMMMNNMNNMMMMMMMMMMMMMMMMMMMMNDDDDNMMMNNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n" +
+	"O88888OZ8ND88NNNNNNNNNNNNNNMMMMMND8OO8DNMMNNNNMMNNNMMMNNNMMMMMMMMMMMMMMMMMMMMMMM\n" +
+	"7777$$OZ7IZ8DOO8DNNNNNNNNNNNNNDOZZZO8DNNMNNDNNMNDDNNMMNNDNMMMMMMMMMMMMNMMNNMMMMM\n" +
+	"7$$77$$ZZ$??7O88OODNMNNNNND88OZZZZ8DNNNNNDDNNNNNNDNNNNNNDDNNNNNNNNNNNNMMMNNMMMMM\n" +
+	"$ZZZ$$7$ZZ$II++7$ZOOO8888OZZ$ZZZO8DNNNNDDDNNMNMNNDDNNNNNDDDNNNNDDDNNNNNNNNNNNMMM\n" +
+	"$ZZZZZZ$ZOOOZZ7++~???~~+?7ZOZZO8DDNNNNDDDDNMMMMNNDDNNNNMNDDDDNNDDDDDDNNNNNNNNNNN\n" +
+	"$$Z$Z$$$Z$$OO8D87?++~~:,:++ZDNDDNNDDDDDDDNNNNNNNNDNNNNNNNNNDDDDDDDDDDDDNNNNNNNNN\n" +
+	"ZZZ$Z$$$Z$O$ZO8NMN87??+~,:::=$NNDNDNNDDDNNNNNNNMNDDNNNNNNNNDDDDDDDDDDDDDDNNNNNNN\n" +
+	"$ZOZZ$ZZ$Z$Z8OOODMD887$77I=?+~7MNNNNDD8DNNNNNNNNNDDNNNNNNNNNDDDDDD88888DDDDDNDDD\n" +
+	"Z$7Z$Z888ZZOOZZZONDZMMNOZZ7+Z$~DMNNND88NNNNNNNNNNDDDNNNDDDDDDDDDDD88888DDDDDDDD8\n" +
+	"II$ZOOO8DOZ8DN8OOOODDNNNDO$I?++7MMNND8DNNNNNNNNNNDDDNNDDDDDDDDDD8888888DDDDDD8OO\n" +
+	"7O8DNDD88DO7ZZOD8888DDD88DOZ7+~:INMMDDDNNDDDDNDNNDDDDDDDDDDDDDDDD88888888DD88OZZ\n" +
+	"$8DNDDNDDNMO7ZOZ$77$ODZ$8DNDO$?~.,+OMDNNNDDDDDDDNDD88DDDD888DDDDD88888O8888OZ$77\n" +
+	"Z8DNDDDNNNDD888D87??+~..,=$DNNMD?~~:7NDNDD8DDDDDDDD888DDD8888888DDD88OOOOOZZ$7I?\n" +
+	"$88DD8DNNOOO8NDNDN8I=,....,~$DNMM8$I?DDDDDDDDDDD8DD888DDD88888888DDD8OOZZ$77II??\n" +
+	"$$OO8DN8OO8OO8NMNDN8?.....,,=I$$$Z7IZDNDDDDDDDDDDDDD8888888888888888OZ$77IIII???\n" +
+	"ZZZZ8N8IO8O88O8NMMMN8=.....,,,:+I7$ZO8DDDDDD8DDDDDD8DD888888888OZ$$$777IIIIII???\n" +
+	"7ZZODD$$OOOO8888DNMMNO+:,...,,..,+7$7?$88DD8DDDDDDDD88D888888OZ$7777IIIIIIII????\n" +
+	"II7Z88IZZZZOO8OOOODMMNZ?:,,,...,..,=?I7$ZODDDDDD8888DO888888OZ7777III???IIII???+\n" +
+	"II7ZOZ+ZZZZOOZZ$ZOO8NN87=:,,:,......:?IIZ$78D888888888888OOOZ77IIII????IIIIII??+\n" +
+	"7$7$Z$?Z$$$$$$$7$$ZZO8N8?~:,::,,.....,=+II?$ZO8OO8888OOZ88OZ7IIII??????I?IIII??+\n" +
+	"??77$7?$II7II??III77$7ZDDI::~~~:,,,....:,:~=?IZ888OOOOOO88O$77III?????I??IIII??+\n" +
+	"?I$ZO$+?????+++????IIII7887,:+=:,,,,....,,,:~=?ZOOOOOZZZZ8OZ7IIII?????I??IIII?++\n" +
+	"II7ZZ$+??+?+=+++??++IIIII$D$+++~:,,,.....,..,,:?77$$777I7ZZZ7?III??III???????+~:\n" +
+	"I7$7Z$+???++?+?????+???III7$I===~:,,,.......,..:+?7I??III77$7IIIIIII???+++===:,,\n" +
+	"I7$$ZZ7II??????+?++++++??II???===~:,,,......,...:~=??I????I7IIIIIII??++==:,,,,,,\n" +
+	"II7$ZZ?+??I??+++=++==++===+++??=++~,,,.............,:~++?IIIIIII?++==~~~:,,,,,,,\n" +
+	"77$$ZZ=+I??II++++++==+++=+++++++++=~:,................,:=?II????+=~::::,,,,,,,,,\n" +
+	"$7ZZOO+IOZ$$$7????+===++++========~:::,.................,:~::~~~~~:::::,,,,,,,..\n" +
+	"777$ZOI?8OZZ$$77II?+=======~~~~~=~,,,:,..,.....,,......,,,,,,,,:,::,,,,,,,,,,...\n" +
+	"77$OOZI=OOOZ$$777I?+++=======~~=~::,,,,...,,,.,,,,,,..,,,,,,,,,,,,,,,,,,...,....\n"
