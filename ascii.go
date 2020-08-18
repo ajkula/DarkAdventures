@@ -6,21 +6,23 @@ import (
 )
 
 type ASCII struct {
-	GOBLIN   []string
-	SKELETON []string
-	SORCERER []string
-	ORC      []string
-	DRAGON   []string
-	HERO     map[string][]string
-	SKILLS   map[string][]string
+	GOBLIN      []string
+	SKELETON    []string
+	SORCERER    []string
+	ORC         []string
+	DRAGON      []string
+	NECROMANCER []string
+	HERO        map[string][]string
+	SKILLS      map[string][]string
 }
 
 var AsciiArts = &ASCII{
-	GOBLIN:   []string{goblinAscii, goblinAsciiB},
-	SKELETON: []string{skeletonAscii, skeletonAsciiB},
-	SORCERER: []string{sorcererAscii, sorcererAsciiB},
-	ORC:      []string{orcAscii, orcAsciiB},
-	DRAGON:   []string{dragonAscii, dragonAsciiB},
+	GOBLIN:      []string{goblinAscii, goblinAsciiB},
+	SKELETON:    []string{skeletonAscii, skeletonAsciiB},
+	SORCERER:    []string{sorcererAscii, sorcererAsciiB},
+	ORC:         []string{orcAscii, orcAsciiB},
+	DRAGON:      []string{dragonAscii, dragonAsciiB},
+	NECROMANCER: []string{necromancerAsciiA},
 	HERO: map[string][]string{
 		heroesList.Thieve:    {thieveAscii, thieveAsciiB, thieveAsciiC, thieveAsciiD},
 		heroesList.Paladin:   {paladinAscii, paladinAsciiB, paladinAsciiC, paladinAsciiD},
@@ -39,21 +41,25 @@ func (a *ASCII) makeImage(name string) *DisplayImage {
 		image = &DisplayImage{
 			Image: a.GOBLIN[rand.Intn(len(a.GOBLIN))],
 			Show:  true,
+			Race:  races.Darkling,
 		}
 	case enemiesList.SKELETON:
 		image = &DisplayImage{
 			Image: a.SKELETON[rand.Intn(len(a.SKELETON))],
 			Show:  true,
+			Race:  races.Undead,
 		}
 	case enemiesList.SORCERER:
 		image = &DisplayImage{
 			Image: a.SORCERER[rand.Intn(len(a.SORCERER))],
 			Show:  true,
+			Race:  races.Human,
 		}
 	case enemiesList.ORC:
 		image = &DisplayImage{
 			Image: a.ORC[rand.Intn(len(a.ORC))],
 			Show:  true,
+			Race:  races.Darkling,
 		}
 	case enemiesList.DRAGON:
 		image = &DisplayImage{
@@ -82,13 +88,15 @@ func (a *ASCII) makeImage(name string) *DisplayImage {
 }
 
 type Races struct {
-	Gnoll, Tiefling, Human string
+	Gnoll, Tiefling, Human, Undead, Darkling string
 }
 
 var races = &Races{
 	Gnoll:    translate(GnollTR),
 	Human:    translate(HumanTR),
 	Tiefling: translate(TieflingTR),
+	Undead:   translate(UndeadTR),
+	Darkling: translate(DarklingTR),
 }
 
 func storyFromImage(name string, index int) string {
@@ -874,3 +882,32 @@ const dragonSkillFireAsciiB string = "NNNNNNNMMMNNMNNMMMMMMMMMMMMMMMMMMMMNDDDDNM
 	"$7ZZOO+IOZ$$$7????+===++++========~:::,.................,:~::~~~~~:::::,,,,,,,..\n" +
 	"777$ZOI?8OZZ$$77II?+=======~~~~~=~,,,:,..,.....,,......,,,,,,,,:,::,,,,,,,,,,...\n" +
 	"77$OOZI=OOOZ$$777I?+++=======~~=~::,,,,...,,,.,,,,,,..,,,,,,,,,,,,,,,,,,...,....\n"
+
+const necromancerAsciiA string = "I7777777IIII77I777777777777I777I777$Z$$Z$ZZIIIIIIIIIIIIIIIIIIII77II7777777777777\n" +
+	"77777777IIII77777III777777777II7I7$888D8D88OI77IIIIIII77III77II77777777777777777\n" +
+	"IIII777II7III77IIII7IIIIIII$$$ZZZ888DNNNND8NZI7III7777II7III77III777777777777777\n" +
+	"IIIIII77IIIIIIIIIII7$77Z$III$8DDDDNND8O7ODDDOIII7IIIIIII77IIIIIIIIII7777777II7II\n" +
+	"IIIIIIIIIIIIIIIIIIII7$$$$777OD88D8DN8OZ$Z8DO$77Z7I777IIIIII7O7I7II77IIIIIIIIIIII\n" +
+	"IIIIIIIII77IIIIIIIIIIIIII77$$OZ8D8DD8O$7$8Z7$777II77IIIII77I$Z$7I7$7IIIIIIIIIIII\n" +
+	"IIIIIIIII77II7IIIIIIIIII7I7I??7$Z88DDNNNNO7ZO77III77$77II77I7I7III$$7$7IIIIIIIII\n" +
+	"IIIIIIIIIIIII$$IIIIII7$$$IO8$$O7$Z7ONNNNDZZOZ$Z7III777IIII7$7III777$$7IIIIIIIIII\n" +
+	"IIIIIIIIIIIIII$77II7IIIIIII7$$78OZ8DDNND88OOO8ZZI7IIIIIIIIIIIIII$7IIIIIIIIIIIIII\n" +
+	"IIIII?II?IIII???IIIOOOZII$II77Z8NNNDDNDDDDDOOOOZ$$7II7?IIIIIIIIIIIIIIIIIIIIIIIII\n" +
+	"???I77$I??????I$I?IO88OZ$II$7Z$ZODDDDDDDDNDDDNZ$$II?7II?7+I????II?IIIIIIIIIIIIII\n" +
+	"???????????????????I8888Z77$$8888DDDDDDDDDDDDDOZ7??I??Z7$7????I7I???????????????\n" +
+	"????????II??I?+7I??7888888$ZOOO8D8888OO88DDND88Z??777Z88O7??????????????????????\n" +
+	"?????????7??I$Z$???7D7Z88O$ZOZ8888888888OZ$Z8DOO8OODDDDD8I??I??+I???????????????\n" +
+	"??????+??+I?+I77I7Z$Z?I$ZZDO$OOO88DDDDDDD87?+IZ888DD8DDZI?I?I?I?I????????+++?+??\n" +
+	"??????+?+78?+II????+??+I788$$Z$ZO888DDDD888Z?=+?I78D$$$I?II?I????????++?++++++++\n" +
+	"??????$$7ZI+I$Z?+?I7?I7I887II7$ZOOO88D888ZOZ+:I7O?$88???????7???+??+++++++++++++\n" +
+	"????????I?+?I?I??I$I+$7I$$??I7$ZZ$ZO8OOOZZZ77~:=$ZZ$7?7?++++7$??+??I?+++++++++++\n" +
+	"?????+??+++?+++++?+?+?7++++?+?I7I7$$ZZ$$7$$OZ+:::+7?I7I??I??$8I???+?++++++++++++\n" +
+	"????+?++?+???II???++?+II??I?+?I7II7I77I$7I7$II::,~$8Z??II?II??????++++++++++++++\n" +
+	"?????++???+?$I??++++++++++?7III?III$8$IIIII?I7=:,=?$DZI7II?++++?+?+++++++++++???\n" +
+	"?????+++++++++++??++++II++++??++??$DNN8ZZ$77?I$?+??+OO$7$$??++++++++?IIII???7Z88\n" +
+	"$$$77IIIII??++++I$I+?II++==+++7$$ZDDDN8$$I?++IZ7+?++++++?+IZ+?++++?7O888OOZ88DDD\n" +
+	"888888OOZZZZ7I?+++?I?+=++??=++?7OND8DDDZI+++?++7+=+++??I?Z8?IIII?I$8DDDDDDDDDDDD\n" +
+	"888888888OZZZ$$$777I?????+I+++===ZDZ$Z8$++==~~~~=====?7$$Z77$ZOOOODDDDDDDDDDDDDD\n" +
+	"DDD8DDD888OOOOZ$$$$$7I777I77II?+?ZI+==IO+~~~~==~~=?I7$$ZZZZO8DDDDDDDDDDDDDDDDDDD\n" +
+	"DDDDDDDDDDDDD888888888888OOOOZ$7$7I7II+7$?I?7$Z77Z8DDDDDDDDDDDDDDDDDDDDDDDDDDDDD\n" +
+	"DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD88OOOOOZOZOOO888DDDDDDDDDDDDDDDDDDDDDDDDDDDNDDDDDD\n"

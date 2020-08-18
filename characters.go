@@ -238,6 +238,7 @@ func (player *Character) calculateDammage(enemy *Character) int {
 			if PercentChances(chance) {
 				dmg := int(float32(dragon.BaseHealth) * .35)
 				Output("white", translate(BarbarianLuckDragonTR)+strconv.Itoa(dmg)+translate(DamageTR))
+				time.Sleep(1 * time.Second)
 				return dmg
 			}
 		}
@@ -456,7 +457,7 @@ func (player *Character) setNewNext() {
 }
 
 func (player *Character) applyRates() {
-	var odd int = player.LVL % 2
+	// var odd int = player.LVL % 2
 	// To activate depending on how hard mode behaves
 	// if player.Npc {
 	// 	odd = player.LVL % 3
@@ -464,13 +465,15 @@ func (player *Character) applyRates() {
 	// 		odd = 0
 	// 	}
 	// }
-	if odd == 1 {
-		player.Skill += player.LevelUp.Rates.Skill
-		if !player.Npc {
-			Output("white", Tab+CalculateSpaceAlign(translate(SkillsUP))+"+ "+strconv.Itoa(player.LevelUp.Rates.Skill))
-		}
-	}
-	for i := 0; i < (2 - odd); i++ {
+	// if odd == 1 {
+	// 	player.Skill += player.LevelUp.Rates.Skill
+	// 	if !player.Npc {
+	// 		Output("white", Tab+CalculateSpaceAlign(translate(SkillsUP))+"+ "+strconv.Itoa(player.LevelUp.Rates.Skill))
+	// 	}
+	// }
+	player.ExpValue = player.ExpValue + int(float32(player.ExpValue)*.2)
+	// for i := 0; i < (2 - odd); i++ {
+	for i := 0; i < 2; i++ {
 		operator := lvlRatesMap[rand.Intn(len(lvlRatesMap))]
 		switch operator {
 		case LevelingNames.Health:
@@ -628,6 +631,23 @@ func (player *Character) useSkillSet(e *Character) {
 		e.Inventory[name].Quantity--
 
 		Output(playerEnemyColor[player.Npc], Tab+player.Name+translate(StealSuccessTR)+name+"\n")
+		break
+
+	case heroesList.Paladin:
+		if e.Display.Race == races.Undead {
+			e.Health = 0
+			Output(playerEnemyColor[player.Npc], Tab+player.Name+translate(HolySuccessTR)+"\n")
+			break
+		}
+		if e.Name == enemiesList.DRAGON {
+			dmg := e.Health - int(float32(e.Health)*.75)
+			e.Health = int(float32(e.Health) * .75)
+			Output(playerEnemyColor[player.Npc], Tab+player.Name+translate(HolyHugeTR)+strconv.Itoa(dmg)+translate(HPTR)+"\n")
+			break
+		}
+		e.BaseHealth = e.BaseHealth / 2
+		e.Health = e.Health / 2
+		Output(playerEnemyColor[player.Npc], Tab+player.Name+translate(HolyMitigatedTR)+"\n")
 		break
 
 	case enemiesList.SORCERER:

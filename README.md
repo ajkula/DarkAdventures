@@ -10,9 +10,9 @@ You might want to **go get**:
 
 There are a few steps to make the experience much better however:
  - GDrive URL to download the game:
-  >  1. **https://preview.tinyurl.com/y4v69bsn** (Windows)
-  >  2. **https://preview.tinyurl.com/** (Mac)
-  >  3. **https://preview.tinyurl.com/y38x2d7f** (Linux)
+    1. **https://preview.tinyurl.com/y4v69bsn** (Windows)
+    2. **https://preview.tinyurl.com/y55p9gaa** (Mac)
+    3. **https://preview.tinyurl.com/y38x2d7f** (Linux)
  - I recommend using a terminal emulator on windows such as: 
  **https://conemu.github.io/en/TableOfContents.html**
  - The software will create the default *landscape layout*, it has only a weak contextual influence for the moment but will have more depth later.
@@ -49,7 +49,7 @@ Collect the best items to make it to through alive:
 - **Keys** to open chests or other mechanisms, will break on use.
 - **Moonstones** once used will instantly infuse into your arms and raise your strength by **5 Points**.
 - **Dolls** are a weird unexplained find, owners of that unworldly curiosity have reported to wake up after they thought they died. Even the weakest of them felt stronger for a while! Will suddenly disappear and revive you instantly with **30 HP** no matter your base health.
- - **Skills** are a set of various techniques each Hero can do to vanquish enemis, you earn them randomly on lvl up or at least one each 2 levels. Currently only the Thief has his Skill available, regarding enemies: Dragon, Goblin, Sorcerer have theirs.
+ - **Skills** are a set of various techniques each Hero can do to vanquish enemis, you earn them randomly on lvl up or at least one each 2 levels. Currently only the Thief and Paladin have their Skills available, regarding enemies: Dragon, Goblin, Sorcerer have theirs.
 
 ### More dangers than it seems
 

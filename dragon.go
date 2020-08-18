@@ -64,7 +64,7 @@ func (dragon *Dragon) shouldFreeze(str string) {
 
 func CreateDragon() {
 	HP := rand.Intn(50) + 80
-	dragonStartPosition := getAvailableRoom()
+	dragonStartPosition := getAvailableRoom(4, X-1)
 	dragon = &Dragon{
 		Character: &Character{
 			Name:            enemiesList.DRAGON,
@@ -151,12 +151,12 @@ func canDragonMoveThatWay(y, x int) bool {
 	return true
 }
 
-func getAvailableRoom() []int {
-	dragonStartPosition := []int{rand.Intn(4), rand.Intn(9)}
+func getAvailableRoom(yi, xi int) []int {
+	dragonStartPosition := []int{rand.Intn(yi), rand.Intn(xi)}
 	y := dragonStartPosition[0]
 	x := dragonStartPosition[1]
 	if !(WorldMap[y][x].HasEnemy || WorldMap[y][x].HasSeller) {
 		return dragonStartPosition
 	}
-	return getAvailableRoom()
+	return getAvailableRoom(yi, xi)
 }

@@ -9,9 +9,44 @@ func translate(text map[string]string) string {
 	return text[englishLang]
 }
 
+func vowelOrNot(word string, with, without map[string]string) string {
+	if hasVowel := VowelNextNun(word); hasVowel {
+		return translate(with)
+	}
+	return translate(without)
+}
+
+func VowelNextNun(str string) bool {
+	vowels := []string{"a", "e", "i", "o", "y", "u"}
+	if InitialsIndexOf(vowels, str) {
+		return true
+	}
+	return false
+}
+
 var gameintroTR = map[string]string{
-	englishLang: "\tWelcome to Dark Adventures\n\tSelect a difficulty:",
-	frenchLang:  "\tBienvenu dans Dark Adventures\n\tChoisissez la difficulté:",
+	englishLang: Tab + "Welcome to Dark Adventures\n" + Tab + "Select a difficulty:",
+	frenchLang:  Tab + "Bienvenu dans Dark Adventures\n" + Tab + "Choisissez la difficulté:",
+}
+
+var forestNameTR = map[string]string{
+	englishLang: "forest",
+	frenchLang:  "forêt",
+}
+
+var plainsNameTR = map[string]string{
+	englishLang: "plains",
+	frenchLang:  "plaines",
+}
+
+var desertNameTR = map[string]string{
+	englishLang: "desert",
+	frenchLang:  "désert",
+}
+
+var castleNameTR = map[string]string{
+	englishLang: "castle",
+	frenchLang:  "ruines",
 }
 
 var NearORCTR = map[string]string{
@@ -25,8 +60,8 @@ var nearOrcSearchTR = map[string]string{
 }
 
 var youSeeTR = map[string]string{
-	englishLang: "\tYou see ",
-	frenchLang:  "\tVous voyez ",
+	englishLang: Tab + "You see ",
+	frenchLang:  Tab + "Vous voyez ",
 }
 
 var deadOnTheGroundTR = map[string]string{
@@ -54,7 +89,7 @@ var rootBellFALSE = map[string]string{
 var warpTextTR = map[string]string{
 	englishLang: Tab + "All the roots from around gather and climb your legs,\n" +
 		Tab + "a pain bites you and you faint as a white light engulfs everything\n" +
-		Tab + "\"wake up!\" a voice says in your mind... you are somewhere else~",
+		Tab + "\"wake up!\" an eerie voice says in your mind.. you are somewhere else~",
 	frenchLang: Tab + "Des racines viennent de partout et enlacent vos jambes,\n" +
 		Tab + "soudain, une douleur pinçante et une forte lumière vous enveloppe\n" +
 		Tab + "\"réveillez-vous!\" vous dit une voix fantomatique... vous êtes ailleur~",
@@ -81,8 +116,8 @@ var youCanGoTR = map[string]string{
 }
 
 var CanTGoTR = map[string]string{
-	englishLang: "\tCan't go",
-	frenchLang:  "\tVous ne pouvez pas aller",
+	englishLang: Tab + "Can't go",
+	frenchLang:  Tab + "Vous ne pouvez pas aller",
 }
 
 var fromHereTR = map[string]string{
@@ -121,8 +156,8 @@ var hasBeenSlainTR = map[string]string{
 }
 
 var youDiedTR = map[string]string{
-	englishLang: "\tYou died\n",
-	frenchLang:  "\tVous êtes mort\n",
+	englishLang: Tab + "You died\n",
+	frenchLang:  Tab + "Vous êtes mort\n",
 }
 
 var chooseHeroTR = map[string]string{
@@ -297,6 +332,11 @@ var orcNAME = map[string]string{
 var dragonNAME = map[string]string{
 	englishLang: "DRAGON",
 	frenchLang:  "DRAGON",
+}
+
+var necromancerNAME = map[string]string{
+	englishLang: "NECROMANCER",
+	frenchLang:  "NECROMANCIEN",
 }
 
 var forestTR = map[string]string{
@@ -532,7 +572,7 @@ var HasEnemyOrSellerTR0 = map[string]string{
 
 var HasEnemyTR1 = map[string]string{
 	englishLang: "ready to fight you!\n",
-	frenchLang:  " prêt à combattre!\n",
+	frenchLang:  "prêt à combattre!\n",
 }
 
 var HasSellerTR = map[string]string{
@@ -664,21 +704,6 @@ var directionsArticlesVowelsTR = map[string]string{
 var directionsArticlesConsonantTR = map[string]string{
 	englishLang: " ",
 	frenchLang:  " au ",
-}
-
-func vowelOrNot(word string, with, without map[string]string) string {
-	if hasVowel := VowelNextNun(word); hasVowel {
-		return translate(with)
-	}
-	return translate(without)
-}
-
-func VowelNextNun(str string) bool {
-	vowels := []string{"a", "e", "i", "o", "y", "u"}
-	if InitialsIndexOf(vowels, str) {
-		return true
-	}
-	return false
 }
 
 var heroStoryThieveTR0 = map[string]string{
@@ -926,6 +951,33 @@ var StealSuccessTR = map[string]string{
 	frenchLang:  " a réussi a voler ",
 }
 
+var HolySuccessTR = map[string]string{
+	englishLang: Tab + "The god Triglav shows a smiling face, your sword glows\n" +
+		Tab + "you raise it above your head illuminating everything,\n" +
+		DoubleTab + translate(UndeadTR) + " creatures die instantly!",
+	frenchLang: Tab + "Le dieu Triglav montre un visage souriant, votre épée brille\n" +
+		Tab + "la levant au-dessus de vous, elle illumine tout,\n" +
+		DoubleTab + "les " + translate(UndeadTR) + "s meurent instantanément!",
+}
+
+var HolyMitigatedTR = map[string]string{
+	englishLang: Tab + "The god Triglav shows a sad face, your sword resonates\n" +
+		Tab + "you raise it above you the sound crushes all but you,\n" +
+		DoubleTab + "enemy HP and HP MAX Halfed...",
+	frenchLang: Tab + "Le dieu Triglav montre un visage triste, votre épée vibre\n" +
+		Tab + "la levant haut le son qu'elle émet brise tout sauf vous,\n" +
+		DoubleTab + "HP et HP MAX ennemi réduits de moitié...",
+}
+
+var HolyHugeTR = map[string]string{
+	englishLang: Tab + "The god Triglav shows a sad face, your sword resonates\n" +
+		Tab + "you raise it above you the sound crushes all but you,\n" +
+		DoubleTab + "Enemy -",
+	frenchLang: Tab + "Le dieu Triglav montre un visage triste, votre épée vibre\n" +
+		Tab + "la levant haut le son qu'elle émet brise tout sauf vous,\n" +
+		DoubleTab + "Ennemi -",
+}
+
 var DarkEnergyTR = map[string]string{
 	englishLang: Tab + "A huge Dark Energy ball descends the sky above you\n" +
 		Tab + "Your life is Reduced by ",
@@ -998,6 +1050,101 @@ var TieflingTR = map[string]string{
 	englishLang: "Tiefling",
 	frenchLang:  "Tiefling",
 }
+
+var UndeadTR = map[string]string{
+	englishLang: "Undead",
+	frenchLang:  "Mort-vivant",
+}
+
+var DarklingTR = map[string]string{
+	englishLang: "Darkling",
+	frenchLang:  "Ténébréen",
+}
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
 
 // var NAME = map[string]string{
 // 	englishLang: ,

@@ -57,6 +57,9 @@ var heroesSkillDescription = map[string]map[string]string{
 	heroesList.Barbarian: BarbarianSkill,
 }
 
+const CORPSE string = "CORPSE"
+
+// var CEnemy = &Character{Name: CORPSE}
 var NullifiedEnemy Character
 
 var LegendArray []string = []string{
@@ -113,7 +116,7 @@ var difficultyIndex = map[int]string{0: difficultyNames.Easy, 1: difficultyNames
 var GameDifficulty = map[string]int{difficultyNames.Easy: 15, difficultyNames.Meddium: 30, difficultyNames.Hard: 45}
 
 type HeroesList struct{ Thieve, Paladin, Wizard, Barbarian string }
-type EnemiesList struct{ SKELETON, GOBLIN, SORCERER, ORC, DRAGON string }
+type EnemiesList struct{ SKELETON, GOBLIN, SORCERER, ORC, DRAGON, NECROMANCER string }
 
 var heroesList = HeroesList{
 	Thieve:    translate(ThieveNAME),
@@ -125,11 +128,12 @@ var indexedHeroes = []string{heroesList.Thieve, heroesList.Paladin, heroesList.W
 
 var indexedEnemiesForRandomization = []string{enemiesList.SKELETON, enemiesList.GOBLIN, enemiesList.SORCERER, enemiesList.ORC}
 var enemiesList = EnemiesList{
-	SKELETON: translate(skeletonNAME),
-	GOBLIN:   translate(goblinNAME),
-	SORCERER: translate(sorcererNAME),
-	ORC:      translate(orcNAME),
-	DRAGON:   translate(dragonNAME),
+	SKELETON:    translate(skeletonNAME),
+	GOBLIN:      translate(goblinNAME),
+	SORCERER:    translate(sorcererNAME),
+	ORC:         translate(orcNAME),
+	DRAGON:      translate(dragonNAME),
+	NECROMANCER: translate(necromancerNAME),
 }
 
 var EnemyChancesByName map[string]int = map[string]int{
@@ -177,6 +181,14 @@ var ItemChancesByEnemyName map[string]map[string]int = map[string]map[string]int
 		itemNames.Scroll:    55,
 		itemNames.Potion:    50,
 		itemNames.Key:       45,
+		itemNames.Moonstone: 5,
+		itemNames.Coins:     1,
+	},
+	enemiesList.NECROMANCER: map[string]int{
+		itemNames.Doll:      50,
+		itemNames.Scroll:    25,
+		itemNames.Potion:    15,
+		itemNames.Key:       10,
 		itemNames.Moonstone: 5,
 		itemNames.Coins:     1,
 	},
@@ -269,10 +281,10 @@ type RoomTypes struct {
 }
 
 var roomTypes = &RoomTypes{
-	FOREST: "forest",
-	PLAINS: "plains",
-	DESERT: "desert",
-	CASTLE: "castle",
+	FOREST: translate(forestNameTR),
+	PLAINS: translate(plainsNameTR),
+	DESERT: translate(desertNameTR),
+	CASTLE: translate(castleNameTR),
 }
 
 var RoomFromLandscape = map[string]map[int]string{
