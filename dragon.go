@@ -94,6 +94,9 @@ func CreateDragon() {
 					Strength: 2,
 				},
 			},
+			StatusEffects: &StatusEffectsBlueprint{
+				AllStatus: []*Blueprint{},
+			},
 		},
 		PreviousLocation: dragonStartPosition,
 		Freeze:           false,

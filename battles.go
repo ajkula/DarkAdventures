@@ -32,7 +32,7 @@ func PrintArrayAligned(arr []string) string {
 }
 
 func Battle(player, enemy *Character) {
-	opponents := []*Character{player, enemy}
+	opponents = []*Character{player, enemy}
 	if !player.isAlive() || !enemy.isAlive() {
 		return
 	}
@@ -50,8 +50,34 @@ func Battle(player, enemy *Character) {
 		Output("red", actualPlayer.Name)
 		EnemyAction(player, enemy)
 	}
+	checkPlayers()
+}
 
+// PercentChances(50) bool
+
+func EnemyAction(p, e *Character) {
+	if !e.isAlive() {
+		return
+	}
+
+	MakeEnemyDecision(p, e)
+}
+
+var opponents []*Character
+
+func checkPlayers() {
+	var player *Character
+	var enemy *Character
 	for _, opp := range opponents {
+		if opp.Npc {
+			enemy = opp
+		}
+		if !opp.Npc {
+			player = opp
+		}
+	}
+	for _, opp := range opponents {
+
 		if !opp.isAlive() {
 			ResetTurns()
 			switch opp.Npc {
@@ -77,16 +103,7 @@ func Battle(player, enemy *Character) {
 					enemy.calcLVL()
 				}
 			}
+			opponents = []*Character{}
 		}
 	}
-}
-
-// PercentChances(50) bool
-
-func EnemyAction(p, e *Character) {
-	if !e.isAlive() {
-		return
-	}
-
-	MakeEnemyDecision(p, e)
 }

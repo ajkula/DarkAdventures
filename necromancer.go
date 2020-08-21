@@ -46,6 +46,9 @@ func CreateNecromancer() {
 					Strength: 3,
 				},
 			},
+			StatusEffects: &StatusEffectsBlueprint{
+				AllStatus: []*Blueprint{},
+			},
 		},
 		PreviousLocation: necromancerStartPosition,
 		Freeze:           false,

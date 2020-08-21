@@ -27,6 +27,7 @@ func PresentScene(p *Character) {
 		// Output("red", loc.HasEnemy)
 		// Output("green", getTurns())
 		// Output("red", "dragon.Freeze "+strconv.FormatBool(dragon.Freeze))
+		pile.forEachCharacter(func(player *Character) { player.applyStatusesEffect() })
 		p.showHealth()
 		p.DisplayExpGauge()
 	}

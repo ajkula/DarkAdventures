@@ -186,9 +186,23 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 		if (p.Health + item.Type.Effect) > p.BaseHealth {
 			p.Health = p.BaseHealth
 			p.Inventory[name].Quantity--
+			healing := strconv.Itoa(+item.Type.Effect)
+			if p.Name == heroesList.Wizard {
+				eff := item.Type.Effect + int(float32(item.Type.Effect)*.3)
+				healing = strconv.Itoa(+eff)
+			}
+			if p.Npc {
+				Output("white", Tab+p.Name+translate(usePotionTR)+healing+translate(HPTR))
+			} else {
+				Output("green", Tab+p.Name+translate(usePotionTR)+healing+translate(HPTR))
+			}
 			break
 		}
-		p.Health += item.Type.Effect
+		healing := item.Type.Effect
+		if p.Name == heroesList.Wizard {
+			healing += int(float32(healing) * .30)
+		}
+		p.Health += healing
 		p.Inventory[name].Quantity--
 		break
 	case itemNames.Moonstone:
@@ -199,14 +213,28 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 		break
 	case itemNames.Scroll:
 		enemy := enemyInArr[0].(*Character)
-		enemy.Health -= item.Type.Effect
+		dmg := item.Type.Effect
+		if p.Name == heroesList.Wizard {
+			enemy.StatusEffects.Add(enemy, &Blueprint{
+				Name:    statuses.Blight,
+				Counter: 3,
+			})
+			// DoubleTab + "Enemy gets " + translate(blightStatusTR)
+		}
+		enemy.Health -= dmg
 		p.Inventory[name].Quantity--
+		if p.Npc {
+			Output("white", Tab+p.Name+translate(useScrollTR)+Tab+translate(hitTR)+strconv.Itoa(+item.Type.Effect)+translate(dmgTR))
+		} else {
+			Output("green", Tab+p.Name+translate(useScrollTR)+Tab+translate(hitTR)+strconv.Itoa(+item.Type.Effect)+translate(dmgTR))
+		}
 		break
 	case itemNames.Doll:
 		p.Health = 30
 		p.Alive = true
 		p.Inventory[name].Quantity--
 		Output("green", translate(dollUsedTR))
+		time.Sleep(2 * time.Second)
 	}
 	return true
 }
@@ -273,6 +301,56 @@ func (player *Character) calculateDammage(enemy *Character) int {
 	return dmg
 }
 
+func (player *Character) getAreaRooms() (locArr []*Location) {
+	dirs := []string{}
+	loc := player.SetPlayerRoom()
+	if loc.X > 1 {
+		dirs = append(dirs, directions.West)
+	}
+	if loc.X < X-1 {
+		dirs = append(dirs, directions.East)
+	}
+
+	if loc.Y > 1 {
+		dirs = append(dirs, directions.North)
+	}
+	if loc.Y < X-1 {
+		dirs = append(dirs, directions.South)
+	}
+	x := loc.X
+	y := loc.Y
+
+	if indexOf(dirs, directions.North) != -1 {
+		locArr = append(locArr, WorldMap[y-1][x])
+	}
+	if indexOf(dirs, directions.South) != -1 {
+		locArr = append(locArr, WorldMap[y+1][x])
+	}
+
+	if indexOf(dirs, directions.West) != -1 {
+		locArr = append(locArr, WorldMap[y][x-1])
+
+		if indexOf(dirs, directions.North) != -1 {
+			locArr = append(locArr, WorldMap[y-1][x-1])
+		}
+		if indexOf(dirs, directions.South) != -1 {
+			locArr = append(locArr, WorldMap[y+1][x-1])
+		}
+	}
+
+	if indexOf(dirs, directions.East) != -1 {
+		locArr = append(locArr, WorldMap[y][x+1])
+
+		if indexOf(dirs, directions.North) != -1 {
+			locArr = append(locArr, WorldMap[y-1][x+1])
+		}
+		if indexOf(dirs, directions.South) != -1 {
+			locArr = append(locArr, WorldMap[y+1][x+1])
+		}
+	}
+	return locArr
+}
+
 func (player *Character) showHealth() {
 	loc := player.SetPlayerRoom()
 	if loc.HasSeller {
@@ -286,8 +364,10 @@ func (player *Character) showHealth() {
 	if loc.HasEnemy && loc.Enemy.isAlive() {
 		Output("red", translate(HasEnemyOrSellerTR0)+Article(loc.Enemy.Name+" lvl."+strconv.Itoa(loc.Enemy.LVL))+translate(HasEnemyTR1))
 		loc.Enemy.showHP()
+		loc.Enemy.showPlayerAfflictions()
 	}
 	player.showHP()
+	player.showPlayerAfflictions()
 }
 
 func (player *Character) isAlive() bool {
@@ -539,7 +619,7 @@ func (player *Character) DisplayExpGauge() {
 	partA := strings.Repeat(expChar, length)
 	partB := strings.Repeat(emptyGauge, gaugeSize-length)
 
-	Output("green", Tab+"LVL: "+strconv.Itoa(player.LVL)+strings.Repeat(" ", 3-utf8.RuneCountInString(strconv.Itoa(player.LVL)))+" ["+partA+partB+"]")
+	Output("blue", Tab+"lvl. "+strconv.Itoa(player.LVL)+strings.Repeat(" ", 3-utf8.RuneCountInString(strconv.Itoa(player.LVL)))+" ["+partA+partB+"]")
 }
 
 func (player *Character) DisplayStats() {
@@ -554,7 +634,7 @@ func (player *Character) DisplayStats() {
 			}
 		}
 	}
-	Output("cyan", "\n"+DoubleTab+"================= "+translate(Status)+" =================\n")
+	Output("cyan", "\n"+DoubleTab+"================= "+translate(StatusTR)+" =================\n")
 	Output("stats", Tab+CalculateSpaceAlign(translate(Health)+":")+strconv.Itoa(player.Health)+"/"+strconv.Itoa(player.BaseHealth)+"  "+
 		Tab+CalculateSpaceAlign(translate(CritsUP))+strconv.Itoa(player.Crit))
 	Output("stats", Tab+CalculateSpaceAlign(translate(StrengthUP))+strconv.Itoa(player.Strength)+"  "+
@@ -650,6 +730,35 @@ func (player *Character) useSkillSet(e *Character) {
 		Output(playerEnemyColor[player.Npc], Tab+player.Name+translate(HolyMitigatedTR)+"\n")
 		break
 
+	case heroesList.Wizard:
+		locArr := player.getAreaRooms()
+		Output(playerEnemyColor[player.Npc], translate(MagisterSkillTR))
+		hit := 0
+		for _, loc := range locArr {
+			if loc.HasEnemy {
+				loc.Enemy.Health = loc.Enemy.Health - 10
+				hit++
+			}
+		}
+		e.StatusEffects.Add(e, &Blueprint{
+			Name:    statuses.Blight,
+			Counter: 3,
+		})
+		Output(playerEnemyColor[player.Npc], DoubleTab+strconv.Itoa(hit)+translate(AreaHits))
+		break
+
+	case heroesList.Barbarian:
+		locArr := player.getAreaRooms()
+		for _, loc := range locArr {
+			loc.Visited = true
+		}
+		e.StatusEffects.Add(e, &Blueprint{
+			Name:    statuses.Fright,
+			Counter: 2,
+		})
+		Output(playerEnemyColor[player.Npc], translate(DazbogRushSkillTR))
+		break
+
 	case enemiesList.SORCERER:
 		reducer := .50
 		firstLine := ""
@@ -672,8 +781,10 @@ func (player *Character) useSkillSet(e *Character) {
 			dmg = dmg - int(float32(dmg)*.30)
 		}
 		e.Health = e.Health - dmg
-		time.Sleep(3 * time.Second)
+		time.Sleep(1 * time.Second)
+		break
 	}
+	time.Sleep(2 * time.Second)
 }
 
 func (player *Character) checkSkills() bool {
@@ -693,14 +804,40 @@ func (player *Character) checkSkills() bool {
 //																	Status Effects
 // ***********************************************************************************
 
-func (ste *StatusEffectsBlueprint) Add(args ...*Blueprint) {
+func (ste *StatusEffectsBlueprint) Add(p *Character, args ...*Blueprint) {
 	statuses := args
+	for _, status := range statuses {
+		ste.remove(status.Name)
+		p.logStatusAfflicted(status.Name)
+	}
 	ste.AllStatus = append(ste.AllStatus, statuses...)
+}
+
+func (player *Character) logStatusAfflicted(name string) {
+	NPC := player.Npc
+
+	switch name {
+	case statuses.Blight:
+		text := translate(heroGotBlightTR)
+		if NPC {
+			text = translate(EnemiGotBlightTR)
+		}
+		Output(playerEnemyColor[!NPC], text)
+		break
+	case statuses.Fright:
+		text := translate(heroGotFrightTR)
+		if NPC {
+			text = translate(EnemiGotFrightTR)
+		}
+		Output(playerEnemyColor[!NPC], text)
+	}
 }
 
 func (ste *StatusEffectsBlueprint) remove(name string) {
 	i := indexOfBlueprint(ste.AllStatus, name)
-	ste.AllStatus = append(ste.AllStatus[:i], ste.AllStatus[i+1:]...)
+	if i >= 0 {
+		ste.AllStatus = append(ste.AllStatus[:i], ste.AllStatus[i+1:]...)
+	}
 }
 
 func indexOfBlueprint(arr []*Blueprint, item string) int {
@@ -712,10 +849,51 @@ func indexOfBlueprint(arr []*Blueprint, item string) int {
 	return -1
 }
 
-func (player *Character) applyStatusesEffect() {
-	for _, status := range player.StatusEffects.AllStatus {
-		fmt.Printf(status.Name+": ", status.Counter, status.Timestamp.Seconds)
+func (player *Character) showPlayerAfflictions() {
+	if len(player.StatusEffects.AllStatus) > 0 {
+		list := []string{}
+		for _, status := range player.StatusEffects.AllStatus {
+			list = append(list, status.Name)
+		}
+		Output(playerEnemyColor[!player.Npc], Tab+CalculateSpaceAlign(translate(statusEffectsTR))+ArrayToString(list))
 	}
+}
+
+func (player *Character) applyStatusesEffect() {
+	if !player.isAlive() {
+		player.StatusEffects.AllStatus = []*Blueprint{}
+
+		return
+	}
+	for _, status := range player.StatusEffects.AllStatus {
+		// fmt.Printf("%s: %+v  %+v\n", status.Name, status.Counter, status.Timestamp.Seconds())
+		player.Affliction(status)
+	}
+}
+
+func (player *Character) Affliction(status *Blueprint) {
+	switch status.Name {
+	case statuses.Blight:
+		status.Counter--
+		flames := rand.Intn(5) + 1
+		player.Health -= flames
+		Output(playerEnemyColor[!player.Npc], DoubleTab+player.Name+translate(burnsTR)+strconv.Itoa(flames)+translate(dmgTR))
+		if status.Counter <= 0 {
+			player.StatusEffects.remove(statuses.Blight)
+		}
+		break
+	case statuses.Fright:
+		if status.Counter <= 0 {
+			player.StatusEffects.remove(statuses.Fright)
+			break
+		}
+		status.Counter--
+		Output(playerEnemyColor[!player.Npc], DoubleTab+player.Name+translate(cantMoveTR))
+		ResetTurns()
+		break
+	}
+
+	checkPlayers()
 }
 
 // panic: runtime error: invalid memory address or nil pointer dereference

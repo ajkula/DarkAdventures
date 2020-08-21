@@ -506,8 +506,8 @@ var ScrollTR = map[string]string{
 }
 
 var PotionTR = map[string]string{
-	englishLang: "Heal 20 HP",
-	frenchLang:  "Soigne 20 HP",
+	englishLang: "Heal",
+	frenchLang:  "Soigne",
 }
 
 var KeyTR = map[string]string{
@@ -916,12 +916,12 @@ var WizardSkill = map[string]string{
 
 var BarbarianSkill = map[string]string{
 	englishLang: DoubleTab + "A skilled hunter, the map is revealed around,\n" +
-		DoubleTab + "the enemy you fight is terrified for 3 turns.",
+		DoubleTab + "the enemy you fight is terrified for 2 turns.",
 	frenchLang: DoubleTab + "Un chasseur hors pairs, carte révélée alentour,\n" +
-		DoubleTab + "l'ennemi est terrifié pour 3 tours.",
+		DoubleTab + "l'ennemi est terrifié pour 2 tours.",
 }
 
-var Status = map[string]string{
+var StatusTR = map[string]string{
 	englishLang: "Status",
 	frenchLang:  "Statut",
 }
@@ -976,6 +976,55 @@ var HolyHugeTR = map[string]string{
 	frenchLang: Tab + "Le dieu Triglav montre un visage triste, votre épée vibre\n" +
 		Tab + "la levant haut le son qu'elle émet brise tout sauf vous,\n" +
 		DoubleTab + "Ennemi -",
+}
+
+var MagisterSkillTR = map[string]string{
+	englishLang: Tab + "The Neptunium of the Observatory Tower of Krispin\n," +
+		Tab + "turns to align and focus the light of the Sirius star.\n" +
+		Tab + "The bean hits you wand's crystal dealing an area damage\n" +
+		DoubleTab + "Enemies around get -> -10 HP\n" +
+		Tab + "Using your spirit's strength you focus a beam forward\n",
+	frenchLang: Tab + "Le Neptunium de l'Observatoire de la tour de Krispin\n," +
+		Tab + "s'oriente pour refleter vers vous la lumière de l'étoile Sirius.\n" +
+		Tab + "Le rayon frappe votre baton causant des dégats de zone\n" +
+		DoubleTab + "Les ennemis autout reçoivent -> -10 HP\n" +
+		Tab + "Avec la force de l'esprit vous concentrer le rayon\n",
+}
+
+var DazbogRushSkillTR = map[string]string{
+	englishLang: Tab + "Dazbog, Wolf God of the Hunt's ethereal wolves runs all ways.\n" +
+		Tab + "They suddenly jump dive back straight to your mind.\n" +
+		Tab + "The map around is revealed to you, a huge ghostly\n" +
+		Tab + "wolf jaw bites the enemy from the sky above...\n",
+	frenchLang: Tab + "Dazbog, Dieu Loup de la Chasse envois ses loups éthérés.\n" +
+		Tab + "Ils reviennent d'un bond dans votre esprit.\n" +
+		Tab + "La carte alentour vous est révelée, une énorme\n" +
+		Tab + "mâchoire spéctrale mors l'ennemi depuis les cieux...\n",
+}
+
+var EnemiGotFrightTR = map[string]string{
+	englishLang: DoubleTab + "Enemy gets " + translate(frightStatusTR) + " for 2 turn",
+	frenchLang:  DoubleTab + "L'ennemi est affecté par " + translate(frightStatusTR) + " pour 2 tour",
+}
+
+var heroGotFrightTR = map[string]string{
+	englishLang: DoubleTab + "You got " + translate(blightStatusTR),
+	frenchLang:  DoubleTab + "Vous êtes affecté par " + translate(frightStatusTR) + " pour 2 tour",
+}
+
+var EnemiGotBlightTR = map[string]string{
+	englishLang: DoubleTab + "Enemy gets " + translate(blightStatusTR),
+	frenchLang:  DoubleTab + "L'ennemi est affecté par " + translate(blightStatusTR),
+}
+
+var heroGotBlightTR = map[string]string{
+	englishLang: DoubleTab + "You got " + translate(blightStatusTR),
+	frenchLang:  DoubleTab + "Vous êtes affecté par " + translate(blightStatusTR),
+}
+
+var AreaHits = map[string]string{
+	englishLang: " Enemies Hit!\n",
+	frenchLang:  " Ennemis touchés!\n",
 }
 
 var DarkEnergyTR = map[string]string{
@@ -1061,70 +1110,67 @@ var DarklingTR = map[string]string{
 	frenchLang:  "Ténébréen",
 }
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var usePotionTR = map[string]string{
+	englishLang: " use potion +",
+	frenchLang:  " utilise potion +",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var useScrollTR = map[string]string{
+	englishLang: " reads an old scroll, it suddenly turns into ashes,\n" +
+		Tab + "as a fireball appears and rush the enemy\n",
+	frenchLang: " lit un vieux parchemin qui se change en cendre aussitôt\n" +
+		Tab + "alors qu'une boule de feu se rue sur l'ennemi\n",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var dmgTR = map[string]string{
+	englishLang: " DMG",
+	frenchLang:  " DMG",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var hitTR = map[string]string{
+	englishLang: DoubleTab + "HIT: ",
+	frenchLang:  DoubleTab + "HIT: ",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var blightStatusTR = map[string]string{
+	englishLang: "blight",
+	frenchLang:  "Brûlure",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var darkStatusTR = map[string]string{
+	englishLang: "dark",
+	frenchLang:  "Sombre",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var plagueStatusTR = map[string]string{
+	englishLang: "plague",
+	frenchLang:  "Peste",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var lightStatusTR = map[string]string{
+	englishLang: "light",
+	frenchLang:  "Lumière",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var frightStatusTR = map[string]string{
+	englishLang: "fright",
+	frenchLang:  "Effroi",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var statusEffectsTR = map[string]string{
+	englishLang: "Status:",
+	frenchLang:  "Statuts:",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var cantMoveTR = map[string]string{
+	englishLang: " can't move!",
+	frenchLang:  " ne peut pas bouger!",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
-
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var burnsTR = map[string]string{
+	englishLang: " Burns for ",
+	frenchLang:  " Brûle pour ",
+}
 
 // var NAME = map[string]string{
 // 	englishLang: ,

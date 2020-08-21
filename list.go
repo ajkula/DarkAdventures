@@ -1,20 +1,30 @@
 package main
 
 type Pile struct {
-	Enemies []*Character
-	Gates   []*Gate
+	Enemies       []*Character
+	Gates         []*Gate
+	AllCharacters []*Character
 }
 
 var pile *Pile = &Pile{}
 
-func (pile *Pile) PushCharacters(args ...*Character) {
-	players := args
-	pile.Enemies = append(pile.Enemies, players...)
+func (pile *Pile) PushCharacters(player *Character) {
+	if player.Npc {
+		pile.Enemies = append(pile.Enemies, player)
+	}
+	pile.AllCharacters = append(pile.AllCharacters, player)
 }
 
-func (pile *Pile) PopCharacter() *Character {
+func (pile *Pile) PopEnemy() *Character {
 	enemy := pile.Enemies[:1][0]
 	pile.Enemies = pile.Enemies[1:]
+	return enemy
+}
+
+func (pile *Pile) PopCharacter(player *Character) *Character {
+
+	enemy := pile.AllCharacters[:1][0]
+	pile.Enemies = pile.AllCharacters[1:]
 	return enemy
 }
 
@@ -31,6 +41,16 @@ func (pile *Pile) PopGate() *Gate {
 
 func (pile *Pile) forEachEnemy(apply func(*Character)) {
 	for _, enemi := range pile.Enemies {
-		apply(enemi)
+		if enemi.isAlive() {
+			apply(enemi)
+		}
+	}
+}
+
+func (pile *Pile) forEachCharacter(apply func(*Character)) {
+	for _, player := range pile.AllCharacters {
+		if player.isAlive() {
+			apply(player)
+		}
 	}
 }

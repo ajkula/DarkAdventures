@@ -11,7 +11,7 @@ const Tab string = "\t"
 const DoubleTab string = "\t\t"
 const Unseen string = " "
 const Shop string = "#"
-const Root string = "π"
+const Root string = "л"
 const YourPosition string = "@"
 const LegendSpace int = 10
 const inventorySpace int = 38
@@ -19,6 +19,8 @@ const heroesDetailsSpacing int = 14
 const gaugeSize int = 40
 const expChar string = "="
 const emptyGauge string = " "
+const dragonPos string = "V"
+const enemyPos string = "Д"
 
 var playerEnemyColor = map[bool]string{
 	false: "green",
@@ -55,6 +57,18 @@ var heroesSkillDescription = map[string]map[string]string{
 	heroesList.Paladin:   PaladinSkill,
 	heroesList.Wizard:    WizardSkill,
 	heroesList.Barbarian: BarbarianSkill,
+}
+
+type Statuses struct {
+	Blight, Dark, Plague, Light, Fright string
+}
+
+var statuses = &Statuses{
+	Blight: translate(blightStatusTR),
+	Dark:   translate(darkStatusTR),
+	Light:  translate(lightStatusTR),
+	Plague: translate(plagueStatusTR),
+	Fright: translate(frightStatusTR),
 }
 
 const CORPSE string = "CORPSE"
@@ -383,7 +397,7 @@ var ItemList = map[string]*Item{
 	},
 	itemNames.Potion: {
 		Name:        itemNames.Potion,
-		Description: translate(PotionTR),
+		Description: translate(PotionTR) + " 20 HP",
 		Effect:      20,
 	},
 	itemNames.Key: {

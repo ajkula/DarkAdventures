@@ -82,6 +82,7 @@ func main() {
 	hero := heroFromName(indexedHeroes[Hero])
 	hero.SetPlayerRoom()
 	hero.getImage()
+	pile.PushCharacters(hero)
 	// hero.MoveTo("n")
 	for {
 		loc := hero.SetPlayerRoom()

@@ -21,10 +21,16 @@ func DisplayWorldMap(p *Character) {
 				if WorldMap[y][x].HasGate {
 					result[y][x] = Root
 				}
+				if WorldMap[y][x].HasEnemy {
+					result[y][x] = enemyPos
+					if WorldMap[y][x].Enemy.Name == enemiesList.DRAGON {
+						result[y][x] = dragonPos
+					}
+				}
 			}
 			if WorldMap[y][x].HasEnemy && Difficulty == 0 {
 				if WorldMap[y][x].Enemy.Name == enemiesList.DRAGON {
-					result[y][x] = "V"
+					result[y][x] = dragonPos
 				}
 			}
 
