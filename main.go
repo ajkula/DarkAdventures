@@ -22,6 +22,7 @@ var Grid [][]string
 var player Character
 var Difficulty int
 var Hero int
+var hero *Character
 
 func Check(e error) {
 	if e != nil {
@@ -79,7 +80,7 @@ func init() {
 func main() {
 	// player = *new(Character)
 	ChooseHero()
-	hero := heroFromName(indexedHeroes[Hero])
+	hero = heroFromName(indexedHeroes[Hero])
 	hero.SetPlayerRoom()
 	hero.getImage()
 	pile.PushCharacters(hero)

@@ -987,7 +987,7 @@ var MagisterSkillTR = map[string]string{
 	frenchLang: Tab + "Le Neptunium de l'Observatoire de la tour de Krispin\n," +
 		Tab + "s'oriente pour refleter vers vous la lumière de l'étoile Sirius.\n" +
 		Tab + "Le rayon frappe votre baton causant des dégats de zone\n" +
-		DoubleTab + "Les ennemis autout reçoivent -> -10 HP\n" +
+		DoubleTab + "Les ennemis autour reçoivent -> -10 HP\n" +
 		Tab + "Avec la force de l'esprit vous concentrer le rayon\n",
 }
 

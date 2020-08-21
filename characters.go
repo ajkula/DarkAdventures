@@ -133,6 +133,23 @@ func (player *Character) MoveTo(direction string) bool {
 	return ok
 }
 
+func (player *Character) didYourActionKillThatEnemy(e *Character) {
+	loc := player.SetPlayerRoom()
+	if loc.HasEnemy {
+		if loc.Enemy == e {
+			return
+		}
+	}
+	if !e.isAlive() && e.Npc {
+		Output("green", "\t", e.Name, translate(hasBeenSlainTR))
+		SCORE.scoreKills(e.Name)
+		EnemiesKilled++
+		player.LevelUp.Exp += e.ExpValue
+		player.getEnemyItems(e)
+		player.calcLVL()
+	}
+}
+
 func (p *Character) escapeBattle(b bool) {
 	if b {
 		if p.From != "" {
@@ -737,6 +754,7 @@ func (player *Character) useSkillSet(e *Character) {
 		for _, loc := range locArr {
 			if loc.HasEnemy {
 				loc.Enemy.Health = loc.Enemy.Health - 10
+				player.didYourActionKillThatEnemy(loc.Enemy)
 				hit++
 			}
 		}
@@ -862,7 +880,6 @@ func (player *Character) showPlayerAfflictions() {
 func (player *Character) applyStatusesEffect() {
 	if !player.isAlive() {
 		player.StatusEffects.AllStatus = []*Blueprint{}
-
 		return
 	}
 	for _, status := range player.StatusEffects.AllStatus {
@@ -878,6 +895,7 @@ func (player *Character) Affliction(status *Blueprint) {
 		flames := rand.Intn(5) + 1
 		player.Health -= flames
 		Output(playerEnemyColor[!player.Npc], DoubleTab+player.Name+translate(burnsTR)+strconv.Itoa(flames)+translate(dmgTR))
+		hero.didYourActionKillThatEnemy(player)
 		if status.Counter <= 0 {
 			player.StatusEffects.remove(statuses.Blight)
 		}

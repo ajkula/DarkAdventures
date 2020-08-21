@@ -21,13 +21,6 @@ func (pile *Pile) PopEnemy() *Character {
 	return enemy
 }
 
-func (pile *Pile) PopCharacter(player *Character) *Character {
-
-	enemy := pile.AllCharacters[:1][0]
-	pile.Enemies = pile.AllCharacters[1:]
-	return enemy
-}
-
 func (pile *Pile) PushGates(args ...*Gate) {
 	gate := args
 	pile.Gates = append(pile.Gates, gate...)
@@ -53,4 +46,31 @@ func (pile *Pile) forEachCharacter(apply func(*Character)) {
 			apply(player)
 		}
 	}
+}
+
+func (pile *Pile) checkIfDead(player *Character) {
+	for i, enemi := range pile.Enemies {
+		if !enemi.isAlive() {
+			pile.ejectCharacter(i)
+		}
+	}
+}
+
+func (pile *Pile) removeCharacter(player *Character) {
+	i := pile.indexOfCharacter(player)
+	pile.ejectCharacter(i)
+}
+
+func (pile *Pile) indexOfCharacter(player *Character) (i int) {
+	i = -1
+	for index, char := range pile.Enemies {
+		if player == char {
+			i = index
+		}
+	}
+	return i
+}
+
+func (pile *Pile) ejectCharacter(i int) {
+	pile.Enemies = append(pile.Enemies[:i], pile.Enemies[i+1:]...)
 }
