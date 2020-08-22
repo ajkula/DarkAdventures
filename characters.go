@@ -200,14 +200,14 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 		}
 		break
 	case itemNames.Potion:
-		if (p.Health + item.Type.Effect) > p.BaseHealth {
+		heal := item.Type.Effect
+		if p.Name == heroesList.Wizard {
+			heal += int(float32(heal) * .30)
+		}
+		if (p.Health + heal) > p.BaseHealth {
 			p.Health = p.BaseHealth
 			p.Inventory[name].Quantity--
-			healing := strconv.Itoa(+item.Type.Effect)
-			if p.Name == heroesList.Wizard {
-				eff := item.Type.Effect + int(float32(item.Type.Effect)*.3)
-				healing = strconv.Itoa(+eff)
-			}
+			healing := strconv.Itoa(+heal)
 			if p.Npc {
 				Output("white", Tab+p.Name+translate(usePotionTR)+healing+translate(HPTR))
 			} else {
@@ -215,11 +215,7 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 			}
 			break
 		}
-		healing := item.Type.Effect
-		if p.Name == heroesList.Wizard {
-			healing += int(float32(healing) * .30)
-		}
-		p.Health += healing
+		p.Health += heal
 		p.Inventory[name].Quantity--
 		break
 	case itemNames.Moonstone:
@@ -321,14 +317,14 @@ func (player *Character) calculateDammage(enemy *Character) int {
 func (player *Character) getAreaRooms() (locArr []*Location) {
 	dirs := []string{}
 	loc := player.SetPlayerRoom()
-	if loc.X > 1 {
+	if loc.X >= 1 {
 		dirs = append(dirs, directions.West)
 	}
 	if loc.X < X-1 {
 		dirs = append(dirs, directions.East)
 	}
 
-	if loc.Y > 1 {
+	if loc.Y >= 1 {
 		dirs = append(dirs, directions.North)
 	}
 	if loc.Y < X-1 {
