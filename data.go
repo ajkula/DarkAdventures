@@ -73,6 +73,13 @@ var statuses = &Statuses{
 
 const CORPSE string = "CORPSE"
 
+var specialAttackOnDragon map[string]map[string]int
+var specialOnDragonByDifficultyMap = map[int]int{
+	0: 5,
+	1: 3,
+	2: 0,
+}
+
 // var CEnemy = &Character{Name: CORPSE}
 var NullifiedEnemy Character
 

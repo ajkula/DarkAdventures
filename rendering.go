@@ -2,34 +2,44 @@ package main
 
 import (
 	"strings"
+	"time"
 	"unicode/utf8"
 )
 
 var started bool = false
 
+func applyStatus(player *Character) { player.applyStatusesEffect() }
+
 func PresentScene(p *Character) {
 	loc := p.SetPlayerRoom()
 	loc.RemoveBattle()
 	// ICI
+	t := getTurns()
 	if started {
 		loc.showImage()
-		Output("yellow", loc.Description)
+		if t == 1 {
+			Output("yellow", loc.Description)
+		}
 		if loc.HasGate {
-			Output("yellow", rootBell[p.hasItemInInventory(itemNames.Key)])
+			if t == 1 {
+				Output("yellow", rootBell[p.hasItemInInventory(itemNames.Key)])
+			}
 		}
 		sayIt := dragonLanding.shouldSayIt()
 		if loc.HasEnemy && loc.Enemy.Name == enemiesList.DRAGON && sayIt {
 			Output("yellow", loc.Ephemeral)
 			dragonLanding.saidIt()
-		} else {
-			Output("yellow", loc.Ephemeral)
+			time.Sleep(1 * time.Second)
 		}
 		// Output("red", loc.HasEnemy)
 		// Output("green", getTurns())
 		// Output("red", "dragon.Freeze "+strconv.FormatBool(dragon.Freeze))
-		pile.forEachCharacter(func(player *Character) { player.applyStatusesEffect() })
+		// ICI
+		pile.forEachCharacter(applyStatus)
+		// if t == 1 {
 		p.showHealth()
 		p.DisplayExpGauge()
+		// }
 	}
 	// if loc.HasGate {
 	// 	y, x := loc.Gate.Warp()
@@ -38,8 +48,10 @@ func PresentScene(p *Character) {
 
 	if loc.HasEnemy {
 		if loc.Enemy.Alive {
+			// if t == 1 {
 			showActions(p, battleCommands)
 			showUniversalCmds()
+			// }
 			Battle(p, loc.Enemy)
 		}
 	}

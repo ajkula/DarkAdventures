@@ -268,15 +268,21 @@ func (player *Character) attack(enemy *Character) {
 	}
 }
 
+func (player *Character) getSpecialAttackOnDragon() int {
+	specialAttackOnDragon = map[string]map[string]int{
+		heroesList.Thieve:    {races.Human: 0},
+		heroesList.Paladin:   {races.Human: 0},
+		heroesList.Wizard:    {races.Human: 0, races.Tiefling: 0},
+		heroesList.Barbarian: {races.Human: 5 + specialOnDragonByDifficultyMap[Difficulty], races.Gnoll: 15 + specialOnDragonByDifficultyMap[Difficulty]},
+	}
+	return specialAttackOnDragon[player.Name][player.Display.Race]
+}
+
 func (player *Character) calculateDammage(enemy *Character) int {
 	var modifier float32 = .0
 	if enemy.Name == enemiesList.DRAGON {
 		if player.Name == heroesList.Barbarian {
-			chance := 5
-			if player.Display.Race == races.Gnoll {
-				chance = 15
-			}
-			if PercentChances(chance) {
+			if PercentChances(player.getSpecialAttackOnDragon()) {
 				dmg := int(float32(dragon.BaseHealth) * .35)
 				Output("white", translate(BarbarianLuckDragonTR)+strconv.Itoa(dmg)+translate(DamageTR))
 				time.Sleep(1 * time.Second)
@@ -844,6 +850,7 @@ func (player *Character) logStatusAfflicted(name string) {
 			text = translate(EnemiGotFrightTR)
 		}
 		Output(playerEnemyColor[!NPC], text)
+		break
 	}
 }
 
@@ -903,7 +910,8 @@ func (player *Character) Affliction(status *Blueprint) {
 		}
 		status.Counter--
 		Output(playerEnemyColor[!player.Npc], DoubleTab+player.Name+translate(cantMoveTR))
-		ResetTurns()
+		setTurnsFrightStatus(player.Npc)
+		// ResetTurns()
 		break
 	}
 

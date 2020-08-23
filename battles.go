@@ -21,6 +21,10 @@ func getTurns() int8 {
 	return boolToInt8(boolean)
 }
 
+func setTurnsFrightStatus(b bool) {
+	boolean = b
+}
+
 // turns func => int8 returns 0 / 1 alternatively each time it's invoked
 func turns() int8 {
 	boolean = !boolean
@@ -36,7 +40,8 @@ func Battle(player, enemy *Character) {
 	if !player.isAlive() || !enemy.isAlive() {
 		return
 	}
-	actualPlayer := opponents[turns()]
+	index := turns()
+	actualPlayer := opponents[index]
 	if !actualPlayer.Npc {
 		cmd := UserInputln()
 		if ok := arrayIncludesCommand(battleCommands, cmd); ok {

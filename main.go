@@ -52,7 +52,7 @@ func init() {
 		file, e = ioutil.ReadFile("landscape.txt")
 		Check(e)
 	}
-
+	showTitle()
 	Intro()
 	var lines = strings.Split(string(file), "\n")
 	cols := strings.Split(lines[0], "")
@@ -69,7 +69,6 @@ func init() {
 		// Grid[index][rank] = element
 		// }
 	}
-
 	// for _, l := range Grid {
 	// 	fmt.Println("grid", l)
 	// }
@@ -94,6 +93,11 @@ func main() {
 	}
 	// DisplayWorldMap(hero)
 	// hero.DisplayInvetory()
+}
+
+func showTitle() {
+	Output("blue", title)
+	time.Sleep(2 * time.Second)
 }
 
 func Outputf(c string, format string, args ...interface{}) {
