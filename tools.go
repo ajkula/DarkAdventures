@@ -190,8 +190,8 @@ func showGameItems() {
 
 func showGameEnemies() {
 	fmt.Println(DoubleTab + CalculateSpaceAlign("Enemies:"))
-	for i := 0; i < X; i++ {
-		for j := 0; j < Y; j++ {
+	for i := 0; i < Y; i++ {
+		for j := 0; j < X; j++ {
 			if WorldMap[i][j].HasEnemy {
 				aggregateEnemies[WorldMap[i][j].Enemy.Name]++
 			}
