@@ -119,7 +119,7 @@ func dragonPossibleWays() []string {
 			youCanGo = append(youCanGo, directions.West)
 		}
 	}
-	if yourPlace.X <= 8 {
+	if yourPlace.X <= X-2 {
 		if canDragonMoveThatWay(yourPlace.Y, yourPlace.X+1) {
 			youCanGo = append(youCanGo, directions.East)
 		}
@@ -130,7 +130,7 @@ func dragonPossibleWays() []string {
 			youCanGo = append(youCanGo, directions.North)
 		}
 	}
-	if yourPlace.Y <= 2 {
+	if yourPlace.Y <= Y-2 {
 		if canDragonMoveThatWay(yourPlace.Y+1, yourPlace.X) {
 			youCanGo = append(youCanGo, directions.South)
 		}

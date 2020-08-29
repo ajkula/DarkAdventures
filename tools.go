@@ -96,6 +96,7 @@ func AnalyzeItemsRepartition() {
 }
 
 func makeWorldMapSizes(Y, X int) [][]*Location {
+	fmt.Println(Y, X)
 	var w [][]*Location
 	total := 0
 	var tempo []*Location
@@ -144,8 +145,8 @@ func CreateMap() [][]*Location {
 		// WorldMap = append(WorldMap, temporary)
 	}
 	for b := 0; b < Y; b++ {
-		for a := 0; a < Y; a++ {
-			addOrcProximity(WorldMap[a][b])
+		for a := 0; a < X; a++ {
+			addOrcProximity(WorldMap[b][a])
 		}
 	}
 	CreateDragon()
