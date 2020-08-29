@@ -58,14 +58,18 @@ func main() {
 		}
 	}
 	text := ""
+	lr := "\n"
 	for y, line := range worldMap {
 		for x, elem := range line {
 			if elem == randomizedLandscape {
 				worldMap[y][x] = castle
 			}
 		}
-		text += strings.Join(line, "\n")
-		log(line, "\n")
+		if y == len(worldMap)-1 {
+			lr = ""
+		}
+		text += strings.Join(line, "") + lr
+		log(y, len(worldMap), line, "\n")
 	}
 	writeRandomizedLandscape(text)
 }
@@ -87,19 +91,16 @@ func fillerWorker(y, x int, room string, coordsArr []*Coords, ch chan string) {
 }
 
 func writeRandomizedLandscape(text string) {
-	file, err = ioutil.ReadFile("landscape.txt")
-	if err != nil {
-		f, e := os.Create("landscape.txt")
-		Check(e)
-		defer f.Close()
+	file, err := os.Create("landscape.txt")
+	Check(err)
+	defer file.Close()
 
-		num, e := f.WriteString(text)
-		Check(e)
-		f.Sync()
-		fmt.Fprintf(os.Stdout, "Wrote random Landscape WorldMap: %v bytes wrote to disk\n\n", num)
-		file, e = ioutil.ReadFile("landscape.txt")
-		Check(e)
-	}
+	num, e := file.WriteString(text)
+	Check(e)
+	file.Sync()
+	fmt.Fprintf(os.Stdout, "Wrote random Landscape WorldMap: %v bytes wrote to disk\n\n", num)
+	_, e = ioutil.ReadFile("landscape.txt")
+	Check(e)
 }
 
 func makeWorldMapSizes(Y, X int) [][]string {
