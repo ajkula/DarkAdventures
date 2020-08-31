@@ -60,3 +60,9 @@ Those are about to come ingame soon, the skeleton mechanics are set, now all is 
 ### The mightiest of foes
 
 A **Dragon** roams the North parts of the World Map, you will need to be well prepared to take down this enemy.
+
+## Side tools
+
+mapCreator is a utility to create random landscape.txt (WorldMap) for you.
+It will replace the landscape.txt file in the same directory.
+The goal is to have random maps filed with different types of rooms, with random sizes from 10*10 to 20*20.

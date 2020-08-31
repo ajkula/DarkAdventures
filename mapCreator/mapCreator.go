@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -43,16 +44,17 @@ func init() {
 }
 
 func main() {
+	channel := make(chan string, 18)
 	for i := 0; i < 18; i++ {
 		i := i
-		channel := make(chan string)
 		room := getItemForArrayByBigLoop(letters, i)
 		y := rand.Intn(Y)
 		x := rand.Intn(X)
 		newCoordsArr := getAllAdjacents(y, x)
 
 		go fillerWorker(y, x, room, newCoordsArr, channel)
-
+	}
+	for i := 0; i < 18; i++ {
 		select {
 		case <-channel:
 		}
@@ -74,15 +76,29 @@ func main() {
 	writeRandomizedLandscape(text)
 }
 
+func showProgress(s string, coordsArr []*Coords) {
+	log(s, "\n")
+	if len(coordsArr) > 0 {
+		str := "[ "
+		for _, dir := range coordsArr {
+			str += "X: " + strconv.Itoa(dir.X) + " Y: " + strconv.Itoa(dir.Y) + ", "
+		}
+		str += "]\n"
+		log(str)
+	}
+	for _, line := range worldMap {
+		log(line, "\n")
+	}
+}
+
 func fillerWorker(y, x int, room string, coordsArr []*Coords, ch chan string) {
 	worldMap[y][x] = room
 	newCoordsArr := getAllAdjacents(y, x)
 
 	for len(coordsArr) > 0 {
-		room := room
+		showProgress(room, coordsArr)
 		newCoordsArr = newCoordsArr[0:0]
 		for _, coords := range coordsArr {
-			room := room
 			worldMap[coords.Y][coords.X] = room
 			coordsArr = append(newCoordsArr, getAllAdjacents(coords.Y, coords.X)...)
 		}
