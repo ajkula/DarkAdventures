@@ -45,33 +45,7 @@ var subMapNames SubMapNames = SubMapNames{
 }
 var subMapsParts []string = []string{subMapNames.NorthEast, subMapNames.NorthWest, subMapNames.SouthEast, subMapNames.SouthWest}
 
-var subMaps *SubMaps = &SubMaps{
-	NorthWest: &Coords{
-		Xa: X / 2,
-		Xb: 0,
-		Ya: Y / 2,
-		Yb: 0,
-	},
-	NorthEast: &Coords{
-		Xa: X / 2,
-		Xb: X / 2,
-		Ya: Y / 2,
-		Yb: 0,
-	},
-	SouthWest: &Coords{
-		Xa: X / 2,
-		Xb: 0,
-		Ya: (Y - 2) / 2,
-		Yb: Y / 2,
-	},
-	SouthEast: &Coords{
-		Xa: X / 2,
-		Xb: X / 2,
-		Ya: (Y - 2) / 2,
-		Yb: Y / 2,
-	},
-}
-
+var subMaps *SubMaps
 var diagonals map[int][]string = map[int][]string{
 	0: {subMapNames.NorthEast, subMapNames.SouthWest},
 	1: {subMapNames.NorthWest, subMapNames.SouthEast},
@@ -100,6 +74,33 @@ func getRandomSubMap(part string) (x, y int) {
 }
 
 func InitGates() {
+	subMaps = &SubMaps{
+		NorthWest: &Coords{
+			Xa: X / 2,
+			Xb: 0,
+			Ya: Y / 2,
+			Yb: 0,
+		},
+		NorthEast: &Coords{
+			Xa: X / 2,
+			Xb: X / 2,
+			Ya: Y / 2,
+			Yb: 0,
+		},
+		SouthWest: &Coords{
+			Xa: X / 2,
+			Xb: 0,
+			Ya: (Y - 2) / 2,
+			Yb: Y / 2,
+		},
+		SouthEast: &Coords{
+			Xa: X / 2,
+			Xb: X / 2,
+			Ya: (Y - 2) / 2,
+			Yb: Y / 2,
+		},
+	}
+
 	pile.PushGates(gateA)
 	pile.PushGates(gateB)
 	diag := getDiagonal()

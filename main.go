@@ -73,6 +73,7 @@ func init() {
 	// 	fmt.Println("grid", l)
 	// }
 	CreateMap()
+	makeEnemyTiers()
 	InitGates()
 }
 
@@ -137,4 +138,26 @@ func UserInputln() string {
 	fmt.Print("\n >>> ")
 	text, _ := reader.ReadString('\n')
 	return text
+}
+
+func makeEnemyTiers() {
+	tierExp1 := 2 * expByDifficulty[Difficulty]
+	tierExp2 := expByDifficulty[Difficulty]
+	tier1 := Y / 3
+	tier2 := tier1 * 2
+	var exp int = 0
+	for y := 0; y < Y; y++ {
+		if y <= tier2 {
+			exp = tierExp2
+		}
+		if y <= tier1 {
+			exp = tierExp1
+		}
+		for x := 0; x < X; x++ {
+			if WorldMap[y][x].HasEnemy {
+				WorldMap[y][x].Enemy.LevelUp.Exp += exp
+			}
+		}
+	}
+	pile.forEachEnemy(makeEnemiesLVL)
 }

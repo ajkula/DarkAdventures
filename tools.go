@@ -155,7 +155,6 @@ func CreateMap() [][]*Location {
 	AnalyzeItemsRepartition()
 
 	Output("white", translate(difficultyTR), difficultyIndex[Difficulty], "\n")
-	pile.forEachEnemy(makeEnemiesLVL)
 
 	return WorldMap
 }

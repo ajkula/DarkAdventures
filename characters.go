@@ -333,7 +333,7 @@ func (player *Character) getAreaRooms() (locArr []*Location) {
 	if loc.Y >= 1 {
 		dirs = append(dirs, directions.North)
 	}
-	if loc.Y < X-1 {
+	if loc.Y < Y-1 {
 		dirs = append(dirs, directions.South)
 	}
 	x := loc.X
