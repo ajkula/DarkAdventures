@@ -375,7 +375,7 @@ func (player *Character) showHealth() {
 	if loc.HasSeller {
 		var concat string = ""
 		for name, element := range loc.Item {
-			concat += DoubleTab + strconv.Itoa(element.Quantity) + " - " + name + translate(forTR) + strconv.Itoa(element.Type.Price) + translate(forCoinsTR)
+			concat += DoubleTab + name + "(" + strconv.Itoa(element.Quantity) + ")" + translate(forTR) + strconv.Itoa(element.Type.Price) + translate(forCoinsTR)
 		}
 		Output("yellow", loc.Seller)
 		Output("yellow", translate(HasSellerTR)+concat)
