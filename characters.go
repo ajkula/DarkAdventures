@@ -370,15 +370,23 @@ func (player *Character) getAreaRooms() (locArr []*Location) {
 	return locArr
 }
 
+var tutoSeller bool = true
+
 func (player *Character) showHealth() {
 	loc := player.SetPlayerRoom()
 	if loc.HasSeller {
 		var concat string = ""
+		itemName := ""
 		for name, element := range loc.Item {
+			itemName = name
 			concat += DoubleTab + name + "(" + strconv.Itoa(element.Quantity) + ")" + translate(forTR) + strconv.Itoa(element.Type.Price) + translate(forCoinsTR)
 		}
 		Output("yellow", loc.Seller)
 		Output("yellow", translate(HasSellerTR)+concat)
+		if tutoSeller {
+			Output("red", translate(sellerTutoTR)+itemName+"\n")
+		}
+		tutoSeller = false
 	}
 	if loc.HasEnemy && loc.Enemy.isAlive() {
 		Output("red", translate(HasEnemyOrSellerTR0)+Article(loc.Enemy.Name+" lvl."+strconv.Itoa(loc.Enemy.LVL))+translate(HasEnemyTR1))
@@ -641,6 +649,17 @@ func (player *Character) DisplayExpGauge() {
 	Output("blue", Tab+"lvl. "+strconv.Itoa(player.LVL)+strings.Repeat(" ", 3-utf8.RuneCountInString(strconv.Itoa(player.LVL)))+" ["+partA+partB+"]")
 }
 
+func CalcPropsSpaceAlign(name, value string) string {
+	// +":"
+	var length int = 1
+	num := 27
+	if num-utf8.RuneCountInString(value)-utf8.RuneCountInString(name) > length {
+		length = num - utf8.RuneCountInString(value) - utf8.RuneCountInString(name)
+	}
+	spaces := strings.Repeat(" ", length)
+	return name + ":" + spaces + value
+}
+
 func (player *Character) DisplayStats() {
 	exp := player.getXPtoNext()
 	r := 0
@@ -654,16 +673,16 @@ func (player *Character) DisplayStats() {
 		}
 	}
 	Output("cyan", "\n"+DoubleTab+"================= "+translate(StatusTR)+" =================\n")
-	Output("stats", Tab+CalculateSpaceAlign(translate(Health)+":")+strconv.Itoa(player.Health)+"/"+strconv.Itoa(player.BaseHealth)+"  "+
-		Tab+CalculateSpaceAlign(translate(CritsUP))+strconv.Itoa(player.Crit))
-	Output("stats", Tab+CalculateSpaceAlign(translate(StrengthUP))+strconv.Itoa(player.Strength)+"  "+
-		Tab+CalculateSpaceAlign(translate(BoostTR)+":")+strconv.Itoa(player.Boost))
-	Output("stats", Tab+CalculateSpaceAlign(translate(Level)+":")+strconv.Itoa(player.LVL)+"  "+
-		Tab+CalculateSpaceAlign(translate(EvasionUP))+strconv.Itoa(player.Evasion))
-	Output("stats", Tab+CalculateSpaceAlign(translate(Exp)+":")+strconv.Itoa(exp)+"/"+strconv.Itoa(player.LevelUp.NextRank)+"  "+
-		Tab+CalculateSpaceAlign(translate(Rooms)+":")+strconv.Itoa(r)+"/"+strconv.Itoa(tm))
-	Output("stats", Tab+CalculateSpaceAlign(translate(Enemies)+":")+strconv.Itoa(EnemiesKilled)+"/"+strconv.Itoa(EnemiesCount)+"  "+
-		Tab+CalculateSpaceAlign(translate(SkillsUP))+strconv.Itoa(player.Skill))
+	Output("stats", Tab+CalcPropsSpaceAlign(translate(Health), strconv.Itoa(player.Health)+"/"+strconv.Itoa(player.BaseHealth))+"  "+
+		Tab+CalcPropsSpaceAlign(translate(Crit), strconv.Itoa(player.Crit)))
+	Output("stats", Tab+CalcPropsSpaceAlign(translate(Strength), strconv.Itoa(player.Strength))+"  "+
+		Tab+CalcPropsSpaceAlign(translate(BoostTR), strconv.Itoa(player.Boost)))
+	Output("stats", Tab+CalcPropsSpaceAlign(translate(Level), strconv.Itoa(player.LVL))+"  "+
+		Tab+CalcPropsSpaceAlign(translate(Evasion), strconv.Itoa(player.Evasion)))
+	Output("stats", Tab+CalcPropsSpaceAlign(translate(Exp), strconv.Itoa(exp)+"/"+strconv.Itoa(player.LevelUp.NextRank))+"  "+
+		Tab+CalcPropsSpaceAlign(translate(Rooms), strconv.Itoa(r)+"/"+strconv.Itoa(tm)))
+	Output("stats", Tab+CalcPropsSpaceAlign(translate(Enemies), strconv.Itoa(EnemiesKilled)+"/"+strconv.Itoa(EnemiesCount))+"  "+
+		Tab+CalcPropsSpaceAlign(translate(Skill), strconv.Itoa(player.Skill)))
 
 	Output("cyan", "\n"+DoubleTab+"================= "+translate(Skill)+" ================\n")
 	Output("stats", translate(heroesSkillDescription[player.Name]))

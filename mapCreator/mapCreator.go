@@ -96,7 +96,8 @@ func fillerWorker(y, x int, room string, coordsArr []*Coords, ch chan string) {
 	newCoordsArr := getAllAdjacents(y, x)
 
 	for len(coordsArr) > 0 {
-		showProgress(room, coordsArr)
+		// Monitor creation progress
+		// showProgress(room, coordsArr)
 		newCoordsArr = newCoordsArr[0:0]
 		for _, coords := range coordsArr {
 			worldMap[coords.Y][coords.X] = room

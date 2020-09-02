@@ -26,7 +26,7 @@ func VowelNextNun(str string) bool {
 
 var gameintroTR = map[string]string{
 	englishLang: Tab + "Welcome to Dark Adventures\n" + Tab + "Select a difficulty:",
-	frenchLang:  Tab + "Bienvenu dans Dark Adventures\n" + Tab + "Choisissez la difficulté:",
+	frenchLang:  Tab + "Bienvenue dans Dark Adventures\n" + Tab + "Choisissez la difficulté:",
 }
 
 var forestNameTR = map[string]string{
@@ -565,9 +565,16 @@ var sellerEventNameTR = map[string]string{
 	frenchLang:  "marchand",
 }
 
+var sellerTutoTR = map[string]string{
+	englishLang: "\n" + Tab + "You can buy one of his items like so:\n" +
+		DoubleTab + "b(uy) ",
+	frenchLang: "\n" + Tab + "Vous pouvez acheter de cette manière:\n" +
+		DoubleTab + "b(uy) ",
+}
+
 var HasEnemyOrSellerTR0 = map[string]string{
 	englishLang: Tab + "There is ",
-	frenchLang:  Tab + "Il y a un ",
+	frenchLang:  Tab + "Il y a ",
 }
 
 var HasEnemyTR1 = map[string]string{
@@ -1172,40 +1179,45 @@ var burnsTR = map[string]string{
 	frenchLang:  " Brûle pour ",
 }
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var goHelpTR = map[string]string{
+	englishLang: "- Go the selected way",
+	frenchLang:  "- Aller dans la direction choisie",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var atkHelpTR = map[string]string{
+	englishLang: "- Attacks enemies",
+	frenchLang:  "- Attaquer les ennemis",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var buyHelpTR = map[string]string{
+	englishLang: "- Buy ONE OF proposed items",
+	frenchLang:  "- Acheter UN DES items proposés",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var useHelpTR = map[string]string{
+	englishLang: "- Use item",
+	frenchLang:  "- Utiliser l'item",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var escHelpTR = map[string]string{
+	englishLang: "- Try to escape battle",
+	frenchLang:  "- Tantative de s'échapper du combat",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var invHelpTR = map[string]string{
+	englishLang: "- Display your inventory",
+	frenchLang:  "- Afficher votre inventaire",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var mapHelpTR = map[string]string{
+	englishLang: "- Display unveiled World map rooms\n\n",
+	frenchLang:  "- Afficher la carte du monde\n\n",
+}
+
+var skillHelpTR = map[string]string{
+	englishLang: "- Use one of your skills",
+	frenchLang:  "- Utiliser une de vos compétences",
+}
 
 // var NAME = map[string]string{
 // 	englishLang: ,

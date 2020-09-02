@@ -10,9 +10,9 @@ You might want to **go get**:
 
 There are a few steps to make the experience much better however:
  - GDrive URL to download the game:
-    1. **https://preview.tinyurl.com/y4v69bsn** (Windows)
-    2. **https://preview.tinyurl.com/y55p9gaa** (Mac)
-    3. **https://preview.tinyurl.com/y38x2d7f** (Linux)
+    1. **https://tinyurl.com/y4y4avp5** (Windows 64)
+    2. **https://tinyurl.com/y57ktnbh** (Mac 64)
+    3. **https://tinyurl.com/y3odpymo** (Linux 64)
  - I recommend using a terminal emulator on windows such as: 
  **https://conemu.github.io/en/TableOfContents.html**
  - The software will create the default *landscape layout*, it has only a weak contextual influence for the moment but will have more depth later.
