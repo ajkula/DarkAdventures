@@ -84,6 +84,7 @@ func main() {
 	hero.SetPlayerRoom()
 	hero.getImage()
 	pile.PushCharacters(hero)
+	// hero.addStatus(&Blueprint{Name: statuses.Dark})
 	// hero.MoveTo("n")
 	for {
 		loc := hero.SetPlayerRoom()

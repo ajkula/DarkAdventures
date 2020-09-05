@@ -77,6 +77,11 @@ func (a *ASCII) makeImage(name string) *DisplayImage {
 				race = races.Gnoll
 			}
 		}
+		if index == 3 {
+			if name == heroesList.Thieve {
+				race = races.Elf
+			}
+		}
 		image = &DisplayImage{
 			Image: a.HERO[name][index],
 			Story: "\n" + storyFromImage(name, index),
@@ -88,11 +93,12 @@ func (a *ASCII) makeImage(name string) *DisplayImage {
 }
 
 type Races struct {
-	Gnoll, Tiefling, Human, Undead, Darkling string
+	Gnoll, Tiefling, Human, Undead, Darkling, Elf string
 }
 
 var races = &Races{
 	Gnoll:    translate(GnollTR),
+	Elf:      translate(ElfTR),
 	Human:    translate(HumanTR),
 	Tiefling: translate(TieflingTR),
 	Undead:   translate(UndeadTR),

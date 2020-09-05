@@ -482,7 +482,7 @@ var SellerListTR0 = map[string]string{
 
 var SellerListTR1 = map[string]string{
 	englishLang: " an elf, he holds something in his hand\n",
-	frenchLang:  " un elf, il tend la main montrant quelque chose\n",
+	frenchLang:  " un elfe, il tend la main montrant quelque chose\n",
 }
 
 var SellerListTR2 = map[string]string{
@@ -565,13 +565,6 @@ var sellerEventNameTR = map[string]string{
 	frenchLang:  "marchand",
 }
 
-var sellerTutoTR = map[string]string{
-	englishLang: "\n" + Tab + "You can buy one of his items like so:\n" +
-		DoubleTab + "b(uy) ",
-	frenchLang: "\n" + Tab + "Vous pouvez acheter de cette manière:\n" +
-		DoubleTab + "b(uy) ",
-}
-
 var HasEnemyOrSellerTR0 = map[string]string{
 	englishLang: Tab + "There is ",
 	frenchLang:  Tab + "Il y a ",
@@ -595,6 +588,44 @@ var forTR = map[string]string{
 var forCoinsTR = map[string]string{
 	englishLang: " coins.\n",
 	frenchLang:  " pièces.\n",
+}
+
+var sellerTutoTR = map[string]string{
+	englishLang: Tab + "You can buy one of his items like so:\n" +
+		DoubleTab + "b(uy) ",
+	frenchLang: Tab + "Vous pouvez acheter de cette manière:\n" +
+		DoubleTab + "b(uy) ",
+}
+
+var navTutoTR = map[string]string{
+	englishLang: Tab + "You can go anyavailable direction like so:\n" +
+		DoubleTab + "g(o) ",
+	frenchLang: Tab + "Vous pouvez vous deplacer de cette manière:\n" +
+		DoubleTab + "g(o) ",
+}
+
+var rootTutoTR = map[string]string{
+	englishLang: Tab + "You might be able to solve this mistery\n" +
+		Tab + "by checking in your inventory...\n",
+	frenchLang: Tab + "Vous devriez pouvoir résoudre ce mystère\n" +
+		Tab + "en vérifiant votre inventaire...\n",
+}
+
+var fightTutoTR = map[string]string{
+	englishLang: Tab + "You can fight like so:\n" +
+		DoubleTab + "a (to attack)\n" +
+		DoubleTab + "e (try to escape)\n" +
+		DoubleTab + "s (to use a skill if you have any)\n" +
+		DoubleTab + "i (to see your inventory)\n" +
+		DoubleTab + "p (to check you status, and if you have any skills)\n" +
+		DoubleTab + "u (to use an item +) ",
+	frenchLang: Tab + "Vous pouvez combattre de cette manière:\n" +
+		DoubleTab + "a (pour attaquer)\n" +
+		DoubleTab + "e (tanter de vous échapper)\n" +
+		DoubleTab + "s (utiliser une compétence si vous en avez)\n" +
+		DoubleTab + "s (voir votre inventaire)\n" +
+		DoubleTab + "p (voir l'état du perso, et si des compétences sont dispo)\n" +
+		DoubleTab + "u (utiliser un item +) ",
 }
 
 var yourInventoryTR = map[string]string{
@@ -1051,6 +1082,13 @@ var DarkEnergyNormalTR = map[string]string{
 	frenchLang:  "Moitié!",
 }
 
+var skeletonDarkTR = map[string]string{
+	englishLang: Tab + "You got stabbed by a rotten sword!\n" +
+		Tab + "your blood is turning Dark...\n",
+	frenchLang: Tab + "Vous avez été blessé par une lame pourrissante!\n" +
+		Tab + "votre sang devient s'assombri...\n",
+}
+
 var GraceProtectsYouTR = map[string]string{
 	englishLang: Tab + "Grace protects you from Darkness!\n",
 	frenchLang:  Tab + "La Grâce vous protège des Ténèbres!\n",
@@ -1100,6 +1138,11 @@ var GnollTR = map[string]string{
 var HumanTR = map[string]string{
 	englishLang: "Human",
 	frenchLang:  "Humain",
+}
+
+var ElfTR = map[string]string{
+	englishLang: "Elf",
+	frenchLang:  "Elfe",
 }
 
 var TieflingTR = map[string]string{

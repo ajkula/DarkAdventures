@@ -213,6 +213,7 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 			} else {
 				Output("green", Tab+p.Name+translate(usePotionTR)+healing+translate(HPTR))
 			}
+			p.removeStatus(statuses.Dark)
 			break
 		}
 		p.Health += heal
@@ -257,7 +258,11 @@ func (player *Character) showHP() {
 	if player.Npc {
 		color = "yellow"
 	}
-	Output(color, Tab+CalculateSpaceAlign(player.Name+": ")+"["+strconv.Itoa(player.Health)+" / "+strconv.Itoa(player.BaseHealth)+" HP]")
+	health := strconv.Itoa(player.Health)
+	if yes := hero.hasAffliction(statuses.Dark); yes {
+		health = "--"
+	}
+	Output(color, Tab+CalculateSpaceAlign(player.Name+": ")+"["+health+" / "+strconv.Itoa(player.BaseHealth)+" HP]")
 }
 
 func (player *Character) attack(enemy *Character) {
@@ -371,6 +376,7 @@ func (player *Character) getAreaRooms() (locArr []*Location) {
 }
 
 var tutoSeller bool = true
+var tutoFight bool = true
 
 func (player *Character) showHealth() {
 	loc := player.SetPlayerRoom()
@@ -390,6 +396,11 @@ func (player *Character) showHealth() {
 	}
 	if loc.HasEnemy && loc.Enemy.isAlive() {
 		Output("red", translate(HasEnemyOrSellerTR0)+Article(loc.Enemy.Name+" lvl."+strconv.Itoa(loc.Enemy.LVL))+translate(HasEnemyTR1))
+		if tutoFight {
+			itemName, _ := player.oneOfRandItem()
+			Output("red", translate(fightTutoTR)+itemName+"\n")
+			tutoFight = false
+		}
 		loc.Enemy.showHP()
 		loc.Enemy.showPlayerAfflictions()
 	}
@@ -798,6 +809,11 @@ func (player *Character) useSkillSet(e *Character) {
 		Output(playerEnemyColor[player.Npc], translate(DazbogRushSkillTR))
 		break
 
+	case enemiesList.SKELETON:
+		Output("red", translate(skeletonDarkTR))
+		hero.addStatus(&Blueprint{Name: statuses.Dark, Counter: 1})
+		break
+
 	case enemiesList.SORCERER:
 		reducer := .50
 		firstLine := ""
@@ -843,6 +859,14 @@ func (player *Character) checkSkills() bool {
 //																	Status Effects
 // ***********************************************************************************
 
+func (player *Character) addStatus(args ...*Blueprint) {
+	player.StatusEffects.Add(player, args...)
+}
+
+func (player *Character) removeStatus(name string) {
+	player.StatusEffects.remove(name)
+}
+
 func (ste *StatusEffectsBlueprint) Add(p *Character, args ...*Blueprint) {
 	statuses := args
 	for _, status := range statuses {
@@ -887,6 +911,18 @@ func indexOfBlueprint(arr []*Blueprint, item string) int {
 		}
 	}
 	return -1
+}
+
+func (player *Character) hasAffliction(name string) bool {
+	b := false
+	if len(player.StatusEffects.AllStatus) > 0 {
+		for _, status := range player.StatusEffects.AllStatus {
+			if name == status.Name {
+				b = true
+			}
+		}
+	}
+	return b
 }
 
 func (player *Character) showPlayerAfflictions() {

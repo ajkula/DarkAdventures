@@ -7,8 +7,17 @@ import (
 )
 
 var started bool = false
+var navTutoBool bool = true
+var fightTutoBool bool = true
+var rootTutoBool bool = true
 
 func applyStatus(player *Character) { player.applyStatusesEffect() }
+func showRootTuto(b bool) {
+	if b && rootTutoBool {
+		Output("red", translate(rootTutoTR))
+		rootTutoBool = false
+	}
+}
 
 func PresentScene(p *Character) {
 	loc := p.SetPlayerRoom()
@@ -26,8 +35,14 @@ func PresentScene(p *Character) {
 		if loc.HasGate {
 			if t == 1 {
 				Output("yellow", rootBell[p.hasItemInInventory(itemNames.Key)])
+				showRootTuto(p.hasItemInInventory(itemNames.Key))
 			}
 		}
+		if navTutoBool {
+			Output("red", translate(navTutoTR)+Initial(loc.CanGoTo[0])+" ->"+translate(forTR)+loc.CanGoTo[0]+"\n")
+			navTutoBool = false
+		}
+
 		sayIt := dragonLanding.shouldSayIt()
 		if loc.HasEnemy && loc.Enemy.Name == enemiesList.DRAGON && sayIt {
 			Output("yellow", loc.Ephemeral)
