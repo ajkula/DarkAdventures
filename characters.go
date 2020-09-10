@@ -42,8 +42,22 @@ type StatusEffectsBlueprint struct {
 	AllStatus []*Blueprint
 }
 
+type Encounter struct {
+	isFirst bool
+}
+
+func (landing *Encounter) shouldSayIt() bool {
+	return landing.isFirst
+}
+func (landing *Encounter) saidIt() {
+	landing.isFirst = false
+}
+func (landing *Encounter) reset() {
+	landing.isFirst = true
+}
+
 type Character struct {
-	Welcome, Name, Details, From            string
+	Welcome, Name, Details, From, Icon      string
 	Health, Evasion, Strength, Boost, Skill int
 	BaseHealth, Crit, LVL, ExpValue         int
 	Alive, Npc                              bool
@@ -52,6 +66,7 @@ type Character struct {
 	LevelUp                                 *Leveling
 	Special                                 *Special
 	StatusEffects                           *StatusEffectsBlueprint
+	Encounter                               *Encounter
 
 	CurrentLocation []int
 }
@@ -75,9 +90,16 @@ func (player *Character) showAction() {
 	AsciiArts.showSkillAction(player.Name)
 }
 
+func pauseForGiants(player *Character) {
+	if i := indexOf(giants, player.Name); i != -1 {
+		time.Sleep(300 * time.Millisecond)
+	}
+}
+
 func (player *Character) getImage() {
 	if player.Display.Show {
 		Output("red", player.Display.Image)
+		pauseForGiants(player)
 		if !player.Npc {
 			Output("blue", player.Display.Story)
 			time.Sleep(2 * time.Second)
@@ -200,6 +222,7 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 		}
 		break
 	case itemNames.Potion:
+		p.removeStatus(statuses.Dark)
 		heal := item.Type.Effect
 		if p.Name == heroesList.Wizard {
 			heal += int(float32(heal) * .30)
@@ -213,7 +236,6 @@ func (p *Character) useItem(name string, enemyInArr ...interface{}) bool {
 			} else {
 				Output("green", Tab+p.Name+translate(usePotionTR)+healing+translate(HPTR))
 			}
-			p.removeStatus(statuses.Dark)
 			break
 		}
 		p.Health += heal
@@ -275,7 +297,7 @@ func (player *Character) attack(enemy *Character) {
 
 func (player *Character) getSpecialAttackOnDragon() int {
 	specialAttackOnDragon = map[string]map[string]int{
-		heroesList.Thieve:    {races.Human: 0},
+		heroesList.Thief:     {races.Human: 0},
 		heroesList.Paladin:   {races.Human: 0},
 		heroesList.Wizard:    {races.Human: 0, races.Tiefling: 0},
 		heroesList.Barbarian: {races.Human: 5 + specialOnDragonByDifficultyMap[Difficulty], races.Gnoll: 15 + specialOnDragonByDifficultyMap[Difficulty]},
@@ -316,7 +338,7 @@ func (player *Character) calculateDammage(enemy *Character) int {
 		return dmg
 	}
 	Output("white", "\t"+player.Name+translate(doesTR)+strconv.Itoa(dmg)+translate(dmgToTR)+enemy.Name)
-	if (player.Name == heroesList.Thieve) && (PercentChances(60)) {
+	if (player.Name == heroesList.Thief) && (PercentChances(60)) {
 		extra := ((dmg * 6) / 10)
 		Output("white", "\t"+player.Name+translate(doesTR)+strconv.Itoa(extra)+translate(dmgToTR)+enemy.Name)
 		dmg += extra
@@ -454,6 +476,7 @@ func (player *Character) getEnemyItems(enemy *Character) {
 			Output("green", Tab+CalculateSpaceAlign(name+": "+item.Type.Description+" -> "), item.Quantity)
 			player.addItemTypeToInventory(name, item.Quantity)
 		}
+		enemy.Inventory = map[string]*ItemQuantity{}
 	} else {
 		Output("green", translate(nothingYouCouldGetTR))
 	}
@@ -639,7 +662,7 @@ type LevelingNamesStruct struct {
 	Strength string
 }
 
-var LevelingNames *LevelingNamesStruct = &LevelingNamesStruct{
+var LevelingNames = &LevelingNamesStruct{
 	Health:   "Health",
 	Crit:     "Crit",
 	Evasion:  "Evasion",
@@ -740,9 +763,10 @@ func (player *Character) useSkillSet(e *Character) {
 
 	switch player.Name {
 
+	// ********************************************************************************
 	case enemiesList.GOBLIN:
 		fallthrough
-	case heroesList.Thieve:
+	case heroesList.Thief:
 		name, itemQ := e.oneOfRandItem()
 		ok := e.hasItemInInventory(name)
 		if ok {
@@ -762,6 +786,7 @@ func (player *Character) useSkillSet(e *Character) {
 		Output(playerEnemyColor[player.Npc], Tab+player.Name+translate(StealSuccessTR)+name+"\n")
 		break
 
+		// ********************************************************************************
 	case heroesList.Paladin:
 		if e.Display.Race == races.Undead {
 			e.Health = 0
@@ -779,6 +804,7 @@ func (player *Character) useSkillSet(e *Character) {
 		Output(playerEnemyColor[player.Npc], Tab+player.Name+translate(HolyMitigatedTR)+"\n")
 		break
 
+		// ********************************************************************************
 	case heroesList.Wizard:
 		locArr := player.getAreaRooms()
 		Output(playerEnemyColor[player.Npc], translate(MagisterSkillTR))
@@ -797,6 +823,7 @@ func (player *Character) useSkillSet(e *Character) {
 		Output(playerEnemyColor[player.Npc], DoubleTab+strconv.Itoa(hit)+translate(AreaHits))
 		break
 
+		// ********************************************************************************
 	case heroesList.Barbarian:
 		locArr := player.getAreaRooms()
 		for _, loc := range locArr {
@@ -809,11 +836,13 @@ func (player *Character) useSkillSet(e *Character) {
 		Output(playerEnemyColor[player.Npc], translate(DazbogRushSkillTR))
 		break
 
+		// ********************************************************************************
 	case enemiesList.SKELETON:
 		Output("red", translate(skeletonDarkTR))
 		hero.addStatus(&Blueprint{Name: statuses.Dark, Counter: 1})
 		break
 
+		// ********************************************************************************
 	case enemiesList.SORCERER:
 		reducer := .50
 		firstLine := ""
@@ -827,6 +856,7 @@ func (player *Character) useSkillSet(e *Character) {
 		Output("red", firstLine+translate(DarkEnergyTR)+finalSentence)
 		break
 
+		// ********************************************************************************
 	case enemiesList.DRAGON:
 		dmg := rand.Intn(10) + 15
 		Output("red", translate(DragonSkillFireTR)+strconv.Itoa(dmg)+translate(HPTR))
@@ -837,6 +867,14 @@ func (player *Character) useSkillSet(e *Character) {
 		}
 		e.Health = e.Health - dmg
 		time.Sleep(1 * time.Second)
+		break
+
+		// ********************************************************************************
+	case enemiesList.NIGHTWALKER:
+		break
+
+		// ********************************************************************************
+	case enemiesList.NECROMANCER:
 		break
 	}
 	time.Sleep(2 * time.Second)
@@ -894,6 +932,10 @@ func (player *Character) logStatusAfflicted(name string) {
 		}
 		Output(playerEnemyColor[!NPC], text)
 		break
+	case statuses.Dark:
+		// if NPC {
+		// 	text = translate(skeletonDarkTR)
+		// }
 	}
 }
 
@@ -968,8 +1010,9 @@ func (player *Character) Affliction(status *Blueprint) {
 		setTurnsFrightStatus(player.Npc)
 		// ResetTurns()
 		break
+	case statuses.Dark:
+		break
 	}
-
 	checkPlayers()
 }
 

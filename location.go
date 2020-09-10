@@ -14,6 +14,7 @@ type Location struct {
 func (loc *Location) RemoveBattle() {
 	if loc.HasEnemy && !loc.Enemy.isAlive() {
 		loc.HasEnemy = false
+		opponents = []*Character{}
 		loc.Description += translate(youSeeTR) + Article(loc.Enemy.Name) + translate(deadOnTheGroundTR)
 	}
 }
@@ -87,29 +88,30 @@ func (loc *Location) ClearEphemeral() {
 	}
 }
 
-func (loc *Location) AddEphemeral() {
+func (loc *Location) AddEphemeral(enemy *Walker) {
 	loc.HasEnemy = true
-	loc.Enemy = dragon.Character
-	WorldMap[loc.Y][loc.X].Ephemeral = Tab + dragonProximity["x"]
+	loc.Enemy = enemy.Character
+	proxy := walkerProximity[enemy.Name]
+	WorldMap[loc.Y][loc.X].Ephemeral = Tab + proxy["x"]
 	// Output("red", "AddEphemeral() ", WorldMap[loc.Y][loc.X] == loc)
 	// fmt.Printf("\ny: %v x: %v  EPHEMERAL: %v", loc.Y, loc.X, WorldMap[loc.Y][loc.X].Ephemeral)
 	for _, dir := range loc.CanGoTo {
 		// Output("green", dir)
 		switch dir {
 		case directions.North:
-			WorldMap[loc.Y-1][loc.X].Ephemeral = Tab + dragonProximity[Grid[loc.Y-1][loc.X]]
+			WorldMap[loc.Y-1][loc.X].Ephemeral = Tab + proxy[Grid[loc.Y-1][loc.X]]
 			// fmt.Printf("\ny: %v x: %v  EPHEMERAL: %v", loc.Y-1, loc.X, WorldMap[loc.Y-1][loc.X].Ephemeral)
 			break
 		case directions.South:
-			WorldMap[loc.Y+1][loc.X].Ephemeral = Tab + dragonProximity[Grid[loc.Y+1][loc.X]]
+			WorldMap[loc.Y+1][loc.X].Ephemeral = Tab + proxy[Grid[loc.Y+1][loc.X]]
 			// fmt.Printf("\ny: %v x: %v  EPHEMERAL: %v", loc.Y+1, loc.X, WorldMap[loc.Y+1][loc.X].Ephemeral)
 			break
 		case directions.East:
-			WorldMap[loc.Y][loc.X+1].Ephemeral = Tab + dragonProximity[Grid[loc.Y][loc.X+1]]
+			WorldMap[loc.Y][loc.X+1].Ephemeral = Tab + proxy[Grid[loc.Y][loc.X+1]]
 			// fmt.Printf("\ny: %v x: %v  EPHEMERAL: %v", loc.Y, loc.X+1, WorldMap[loc.Y][loc.X+1].Ephemeral)
 			break
 		case directions.West:
-			WorldMap[loc.Y][loc.X-1].Ephemeral = Tab + dragonProximity[Grid[loc.Y][loc.X-1]]
+			WorldMap[loc.Y][loc.X-1].Ephemeral = Tab + proxy[Grid[loc.Y][loc.X-1]]
 			// fmt.Printf("\ny: %v x: %v  EPHEMERAL: %v", loc.Y, loc.X-1, WorldMap[loc.Y][loc.X-1].Ephemeral)
 			break
 		}

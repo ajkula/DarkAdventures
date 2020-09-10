@@ -23,6 +23,7 @@ var player Character
 var Difficulty int
 var Hero int
 var hero *Character
+var msgDragonDead string = ""
 
 func Check(e error) {
 	if e != nil {
@@ -78,6 +79,7 @@ func init() {
 }
 
 func main() {
+	var sigOnce int = 0
 	// player = *new(Character)
 	ChooseHero()
 	hero = heroFromName(indexedHeroes[Hero])
@@ -86,10 +88,22 @@ func main() {
 	pile.PushCharacters(hero)
 	// hero.addStatus(&Blueprint{Name: statuses.Dark})
 	// hero.MoveTo("n")
+
 	for {
+		if msgDragonDead == enemiesList.DRAGON && sigOnce == 0 {
+			fmt.Println(msgDragonDead + " dead sig")
+			nightWalkerA = CreateNightWalker()
+			nightWalkerB = CreateNightWalker()
+			fmt.Printf("\n%+v\n%+v\n", nightWalkerA, nightWalkerB)
+			sigOnce = 1
+		}
 		loc := hero.SetPlayerRoom()
 		if !loc.HasEnemy {
-			dragon.dragonMoves()
+			dragon.walkerMoves()
+			if msgDragonDead == enemiesList.DRAGON {
+				nightWalkerA.walkerMoves()
+				nightWalkerB.walkerMoves()
+			}
 		}
 		PresentScene(hero)
 	}

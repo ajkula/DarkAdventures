@@ -10,9 +10,10 @@ import (
 	"time"
 )
 
-var letters = []string{"d", "l", "f"}
-var castle string = "c"
+var letters = []string{gridLetters.Desert, gridLetters.Plains, gridLetters.Forest}
+var castle string = gridLetters.Castle
 
+var roots int = 12
 var file []byte
 var err error
 var Y int
@@ -44,17 +45,19 @@ func init() {
 }
 
 func main() {
-	channel := make(chan string, 18)
-	for i := 0; i < 18; i++ {
+	clear()
+	channel := make(chan string, roots)
+	for i := 0; i < roots; i++ {
 		i := i
 		room := getItemForArrayByBigLoop(letters, i)
 		y := rand.Intn(Y)
 		x := rand.Intn(X)
 		newCoordsArr := getAllAdjacents(y, x)
+		writeAt(x, y, room)
 
 		go fillerWorker(y, x, room, newCoordsArr, channel)
 	}
-	for i := 0; i < 18; i++ {
+	for i := 0; i < roots; i++ {
 		select {
 		case <-channel:
 		}
@@ -65,13 +68,14 @@ func main() {
 		for x, elem := range line {
 			if elem == randomizedLandscape {
 				worldMap[y][x] = castle
+				writeAt(x, y, castle)
 			}
 		}
 		if y == len(worldMap)-1 {
 			lr = ""
 		}
 		text += strings.Join(line, "") + lr
-		log(y, len(worldMap), line, "\n")
+		// log(y, len(worldMap), line, "\n")
 	}
 	writeRandomizedLandscape(text)
 }
@@ -93,6 +97,7 @@ func showProgress(s string, coordsArr []*Coords) {
 
 func fillerWorker(y, x int, room string, coordsArr []*Coords, ch chan string) {
 	worldMap[y][x] = room
+	writeAt(x, y, room)
 	newCoordsArr := getAllAdjacents(y, x)
 
 	for len(coordsArr) > 0 {
@@ -101,6 +106,7 @@ func fillerWorker(y, x int, room string, coordsArr []*Coords, ch chan string) {
 		newCoordsArr = newCoordsArr[0:0]
 		for _, coords := range coordsArr {
 			worldMap[coords.Y][coords.X] = room
+			writeAt(coords.X, coords.Y, room)
 			coordsArr = append(newCoordsArr, getAllAdjacents(coords.Y, coords.X)...)
 		}
 	}
@@ -115,7 +121,8 @@ func writeRandomizedLandscape(text string) {
 	num, e := file.WriteString(text)
 	Check(e)
 	file.Sync()
-	fmt.Fprintf(os.Stdout, "Wrote random Landscape WorldMap: %v bytes wrote to disk\n\n", num)
+
+	writeAt(X/2, Y+1, "Wrote random Landscape WorldMap: "+strconv.Itoa(num)+" bytes wrote to disk\n\n")
 	_, e = ioutil.ReadFile("landscape.txt")
 	Check(e)
 }
@@ -190,4 +197,14 @@ func isFree(y, x int) bool {
 		b = true
 	}
 	return b
+}
+
+func clear() {
+	fmt.Print("\033[H\033[2J")
+}
+
+func writeAt(x, y int, str string) {
+	fmt.Printf("\033[" + strconv.Itoa(y) + ";" + strconv.Itoa(x) + "H")
+	fmt.Print(str)
+	time.Sleep(100 * time.Millisecond)
 }

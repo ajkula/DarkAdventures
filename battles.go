@@ -89,6 +89,9 @@ func checkPlayers() {
 			case true:
 				Output("green", "\t", opp.Name, translate(hasBeenSlainTR))
 				// you got :
+				if enemy.Name == enemiesList.DRAGON {
+					msgDragonDead = enemiesList.DRAGON
+				}
 				SCORE.scoreKills(opp.Name)
 				EnemiesKilled++
 				player.LevelUp.Exp += opp.ExpValue

@@ -26,6 +26,13 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 	// Output("yellow", "itemName ", itemName)
 	loc := player.SetPlayerRoom()
 	dragon.shouldFreeze(Initial(command))
+	if nightWalkerA != nil {
+		nightWalkerA.shouldFreeze(Initial(command))
+	}
+	if nightWalkerB != nil {
+		nightWalkerB.shouldFreeze(Initial(command))
+	}
+
 	switch Initial(command) {
 	case Initial(commands.Go):
 		ResetTurns()

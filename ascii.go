@@ -11,6 +11,7 @@ type ASCII struct {
 	SORCERER    []string
 	ORC         []string
 	DRAGON      []string
+	NIGHTWALKER []string
 	NECROMANCER []string
 	HERO        map[string][]string
 	SKILLS      map[string][]string
@@ -22,9 +23,10 @@ var AsciiArts = &ASCII{
 	SORCERER:    []string{sorcererAscii, sorcererAsciiB},
 	ORC:         []string{orcAscii, orcAsciiB},
 	DRAGON:      []string{dragonAscii, dragonAsciiB},
+	NIGHTWALKER: []string{nightWalkerAsciiA},
 	NECROMANCER: []string{necromancerAsciiA},
 	HERO: map[string][]string{
-		heroesList.Thieve:    {thieveAscii, thieveAsciiB, thieveAsciiC, thieveAsciiD},
+		heroesList.Thief:     {thiefAscii, thiefAsciiB, thiefAsciiC, thiefAsciiD},
 		heroesList.Paladin:   {paladinAscii, paladinAsciiB, paladinAsciiC, paladinAsciiD},
 		heroesList.Wizard:    {wizardAscii, wizardAsciiB, wizardAsciiC, wizardAsciiD},
 		heroesList.Barbarian: {barbarianAscii, barbarianAsciiB, barbarianAsciiC, barbarianAsciiD},
@@ -33,6 +35,8 @@ var AsciiArts = &ASCII{
 		enemiesList.DRAGON: {dragonSkillFireAsciiA, dragonSkillFireAsciiB},
 	},
 }
+
+var giants = []string{enemiesList.DRAGON, enemiesList.NECROMANCER, enemiesList.NIGHTWALKER}
 
 func (a *ASCII) makeImage(name string) *DisplayImage {
 	var image *DisplayImage
@@ -66,6 +70,11 @@ func (a *ASCII) makeImage(name string) *DisplayImage {
 			Image: a.DRAGON[rand.Intn(len(a.DRAGON))],
 			Show:  true,
 		}
+	case enemiesList.NIGHTWALKER:
+		image = &DisplayImage{
+			Image: a.NIGHTWALKER[rand.Intn(len(a.NIGHTWALKER))],
+			Show:  true,
+		}
 	default:
 		index := rand.Intn(len(a.HERO[name]))
 		race := races.Human
@@ -78,7 +87,7 @@ func (a *ASCII) makeImage(name string) *DisplayImage {
 			}
 		}
 		if index == 3 {
-			if name == heroesList.Thieve {
+			if name == heroesList.Thief {
 				race = races.Elf
 			}
 		}
@@ -110,11 +119,11 @@ func storyFromImage(name string, index int) string {
 }
 
 var heroStoryAndImages = map[string]map[int]string{
-	heroesList.Thieve: map[int]string{
-		0: translate(heroStoryThieveTR0),
-		1: translate(heroStoryThieveTR1),
-		2: translate(heroStoryThieveTR2),
-		3: translate(heroStoryThieveTR3),
+	heroesList.Thief: map[int]string{
+		0: translate(heroStoryThiefTR0),
+		1: translate(heroStoryThiefTR1),
+		2: translate(heroStoryThiefTR2),
+		3: translate(heroStoryThiefTR3),
 	},
 	heroesList.Paladin: map[int]string{
 		0: translate(heroStoryPaladinTR0),
@@ -383,6 +392,53 @@ const goblinAsciiB string = DoubleTab + "..................::,.........\n" + Dou
 	".....,=?I77IOO7+~~=,..........\n" + DoubleTab +
 	".......,::~=++=~~~~...........\n"
 
+const nightWalkerAsciiA string = Tab + "..............................,.....,~=~:,.............\n" + Tab +
+	"....................?7..~?$O7,.,~=??=~,................\n" + Tab +
+	".............,:,...+DD:?8N8OMNOZI~,....................\n" + Tab +
+	"..............:~=?=7D8$ZN7+.:7I,.......................\n" + Tab +
+	".................,+$OZZ8D~+:.~.........................\n" + Tab +
+	"...................=DOZDD8?::I~:,.,....................\n" + Tab +
+	"....................$DODO8D$$7=...,....................\n" + Tab +
+	"....................~NNDO88DZ7?=::.....................\n" + Tab +
+	"....................,Z$ZDD8DOI?=?~:....................\n" + Tab +
+	".......................~DDDDD8$I?==....................\n" + Tab +
+	".......................ID8DD88Z$$I~....................\n" + Tab +
+	"......................+DO8D8O8N$?I=....................\n" + Tab +
+	"......................ZOO8D88DNO=~:....................\n" + Tab +
+	"......................O8O8DODDNN?I,.:,.................\n" + Tab +
+	"......................INDN8O8D8+~?,.,,.................\n" + Tab +
+	"......................+NDDZ88M$,=$+,,..................\n" + Tab +
+	"......................ODN8O8DMI~,,+,,..................\n" + Tab +
+	".....................INDN8DDMO+:.......................\n" + Tab +
+	".....................OND888D87=,.......................\n" + Tab +
+	"....................=MDZODONII$=,......................\n" + Tab +
+	".........,::~......,DDZOD8NM8:?O+:,....................\n" + Tab +
+	".........,::?Z+=,..?DZ8NNNNN8:.??=~,...................\n" + Tab +
+	"...........::~?D7?$O8NNNNNDNI,:~?7=,...................\n" + Tab +
+	"..........,:,:+8D88NNNNNNDDN$=:.,==,...................\n" + Tab +
+	"............:==~?,=MNNNND88DO?:...:,...................\n" + Tab +
+	"..................?NNND$N8OD8=:,.......................\n" + Tab +
+	"..................?DDN8:ODZ8D~,,,......................\n" + Tab +
+	"..................IDDN$:=DO8D=.,.......................\n" + Tab +
+	"..................7DDN?~.?NOD$.........................\n" + Tab +
+	"..................IDDN=.,.7N8D7:.......................\n" + Tab +
+	"..................=DDD=,...IDDDD$,.....................\n" + Tab +
+	"...................8DN7~~...=OMNNO,....................\n" + Tab +
+	".....,.............+NND+==:...7MMMZ,...................\n" + Tab +
+	".....~7~............=NN$++~,=:.~OMM8?,.................\n" + Tab +
+	"......,$,............?M8DI+~??,..+NMNZ~,...............\n" + Tab +
+	".,$?~,+D+...........,~NDO77II:....=MN8+~...............\n" + Tab +
+	".=8D8DN$..............DM7+I=:......IMD+=,..............\n" + Tab +
+	"..:OD8O?I=...........,DM7~~:,..,....8M$??~,....:.......\n" + Tab +
+	"...,ZOZZO:...........:DD$+=:...:..,.=NDI?++:,..,.......\n" + Tab +
+	".....Z888O~..........=M8$7?=:~,,=~:..$MZ=+==++~~,,,....\n" + Tab +
+	".....Z8DDOOI,........ON87$7I??=,:=~+=$ND7+??I?~~:,,....\n" + Tab +
+	".....?D7DD$D=.....,~7NDD$77I?I?=+=+?+ONNOI7$7I++=,.....\n" + Tab +
+	".....?D8Z88+.,:=~=ZNMNDO88OOZ$7ZOZI??$NND$$Z$$I?+~,,...\n" + Tab +
+	",:~+IO88788I$ZO88888888DDNNDDDDD8DDOO8NNN8OOZZZZI+=~~..\n" + Tab +
+	".,~IDZIZZOZZOO888O8OO88888O88ZOZZOO8DOZ$$$$$Z8DO$$$?~,.\n" + Tab +
+	".,:~~:~~:,,.,.,,.......,,,,::,:::::::,....,..,,,,:::...\n"
+
 const GameOverAscii string = "\nNNNNNNNNNNNNNNNNNNNNNNNNNNNNMMMMNNMMNNNMMNNMMMMMNMMMMMMMMNNNNNNNNNNNNNNNNNNNNNNN\n" +
 	"NNNNNNNNNNNNNNNNNNNNNNNNNNDDMMNNNNDNMNN88NMNN8DNNNMMMMMNNNNNNNNNNNNNNNNNNNNNNNNN\n" +
 	"NNNNNNNNNNNNNNNNNNNNNNNNO=,,=ONND=~?$NDI,:7DDI,=ZI++?IONNNNNNNNNNNNNNNNNNNNNNNNN\n" +
@@ -516,7 +572,7 @@ const wizardAsciiD string = DoubleTab + "====================\n" + DoubleTab +
 	"===Z++788Z7?IIONO===\n" + DoubleTab +
 	"======??=~=====?I===\n"
 
-const thieveAscii string = "............................................................\n" +
+const thiefAscii string = "............................................................\n" +
 	"............................................................\n" +
 	"...............,:...........................................\n" +
 	"..............~OD?...............~I7~.......................\n" +
@@ -548,7 +604,7 @@ const thieveAscii string = "....................................................
 	"............:$$I?=..........................................\n" +
 	"............................................................\n"
 
-const thieveAsciiB string = DoubleTab + "...............:,.............\n" + DoubleTab +
+const thiefAsciiB string = DoubleTab + "...............:,.............\n" + DoubleTab +
 	".............,O8Z=............\n" + DoubleTab +
 	".............7MZZ8:...........\n" + DoubleTab +
 	"............=OM8O8+...........\n" + DoubleTab +
@@ -573,7 +629,7 @@ const thieveAsciiB string = DoubleTab + "...............:,.............\n" + Dou
 	"...........+O?................\n" + DoubleTab +
 	"..............................\n"
 
-const thieveAsciiC string = DoubleTab + "............................\n" + DoubleTab +
+const thiefAsciiC string = DoubleTab + "............................\n" + DoubleTab +
 	"............~++~............\n" + DoubleTab +
 	"...........+O?7Z,...........\n" + DoubleTab +
 	"............I7+$+...........\n" + DoubleTab +
@@ -602,7 +658,7 @@ const thieveAsciiC string = DoubleTab + "............................\n" + Doubl
 	"......:=+++=~:::,,:$8Z:.....\n" + DoubleTab +
 	"............................\n"
 
-const thieveAsciiD string = DoubleTab + "...................................\n" + DoubleTab +
+const thiefAsciiD string = DoubleTab + "...................................\n" + DoubleTab +
 	".................~=:...............\n" + DoubleTab +
 	"................7OOZ+..............\n" + DoubleTab +
 	"...............~Z$??7,.............\n" + DoubleTab +

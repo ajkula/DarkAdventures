@@ -12,7 +12,7 @@ const DoubleTab string = "\t\t"
 const Unseen string = " "
 const Shop string = "#"
 const Root string = "л"
-const YourPosition string = "@"
+const YourPosition string = "●"
 const LegendSpace int = 10
 const inventorySpace int = 38
 const heroesDetailsSpacing int = 14
@@ -20,6 +20,7 @@ const gaugeSize int = 40
 const expChar string = "="
 const emptyGauge string = " "
 const dragonPos string = "V"
+const nightWalkerPos string = "○"
 const enemyPos string = "Д"
 
 var playerEnemyColor = map[bool]string{
@@ -46,14 +47,14 @@ var rootBell = map[bool]string{
 var warpText string = translate(warpTextTR)
 
 var heroesDetails = map[string]string{
-	heroesList.Thieve:    translate(heroesDetailsTHIEVE),
+	heroesList.Thief:     translate(heroesDetailsTHIEF),
 	heroesList.Paladin:   translate(heroesDetailsPALADIN),
 	heroesList.Wizard:    translate(heroesDetailsWIZARD),
 	heroesList.Barbarian: translate(heroesDetailsBARBARIAN),
 }
 
 var heroesSkillDescription = map[string]map[string]string{
-	heroesList.Thieve:    ThiefSkill,
+	heroesList.Thief:     ThiefSkill,
 	heroesList.Paladin:   PaladinSkill,
 	heroesList.Wizard:    WizardSkill,
 	heroesList.Barbarian: BarbarianSkill,
@@ -136,16 +137,16 @@ var universalCommands = []string{commands.Map, commands.Inv, commands.Stats, com
 var difficultyIndex = map[int]string{0: difficultyNames.Easy, 1: difficultyNames.Meddium, 2: difficultyNames.Hard}
 var GameDifficulty = map[string]int{difficultyNames.Easy: 15, difficultyNames.Meddium: 30, difficultyNames.Hard: 45}
 
-type HeroesList struct{ Thieve, Paladin, Wizard, Barbarian string }
-type EnemiesList struct{ SKELETON, GOBLIN, SORCERER, ORC, DRAGON, NECROMANCER string }
+type HeroesList struct{ Thief, Paladin, Wizard, Barbarian string }
+type EnemiesList struct{ SKELETON, GOBLIN, SORCERER, ORC, DRAGON, NIGHTWALKER, NECROMANCER string }
 
 var heroesList = HeroesList{
-	Thieve:    translate(ThieveNAME),
+	Thief:     translate(ThiefNAME),
 	Paladin:   translate(PaladinNAME),
 	Wizard:    translate(WizardNAME),
 	Barbarian: translate(BarbarianNAME),
 }
-var indexedHeroes = []string{heroesList.Thieve, heroesList.Paladin, heroesList.Wizard, heroesList.Barbarian}
+var indexedHeroes = []string{heroesList.Thief, heroesList.Paladin, heroesList.Wizard, heroesList.Barbarian}
 
 var indexedEnemiesForRandomization = []string{enemiesList.SKELETON, enemiesList.GOBLIN, enemiesList.SORCERER, enemiesList.ORC}
 var enemiesList = EnemiesList{
@@ -154,6 +155,7 @@ var enemiesList = EnemiesList{
 	SORCERER:    translate(sorcererNAME),
 	ORC:         translate(orcNAME),
 	DRAGON:      translate(dragonNAME),
+	NIGHTWALKER: translate(nightWalkerNAME),
 	NECROMANCER: translate(necromancerNAME),
 }
 
@@ -213,6 +215,14 @@ var ItemChancesByEnemyName map[string]map[string]int = map[string]map[string]int
 		itemNames.Moonstone: 5,
 		itemNames.Coins:     1,
 	},
+	enemiesList.NIGHTWALKER: map[string]int{
+		itemNames.Doll:      35,
+		itemNames.Scroll:    20,
+		itemNames.Potion:    15,
+		itemNames.Key:       10,
+		itemNames.Moonstone: 5,
+		itemNames.Coins:     1,
+	},
 }
 
 type Specifics struct {
@@ -261,12 +271,21 @@ var enemiesSpecificsValues = map[string]Specifics{
 	},
 }
 
-var dragonProximity = map[string]string{
-	"f": translate(forestTR),
-	"l": translate(landTR),
-	"d": translate(desertTR),
-	"c": translate(castleTR),
-	"x": translate(xTR),
+var walkerProximity = map[string]map[string]string{
+	enemiesList.DRAGON: {
+		LettersFromLandscape[roomTypes.FOREST]: translate(forestTR),
+		LettersFromLandscape[roomTypes.PLAINS]: translate(landTR),
+		LettersFromLandscape[roomTypes.DESERT]: translate(desertTR),
+		LettersFromLandscape[roomTypes.CASTLE]: translate(castleTR),
+		"x":                                    translate(xTR),
+	},
+	enemiesList.NIGHTWALKER: {
+		LettersFromLandscape[roomTypes.FOREST]: translate(nwProxTR),
+		LettersFromLandscape[roomTypes.PLAINS]: translate(nwProxTR),
+		LettersFromLandscape[roomTypes.DESERT]: translate(nwProxTR),
+		LettersFromLandscape[roomTypes.CASTLE]: translate(nwProxTR),
+		"x":                                    translate(nwEncxTR),
+	},
 }
 
 // You are
@@ -308,17 +327,36 @@ var roomTypes = &RoomTypes{
 	CASTLE: translate(castleNameTR),
 }
 
+type GridLetters struct {
+	Forest, Plains, Desert, Castle string
+}
+
+var gridLetters = &GridLetters{
+	Castle: "c",
+	Desert: "d",
+	Forest: "f",
+	Plains: "l",
+}
+
+// ICI
+var displayMapIcons = map[string]string{
+	gridLetters.Forest: "ф", //🌳 🌴 🌲 ⺦ ф Ф
+	gridLetters.Plains: "_", // ⏚ 🌬 ◌ ◒ ◛ ◡ ⚆ ㊀
+	gridLetters.Desert: "^", //🏜 🏝
+	gridLetters.Castle: "H", // 🏯 🏰 ⛫
+}
+
 var RoomFromLandscape = map[string]map[int]string{
-	"f": introForest,
-	"l": introPlains,
-	"d": introDesert,
-	"c": introCastle,
+	gridLetters.Forest: introForest,
+	gridLetters.Plains: introPlains,
+	gridLetters.Desert: introDesert,
+	gridLetters.Castle: introCastle,
 }
 var LettersFromLandscape = map[string]string{
-	roomTypes.FOREST: "f",
-	roomTypes.PLAINS: "l",
-	roomTypes.DESERT: "d",
-	roomTypes.CASTLE: "c",
+	roomTypes.FOREST: gridLetters.Forest,
+	roomTypes.PLAINS: gridLetters.Plains,
+	roomTypes.DESERT: gridLetters.Desert,
+	roomTypes.CASTLE: gridLetters.Castle,
 }
 
 var Ambiance = map[int]string{
@@ -338,10 +376,10 @@ var SellerList = map[int]string{
 }
 
 var RoomTypeList = map[string]string{
-	"f": roomTypes.FOREST,
-	"d": roomTypes.DESERT,
-	"l": roomTypes.PLAINS,
-	"c": roomTypes.CASTLE,
+	gridLetters.Forest: roomTypes.FOREST,
+	gridLetters.Desert: roomTypes.DESERT,
+	gridLetters.Plains: roomTypes.PLAINS,
+	gridLetters.Castle: roomTypes.CASTLE,
 }
 
 type EventNames struct {
@@ -423,10 +461,10 @@ type EscapeResults struct{ OK, RAND, KO string }
 
 var escapeResults = &EscapeResults{OK: "ok", RAND: "rand", KO: "ko"}
 var escapeCases map[string]map[string]string = map[string]map[string]string{
-	heroesList.Thieve: map[string]string{
-		escapeResults.OK:   translate(ThieveEscapeOK),
-		escapeResults.RAND: translate(ThieveEscapeRAND),
-		escapeResults.KO:   translate(ThieveEscapeKO),
+	heroesList.Thief: map[string]string{
+		escapeResults.OK:   translate(ThiefEscapeOK),
+		escapeResults.RAND: translate(ThiefEscapeRAND),
+		escapeResults.KO:   translate(ThiefEscapeKO),
 	},
 	heroesList.Paladin: map[string]string{
 		escapeResults.OK:   translate(PaladinEscapeOK),

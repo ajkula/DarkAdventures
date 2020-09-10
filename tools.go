@@ -279,12 +279,12 @@ func InitialsIndexOf(arr []string, item string) bool {
 }
 
 var heroFromName = func(s string) *Character {
-	// json.Unmarshal([]byte(`{"Name": "Thieve", "Health": 10}`), &player)
+	// json.Unmarshal([]byte(`{"Name": "Thief", "Health": 10}`), &player)
 	var hero Character
 	switch Initial(s) {
-	case Initial(heroesList.Thieve):
+	case Initial(heroesList.Thief):
 		hero = Character{
-			Name:            heroesList.Thieve,
+			Name:            heroesList.Thief,
 			Alive:           true,
 			CurrentLocation: []int{Y - 1, (X / 2) - (X % 2)},
 			Evasion:         30,
@@ -443,6 +443,7 @@ func makeNewEnemy() *Character {
 		Name:       name,
 		Alive:      true,
 		Npc:        true,
+		Icon:       enemyPos,
 		Inventory:  map[string]*ItemQuantity{},
 		LevelUp: &Leveling{
 			NextRank:            5,
@@ -472,7 +473,6 @@ func enemyProbability(loc *Location) {
 		if rand.Intn(100) <= GameDifficulty[difficultyIndex[Difficulty]] {
 			loc.HasEnemy = true
 			loc.Enemy = makeNewEnemy()
-			// ICI
 			pile.PushCharacters(loc.Enemy)
 		}
 	}
@@ -544,6 +544,22 @@ var itemsByEnemy = map[string]map[string]int{
 		itemNames.Scroll:    0,
 	},
 	enemiesList.DRAGON: map[string]int{
+		itemNames.Moonstone: 0,
+		itemNames.Doll:      0,
+		itemNames.Coins:     0,
+		itemNames.Key:       0,
+		itemNames.Potion:    0,
+		itemNames.Scroll:    0,
+	},
+	enemiesList.NIGHTWALKER: map[string]int{
+		itemNames.Moonstone: 0,
+		itemNames.Doll:      0,
+		itemNames.Coins:     0,
+		itemNames.Key:       0,
+		itemNames.Potion:    0,
+		itemNames.Scroll:    0,
+	},
+	enemiesList.NECROMANCER: map[string]int{
 		itemNames.Moonstone: 0,
 		itemNames.Doll:      0,
 		itemNames.Coins:     0,

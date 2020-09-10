@@ -31,7 +31,7 @@ There are a few steps to make the experience much better however:
 **There are 4 Hero classes to choose from**
 
 > Select the hero you want, they each have their attributes, passive contextual and item chances:
->  1. **Thieve** has the best avoid chances, has a chance to attack twice with a second attack dealing 60% of regular damages.
+>  1. **Thief** has the best avoid chances, has a chance to attack twice with a second attack dealing 60% of regular damages.
 >  2. **Paladin** has more potions chances, a good attack and avoid chances. He's the most balanced.
 >  3. **Wizard** doesn't have a good resistance and attack but starts with potions and scrolls.
 >   4. **Barbarian** has a good attack, more health, but less potions chances.

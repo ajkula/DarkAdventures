@@ -31,11 +31,13 @@ var SCORE *ScoreSchema = &ScoreSchema{
 		itemNames.Coins:     {Points: 10},
 	},
 	Enemies: map[string]*Calculus{
-		enemiesList.GOBLIN:   {Points: 25},
-		enemiesList.SKELETON: {Points: 30},
-		enemiesList.SORCERER: {Points: 80},
-		enemiesList.ORC:      {Points: 100},
-		enemiesList.DRAGON:   {Points: 250},
+		enemiesList.GOBLIN:      {Points: 25},
+		enemiesList.SKELETON:    {Points: 30},
+		enemiesList.SORCERER:    {Points: 80},
+		enemiesList.ORC:         {Points: 100},
+		enemiesList.DRAGON:      {Points: 250},
+		enemiesList.NIGHTWALKER: {Points: 250},
+		enemiesList.NECROMANCER: {Points: 150},
 	},
 	Dammages: &DammageSchema{
 		Dealt: 0,

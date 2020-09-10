@@ -12,7 +12,7 @@ func DisplayWorldMap(p *Character) {
 			if !WorldMap[y][x].Visited {
 				result[y][x] = Unseen
 			} else {
-				result[y][x] = Grid[y][x]
+				result[y][x] = displayMapIcons[Grid[y][x]] // displayMapIcons[Grid[y][x]] Grid[y][x]
 
 				if WorldMap[y][x].HasSeller {
 					result[y][x] = Shop
@@ -22,15 +22,12 @@ func DisplayWorldMap(p *Character) {
 					result[y][x] = Root
 				}
 				if WorldMap[y][x].HasEnemy {
-					result[y][x] = enemyPos
-					if WorldMap[y][x].Enemy.Name == enemiesList.DRAGON {
-						result[y][x] = dragonPos
-					}
+					result[y][x] = WorldMap[y][x].Enemy.Icon
 				}
 			}
 			if WorldMap[y][x].HasEnemy && Difficulty == 0 {
-				if WorldMap[y][x].Enemy.Name == enemiesList.DRAGON {
-					result[y][x] = dragonPos
+				if i := indexOf(giants, WorldMap[y][x].Enemy.Name); i != -1 {
+					result[y][x] = WorldMap[y][x].Enemy.Icon
 				}
 			}
 

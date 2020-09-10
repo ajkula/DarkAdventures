@@ -165,7 +165,7 @@ var chooseHeroTR = map[string]string{
 	frenchLang:  DoubleTab + "Choisissez votre hero:",
 }
 
-var heroesDetailsTHIEVE = map[string]string{
+var heroesDetailsTHIEF = map[string]string{
 	englishLang: " - High evasion, crits, can attack x2",
 	frenchLang:  " - Evasion, crits élevée, chances de double attaque",
 }
@@ -205,21 +205,21 @@ var hardTR = map[string]string{
 	frenchLang:  DoubleTab + "3 - Difficile",
 }
 
-var ThieveEscapeOK = map[string]string{
+var ThiefEscapeOK = map[string]string{
 	englishLang: Tab + "Using tricks and tools, you make a dark suffocating smoke cloud\n" +
 		Tab + "Giving you an opportunity to fall back",
 	frenchLang: Tab + "Utilisant vos gadgets et tours, vous créez un nuage noir\n" +
 		Tab + "de fumée suffocante vous donnant l'opportunité de battre en retraite",
 }
 
-var ThieveEscapeRAND = map[string]string{
+var ThiefEscapeRAND = map[string]string{
 	englishLang: Tab + "Parrying the enemy's attacks and throw a handful of darts\n" +
 		Tab + "they fly straight to their face as you jump wherever you can",
 	frenchLang: Tab + "Parrant les attaques ennemies vous jetez une poignée de flechettes\n" +
 		Tab + "qui volent droit à leur visage tandis que vous fuiyez où ce peut",
 }
 
-var ThieveEscapeKO = map[string]string{
+var ThiefEscapeKO = map[string]string{
 	englishLang: Tab + "After a clumsy parry you trigger agrenade off your arm-canon\n" +
 		Tab + "it blocks and your step trips giving the enemy an opportunity to hit",
 	frenchLang: Tab + "Après avoir maladroitement parré vous tantez de tirer une grenade\n" +
@@ -289,8 +289,8 @@ var BarbarianEscapeKO = map[string]string{
 		Tab + "Vous courez mais pas de chance vous êtes acculé...",
 }
 
-var ThieveNAME = map[string]string{
-	englishLang: "Thieve",
+var ThiefNAME = map[string]string{
+	englishLang: "Thief",
 	frenchLang:  "Voleur",
 }
 
@@ -334,6 +334,11 @@ var dragonNAME = map[string]string{
 	frenchLang:  "DRAGON",
 }
 
+var nightWalkerNAME = map[string]string{
+	englishLang: "NIGHTWALKER",
+	frenchLang:  "NIGHTWALKER",
+}
+
 var necromancerNAME = map[string]string{
 	englishLang: "NECROMANCER",
 	frenchLang:  "NECROMANCIEN",
@@ -368,6 +373,26 @@ var xTR = map[string]string{
 		Tab + "On croirait une éclipse lorsqu'un bruit assourdissant retenti\n" +
 		Tab + "Colossal, ailes déployées un cri déchirant les cieux,\n" +
 		Tab + "Le voilà. Le plus redoutable des ennemis...",
+}
+
+var nwProxTR = map[string]string{
+	englishLang: "The sun light is dims, it looks like nightfall.\n" +
+		Tab + "Light seems to glow half it would normally...",
+	frenchLang: "La lumière du jour est ternie, la nuit tombe.\n" +
+		Tab + "Elle semble briller beaucoup moins loin...",
+}
+
+var nwEncxTR = map[string]string{
+	englishLang: "The darkness is so thick now,\n" +
+		Tab + "loud and heavy footsteps are closing by.\n" +
+		Tab + "A huge and even dimmer silhouette appears in front of you,\n" +
+		Tab + "TOO LATE, it's a NightWalker and it has seen you!\n" +
+		Tab + "You will have to fight back...",
+	frenchLang: "L'obscurité est si épaisse maintenant,\n" +
+		Tab + "des bruits de pas très lourds et bruyants s'approche.\n" +
+		Tab + "Une silhouette géante et encore plus sombre apparaît,\n" +
+		Tab + "TROP TARD, c'est un NightWalker et il vous a déjà vu!\n" +
+		Tab + "Il va falloir se battre...",
 }
 
 var youAreTR = map[string]string{
@@ -744,28 +769,28 @@ var directionsArticlesConsonantTR = map[string]string{
 	frenchLang:  " au ",
 }
 
-var heroStoryThieveTR0 = map[string]string{
-	englishLang: Tab + "Member of the Thieves Guild of Novigrad, you've been hired\n" +
+var heroStoryThiefTR0 = map[string]string{
+	englishLang: Tab + "Member of the Thiefs Guild of Novigrad, you've been hired\n" +
 		Tab + "by a mysterious contractor to retrieve a so-called treasure here...",
 	frenchLang: Tab + "Membre de la Guilde des voleurs de Novigrad, on vous a engagé\n" +
 		Tab + "par un homme mystérieux pour retrouver un soi-disant trésor ici...",
 }
 
-var heroStoryThieveTR1 = map[string]string{
+var heroStoryThiefTR1 = map[string]string{
 	englishLang: Tab + "Behind every Pirates story, there's a treasure map...\n" +
 		Tab + "The same goes for yours, unfortunately...",
 	frenchLang: Tab + "Pour toute histoire de Pirates, il y a une carte au trésor...\n" +
 		Tab + "Vous en avez également trouvé une, malheureusement...",
 }
 
-var heroStoryThieveTR2 = map[string]string{
+var heroStoryThiefTR2 = map[string]string{
 	englishLang: Tab + "A Rogue from the Hanging City of Szyan who left, with the final goal\n" +
-		Tab + "the Thieves Guild of Novigrad. Until your path lead you here...",
+		Tab + "the Thiefs Guild of Novigrad. Until your path lead you here...",
 	frenchLang: Tab + "Voyou ayant quitté votre cité suspendue Szyan, avec pour destination\n" +
 		Tab + "la Guilde des voleurs de Novigrad. votre chemin vous a mené ici...",
 }
 
-var heroStoryThieveTR3 = map[string]string{
+var heroStoryThiefTR3 = map[string]string{
 	englishLang: Tab + "As a memeber of the Leaf Walkers Order of female elfic guards,\n" +
 		Tab + "you go wherever the forest needs help and heard the trees calling.",
 	frenchLang: Tab + "En tant que membre de l'ordre elfique des Marcheuses de feuilles,\n" +

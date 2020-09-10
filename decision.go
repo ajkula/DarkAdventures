@@ -51,6 +51,12 @@ func MakeEnemyDecision(p1, p2 *Character) {
 				},
 			},
 			Node{
+				//******************
+				// Leaf:   true,
+				// Label:  "skill",
+				// Name:   e.Name,
+				// Action: doSkill,
+				//******************
 				Leaf:  false,
 				Label: "skill",
 				Name:  e.Name,

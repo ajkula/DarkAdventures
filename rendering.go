@@ -43,11 +43,15 @@ func PresentScene(p *Character) {
 			navTutoBool = false
 		}
 
-		sayIt := dragonLanding.shouldSayIt()
-		if loc.HasEnemy && loc.Enemy.Name == enemiesList.DRAGON && sayIt {
-			Output("yellow", loc.Ephemeral)
-			dragonLanding.saidIt()
-			time.Sleep(1 * time.Second)
+		if loc.HasEnemy {
+			if indexGiants := indexOf(giants, loc.Enemy.Name); indexGiants != -1 {
+				sayIt := loc.Enemy.Encounter.shouldSayIt()
+				if sayIt {
+					Output("yellow", loc.Ephemeral)
+					loc.Enemy.Encounter.saidIt()
+					time.Sleep(1 * time.Second)
+				}
+			}
 		}
 		// Output("red", loc.HasEnemy)
 		// Output("green", getTurns())
