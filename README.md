@@ -16,6 +16,7 @@ There are a few steps to make the experience much better however:
  - I recommend using a terminal emulator on windows such as: 
  **https://conemu.github.io/en/TableOfContents.html**
  - The software will create the default *landscape layout*, it has only a weak contextual influence for the moment but will have more depth later.
+ - The mapCreator tool will generate a new random world map for you replacing the existing one.
  - If the software was started *directly* it might close the console abruptly on exit, I therefore recommend opening the terminal and start the application from it.
  - By default the game will get the O/S language
 
