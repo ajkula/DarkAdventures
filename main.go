@@ -32,6 +32,8 @@ func Check(e error) {
 }
 
 func init() {
+	lastVer := getRepos()
+	updateTitle(lastVer)
 	rand.Seed(time.Now().UTC().UnixNano())
 	Out = os.Stdout
 	In = os.Stdin
@@ -173,4 +175,17 @@ func makeEnemyTiers() {
 		}
 	}
 	pile.forEachEnemy(makeEnemiesLVL)
+}
+
+func updateTitle(lastVer *Repo) {
+	// fmt.Printf("\n%+v\n", lastVer.Name) // ligne 29 title
+	titleAsArray := strings.Split(title, "\n")
+	ver := " " + releaseVersion + " "
+
+	if lastVer.Name != releaseVersion {
+		titleAsArray[28] = titleAsArray[28][:28] + updatedAvailable + titleAsArray[28][28+len(updatedAvailable):]
+	}
+	titleAsArray[32] = titleAsArray[32][:4] + ver + titleAsArray[32][4+len(ver):]
+
+	title = strings.Join(titleAsArray, "\n")
 }
