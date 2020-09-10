@@ -38,7 +38,7 @@ func getRepos() *Repo {
 	body, err := ioutil.ReadAll(resp.Body)
 	check(err)
 	json.Unmarshal(body, &Repos)
-	return Repos[len(Repos)-1]
+	return Repos[0]
 }
 
 func check(e error) {
