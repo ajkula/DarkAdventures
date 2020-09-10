@@ -409,6 +409,7 @@ var heroFromName = func(s string) *Character {
 	hero.StatusEffects = &StatusEffectsBlueprint{
 		AllStatus: []*Blueprint{},
 	}
+	hero.Icon = YourPosition
 	SCORE.removeBaseInventory(hero.Inventory)
 	return &hero
 }

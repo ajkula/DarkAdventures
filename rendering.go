@@ -28,7 +28,7 @@ func PresentScene(p *Character) {
 		loc.showImage()
 		if t == 1 {
 			Output("yellow", loc.Description)
-			if loc.HasEnemy && loc.Enemy.Name != enemiesList.DRAGON || !loc.HasEnemy {
+			if loc.HasEnemy && indexOf(giants, loc.Enemy.Name) == -1 || !loc.HasEnemy {
 				Output("yellow", loc.Ephemeral)
 			}
 		}

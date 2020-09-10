@@ -12,7 +12,7 @@ const DoubleTab string = "\t\t"
 const Unseen string = " "
 const Shop string = "#"
 const Root string = "л"
-const YourPosition string = "●"
+const YourPosition string = "○"
 const LegendSpace int = 10
 const inventorySpace int = 38
 const heroesDetailsSpacing int = 14
@@ -20,7 +20,7 @@ const gaugeSize int = 40
 const expChar string = "="
 const emptyGauge string = " "
 const dragonPos string = "V"
-const nightWalkerPos string = "○"
+const nightWalkerPos string = "●"
 const enemyPos string = "Д"
 
 var playerEnemyColor = map[bool]string{
@@ -88,10 +88,10 @@ var LegendArray []string = []string{
 	CustomSpaceAlign(translate(youTR), LegendSpace) + YourPosition,
 	CustomSpaceAlign(translate(shopsTR), LegendSpace) + Shop,
 	CustomSpaceAlign(translate(rootsTR), LegendSpace) + Root,
-	CustomSpaceAlign(roomTypes.FOREST+":", LegendSpace) + LettersFromLandscape[roomTypes.FOREST],
-	CustomSpaceAlign(roomTypes.PLAINS+":", LegendSpace) + LettersFromLandscape[roomTypes.PLAINS],
-	CustomSpaceAlign(roomTypes.DESERT+":", LegendSpace) + LettersFromLandscape[roomTypes.DESERT],
-	CustomSpaceAlign(roomTypes.CASTLE+":", LegendSpace) + LettersFromLandscape[roomTypes.CASTLE],
+	CustomSpaceAlign(roomTypes.FOREST+":", LegendSpace) + displayMapIcons[LettersFromLandscape[roomTypes.FOREST]],
+	CustomSpaceAlign(roomTypes.PLAINS+":", LegendSpace) + displayMapIcons[LettersFromLandscape[roomTypes.PLAINS]],
+	CustomSpaceAlign(roomTypes.DESERT+":", LegendSpace) + displayMapIcons[LettersFromLandscape[roomTypes.DESERT]],
+	CustomSpaceAlign(roomTypes.CASTLE+":", LegendSpace) + displayMapIcons[LettersFromLandscape[roomTypes.CASTLE]],
 }
 
 type Directions struct{ North, South, East, West string }

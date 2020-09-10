@@ -91,10 +91,8 @@ func main() {
 
 	for {
 		if msgDragonDead == enemiesList.DRAGON && sigOnce == 0 {
-			fmt.Println(msgDragonDead + " dead sig")
 			nightWalkerA = CreateNightWalker()
 			nightWalkerB = CreateNightWalker()
-			fmt.Printf("\n%+v\n%+v\n", nightWalkerA, nightWalkerB)
 			sigOnce = 1
 		}
 		loc := hero.SetPlayerRoom()
