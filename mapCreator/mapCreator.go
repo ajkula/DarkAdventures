@@ -10,8 +10,8 @@ import (
 	"time"
 )
 
-var letters = []string{gridLetters.Desert, gridLetters.Plains, gridLetters.Forest}
-var castle string = gridLetters.Castle
+var letters = []string{"d", "l", "f"}
+var castle string = "c"
 
 var roots int = 12
 var file []byte
