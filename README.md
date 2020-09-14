@@ -1,4 +1,6 @@
 # DarkAdventures
+A simple text adventure game I build in Go for fun...
+
 ![A simple text adventure game I build in Go for fun...](https://github.com/ajkula/DarkAdventures/blob/master/scr/title.png)
 
 ## Installation
