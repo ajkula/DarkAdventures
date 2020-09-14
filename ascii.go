@@ -150,7 +150,7 @@ func (a *ASCII) showSkillAction(name string) {
 	case enemiesList.DRAGON:
 		index := rand.Intn(len(a.SKILLS[name]))
 		Output("red", a.SKILLS[name][index])
-		time.Sleep(2 * time.Second)
+		time.Sleep(1 * time.Second)
 		break
 	default:
 		break

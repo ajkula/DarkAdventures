@@ -1,5 +1,5 @@
 # DarkAdventures
-A simple text adventure game I build in Go for fun...
+![A simple text adventure game I build in Go for fun...](https://github.com/ajkula/DarkAdventures/blob/master/scr/title.png)
 
 ## Installation
 It's as simple as clone/compile/run...
@@ -10,9 +10,9 @@ You might want to **go get**:
 
 There are a few steps to make the experience much better however:
  - GDrive URL to download the game:
-    1. **https://tinyurl.com/y4y4avp5** (Windows 64)
-    2. **https://tinyurl.com/y57ktnbh** (Mac 64)
-    3. **https://tinyurl.com/y3odpymo** (Linux 64)
+    1. [**Windows 64**](https://tinyurl.com/y4y4avp5)
+    2. [**Mac 64**](https://tinyurl.com/y57ktnbh)
+    3. [**Linux 64**](https://tinyurl.com/y3odpymo)
  - I recommend using a terminal emulator on windows such as: 
  **https://conemu.github.io/en/TableOfContents.html**
  - The software will create the default *landscape layout*, it has only a weak contextual influence for the moment but will have more depth later.
@@ -37,6 +37,8 @@ There are a few steps to make the experience much better however:
 >  3. **Wizard** doesn't have a good resistance and attack but starts with potions and scrolls.
 >   4. **Barbarian** has a good attack, more health, but less potions chances.
 
+![The Thief](https://github.com/ajkula/DarkAdventures/blob/master/scr/character.png)
+
 ### Great tools to your disposal
 
 You will come across many sellers with variable deals during your trip, along with enemies dropping their items or gold coins and experience upon defeat.
@@ -50,7 +52,7 @@ Collect the best items to make it to through alive:
 - **Keys** to open chests or other mechanisms, will break on use.
 - **Moonstones** once used will instantly infuse into your arms and raise your strength by **5 Points**.
 - **Dolls** are a weird unexplained find, owners of that unworldly curiosity have reported to wake up after they thought they died. Even the weakest of them felt stronger for a while! Will suddenly disappear and revive you instantly with **30 HP** no matter your base health.
- - **Skills** are a set of various techniques each Hero can do to vanquish enemis, you earn them randomly on lvl up. Currently all heroes have their Skills available, regarding enemies: Dragon, Goblin, Sorcerer have theirs.
+ - **Skills** are a set of various techniques each Hero can do to vanquish enemis, you earn them randomly on lvl up. Currently all heroes have their Skills available, regarding enemies: Dragon, Goblin, Sorcerer, Skeleton have theirs.
 
 ### More dangers than it seems
 
@@ -61,6 +63,8 @@ Those are about to come ingame soon, the skeleton mechanics are set, now all is 
 ### The mightiest of foes
 
 A **Dragon** roams the North parts of the World Map, you will need to be well prepared to take down this enemy.
+
+![The Dragon](https://github.com/ajkula/DarkAdventures/blob/master/scr/dragon.png)
 
 ### Side tools
 

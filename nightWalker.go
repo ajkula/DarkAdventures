@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 )
 
@@ -56,6 +55,5 @@ func CreateNightWalker() *Walker {
 	pile.PushCharacters(nightWalker.Character)
 	loc = nightWalker.SetPlayerRoom()
 	loc.AddEphemeral(nightWalker)
-	fmt.Printf("\n%+v\n", nightWalker)
 	return nightWalker
 }

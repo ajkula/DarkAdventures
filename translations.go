@@ -70,8 +70,8 @@ var deadOnTheGroundTR = map[string]string{
 }
 
 var someoneWasHereTR = map[string]string{
-	englishLang: Tab + "There was someone here, it's empty now.",
-	frenchLang:  Tab + "Il y avait quelqu'un ici, il n'est plus là.",
+	englishLang: Tab + "There was someone here, it's empty now.\n",
+	frenchLang:  Tab + "Il y avait quelqu'un ici, il n'est plus là.\n",
 }
 
 var rootBellTRUE = map[string]string{
@@ -1170,6 +1170,11 @@ var ElfTR = map[string]string{
 	frenchLang:  "Elfe",
 }
 
+var DarkElfTR = map[string]string{
+	englishLang: "Dark Elf",
+	frenchLang:  "Elfe Noire",
+}
+
 var TieflingTR = map[string]string{
 	englishLang: "Tiefling",
 	frenchLang:  "Tiefling",
@@ -1183,6 +1188,16 @@ var UndeadTR = map[string]string{
 var DarklingTR = map[string]string{
 	englishLang: "Darkling",
 	frenchLang:  "Ténébréen",
+}
+
+var VillagerTR = map[string]string{
+	englishLang: "Villager",
+	frenchLang:  "Villageois",
+}
+
+var VillagerChiefTR = map[string]string{
+	englishLang: "Village Chief",
+	frenchLang:  "Chef de Village",
 }
 
 var usePotionTR = map[string]string{

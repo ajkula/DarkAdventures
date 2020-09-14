@@ -92,7 +92,7 @@ func (player *Character) showAction() {
 
 func pauseForGiants(player *Character) {
 	if i := indexOf(giants, player.Name); i != -1 {
-		time.Sleep(300 * time.Millisecond)
+		time.Sleep(600 * time.Millisecond)
 	}
 }
 
@@ -877,7 +877,7 @@ func (player *Character) useSkillSet(e *Character) {
 	case enemiesList.NECROMANCER:
 		break
 	}
-	time.Sleep(2 * time.Second)
+	time.Sleep(1 * time.Second)
 }
 
 func (player *Character) checkSkills() bool {

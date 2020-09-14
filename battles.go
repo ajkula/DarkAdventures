@@ -97,6 +97,7 @@ func checkPlayers() {
 				player.LevelUp.Exp += opp.ExpValue
 				player.getEnemyItems(enemy)
 				player.calcLVL()
+				player.SetPlayerRoom().Ephemeral = ""
 				return
 			case false:
 				if !opp.hasItemInInventory(itemNames.Doll) || (opp.hasItemInInventory(itemNames.Doll) && opp.Inventory[itemNames.Doll].Quantity < 1) {

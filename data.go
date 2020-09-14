@@ -340,6 +340,8 @@ var gridLetters = &GridLetters{
 	Plains: "l",
 }
 
+const people = "𐒕" // ᡶ ᡷ ᢜ ᢤ ♾ 𐒉 𐒕
+
 // ICI
 var displayMapIcons = map[string]string{
 	gridLetters.Forest: "ф", //🌳 🌴 🌲 ⺦ ф Ф
