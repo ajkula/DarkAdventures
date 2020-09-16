@@ -189,3 +189,9 @@ func updateTitle(lastVer *Repo) {
 
 	title = strings.Join(titleAsArray, "\n")
 }
+
+func printQuestEvent(args ...interface{}) {
+	s := fmt.Sprint(args...)
+	col := color.HiGreenString
+	fmt.Fprintln(Out, col(s))
+}

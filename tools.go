@@ -141,6 +141,7 @@ func CreateMap() [][]*Location {
 				WorldMap[y][x].Enemy.createEnemyInventory()
 			}
 			// temporary = append(temporary, &room)
+			populateTheSlices(WorldMap[y][x])
 		}
 		// WorldMap = append(WorldMap, temporary)
 	}
@@ -155,6 +156,8 @@ func CreateMap() [][]*Location {
 	AnalyzeItemsRepartition()
 
 	Output("white", translate(difficultyTR), difficultyIndex[Difficulty], "\n")
+
+	// Create Quests Here
 
 	return WorldMap
 }

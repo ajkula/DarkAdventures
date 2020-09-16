@@ -1,30 +1,14 @@
 package main
 
-type QuestTypes struct {
-	KILL, RETRIEVE, SAVE string
-}
-
-var questProbabilityPercentage = 5
-var questTypes = &QuestTypes{KILL: "kill", RETRIEVE: "retrieve", SAVE: "save"}
+import "math/rand"
 
 // {Name} npc name, {Dialog} dialog for the quest, {QuestType} [kill, objects, save]
 type NPC struct {
 	Name, Dialog, QuestType string
-	Conditions              *Conditions
-	resolution              string
-	QuestName               string
-	Quest                   string
+	QuestID                 string
+	Quest                   *Quest
 	Icon                    string // people
 	Active                  bool
-}
-
-type Conditions struct {
-	QuestType string
-	Target    string
-	Quantity  int
-	ExpValue  int
-	Item      *ItemQuantity
-	Answer    string
 }
 
 type NPCTypes struct {
@@ -39,12 +23,24 @@ var npcTypes = &NPCTypes{
 	Villager:     translate(VillagerTR),
 }
 
-type Quest struct{}
-
-type PlayerQuestsMap struct {
-	activeQuestsByType map[string]*Quest
+var npcTypesList = []string{
+	npcTypes.DarkElf,
+	npcTypes.Elf,
+	npcTypes.Gnoll,
+	npcTypes.VillageChief,
+	npcTypes.Villager,
 }
 
-var playerQuestsMap = &PlayerQuestsMap{
-	activeQuestsByType: map[string]*Quest{},
+func createNPC() (npc *NPC) {
+	name := npcTypesList[rand.Intn(len(npcTypesList))]
+	npc = &NPC{
+		Name:      name,
+		Dialog:    "",
+		QuestID:   "",
+		Quest:     &Quest{},
+		QuestType: "",
+		Icon:      "",
+		Active:    false,
+	}
+	return npc
 }

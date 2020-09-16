@@ -12,9 +12,9 @@ You might want to **go get**:
 
 There are a few steps to make the experience much better however:
  - GDrive URL to download the game:
-    1. [**Windows 64**](https://tinyurl.com/y4y4avp5)
-    2. [**Mac 64**](https://tinyurl.com/y57ktnbh)
-    3. [**Linux 64**](https://tinyurl.com/y3odpymo)
+    * [**Windows 64**](https://tinyurl.com/y4y4avp5)
+    * [**Mac 64**](https://tinyurl.com/y57ktnbh)
+    * [**Linux 64**](https://tinyurl.com/y3odpymo)
  - I recommend using a terminal emulator on windows such as: 
  **https://conemu.github.io/en/TableOfContents.html**
  - The software will create the default *landscape layout*, it has only a weak contextual influence for the moment but will have more depth later.
@@ -54,7 +54,15 @@ Collect the best items to make it to through alive:
 - **Keys** to open chests or other mechanisms, will break on use.
 - **Moonstones** once used will instantly infuse into your arms and raise your strength by **5 Points**.
 - **Dolls** are a weird unexplained find, owners of that unworldly curiosity have reported to wake up after they thought they died. Even the weakest of them felt stronger for a while! Will suddenly disappear and revive you instantly with **30 HP** no matter your base health.
- - **Skills** are a set of various techniques each Hero can do to vanquish enemis, you earn them randomly on lvl up. Currently all heroes have their Skills available, regarding enemies: Dragon, Goblin, Sorcerer, Skeleton have theirs.
+ - **Skills** are a set of various techniques each Hero can do to vanquish enemis, you earn them randomly on lvl up. Currently all heroes have their Skills available.
+ 
+###### Regarding enemies skills available:
+ - [x] Dragon
+ - [x] Goblin
+ - [x] Sorcerer
+ - [x] Skeleton
+ - [ ] Orc
+ - [ ] NightWalkers
 
 ### More dangers than it seems
 

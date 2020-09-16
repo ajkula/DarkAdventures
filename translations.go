@@ -1302,6 +1302,46 @@ var skillHelpTR = map[string]string{
 	frenchLang:  "- Utiliser une de vos compétences",
 }
 
+var RescueTargetTR = map[string]string{
+	englishLang: "Friend",
+	frenchLang:  "Ami",
+}
+
+var ShamanTR = map[string]string{
+	englishLang: "Shaman",
+	frenchLang:  "Shaman",
+}
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
 // var NAME = map[string]string{
 // 	englishLang: ,
 // 	frenchLang: ,
