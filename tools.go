@@ -68,7 +68,7 @@ func ChooseHero() {
 	}
 }
 
-var aggregate = map[string]int{
+var aggregateItems = map[string]int{
 	itemNames.Moonstone: 0,
 	itemNames.Doll:      0,
 	itemNames.Coins:     0,
@@ -93,6 +93,10 @@ func AnalyzeItemsRepartition() {
 			}
 		}
 	}
+}
+
+func getRandomArrayString(arr []string) string {
+	return arr[rand.Intn(len(arr))]
 }
 
 func makeWorldMapSizes(Y, X int) [][]*Location {
@@ -123,12 +127,9 @@ func makeWorldMapSizes(Y, X int) [][]*Location {
 }
 
 func CreateMap() [][]*Location {
-	// var temporary []*Location
 	WorldMap = makeWorldMapSizes(Y, X)
-
 	for y := 0; y < Y; y++ {
 		for x := 0; x < X; x++ {
-
 			if WorldMap[y][x].HasSeller {
 				WorldMap[y][x].Seller = translate(HasEnemyOrSellerTR0) + getSeller()
 			}
@@ -140,25 +141,19 @@ func CreateMap() [][]*Location {
 				EnemiesCount++
 				WorldMap[y][x].Enemy.createEnemyInventory()
 			}
-			// temporary = append(temporary, &room)
 			populateTheSlices(WorldMap[y][x])
 		}
-		// WorldMap = append(WorldMap, temporary)
 	}
 	for b := 0; b < Y; b++ {
 		for a := 0; a < X; a++ {
 			addOrcProximity(WorldMap[b][a])
 		}
 	}
-	CreateDragon()
 	showGameItems()
 	showGameEnemies()
 	AnalyzeItemsRepartition()
 
 	Output("white", translate(difficultyTR), difficultyIndex[Difficulty], "\n")
-
-	// Create Quests Here
-
 	return WorldMap
 }
 
@@ -186,7 +181,7 @@ func addOrcProximity(loc *Location) {
 
 func showGameItems() {
 	fmt.Println(DoubleTab + CalculateSpaceAlign("Items:"))
-	for a, b := range aggregate {
+	for a, b := range aggregateItems {
 		fmt.Println(Tab+CustomSpaceAlign(a, 22-len(strconv.Itoa(b))), b)
 	}
 }
@@ -197,6 +192,7 @@ func showGameEnemies() {
 		for j := 0; j < X; j++ {
 			if WorldMap[i][j].HasEnemy {
 				aggregateEnemies[WorldMap[i][j].Enemy.Name]++
+				totalEnemiesMinusQuestsObject[WorldMap[i][j].Enemy.Name]++
 			}
 		}
 	}

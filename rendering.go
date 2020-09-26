@@ -10,28 +10,30 @@ var started bool = false
 var navTutoBool bool = true
 var fightTutoBool bool = true
 var rootTutoBool bool = true
+var oneTimeQuestEvents = &OneTimeQuestEvents{str: "", show: false}
 
-func applyStatus(player *Character) { player.applyStatusesEffect() }
-func showRootTuto(b bool) {
-	if b && rootTutoBool {
-		Output("red", translate(rootTutoTR))
-		rootTutoBool = false
-	}
+type OneTimeQuestEvents struct {
+	str  string
+	show bool
 }
 
 func PresentScene(p *Character) {
 	loc := p.SetPlayerRoom()
 	loc.RemoveBattle()
-	// ICI
 	t := getTurns()
 	if started {
 		loc.showImage()
 		if t == 1 {
 			Output("yellow", loc.Description)
-			if loc.HasEnemy && indexOf(giants, loc.Enemy.Name) == -1 || !loc.HasEnemy {
+			if (loc.HasEnemy && indexOf(giants, loc.Enemy.Name) == -1) || !loc.HasEnemy {
 				Output("yellow", loc.Ephemeral)
+				if loc.HasNPC {
+					// ICI QUEST
+					oneTimeQuestEvents.addEventString(dialogFromConditions(loc.NPC.Quest))
+				}
 			}
 		}
+		oneTimeQuestEvents.display()
 		if loc.HasGate {
 			if t == 1 {
 				Output("yellow", rootBell[p.hasItemInInventory(itemNames.Key)])
@@ -53,42 +55,16 @@ func PresentScene(p *Character) {
 				}
 			}
 		}
-		// Output("red", loc.HasEnemy)
-		// Output("green", getTurns())
-		// Output("red", "dragon.Freeze "+strconv.FormatBool(dragon.Freeze))
-		// ICI
 		pile.forEachCharacter(applyStatus)
-		// if t == 1 {
 		p.showHealth()
 		p.DisplayExpGauge()
-		// }
 	}
-	// if loc.HasGate {
-	// 	y, x := loc.Gate.Warp()
-	// 	Output("red", " y: ", y, " x: ", x)
-	// }
 
 	if loc.HasEnemy {
 		if loc.Enemy.Alive {
-			// if t == 1 {
 			showActions(p, battleCommands)
 			showUniversalCmds()
-			// }
 			Battle(p, loc.Enemy)
-		}
-	}
-
-	if !loc.HasEnemy && !loc.HasSeller {
-		if started {
-			showActions(p, worldCommands)
-			showWhereCanGo(loc)
-			showUniversalCmds()
-		}
-		cmd := UserInputln()
-		if ok := arrayIncludesCommand(worldCommands, cmd); ok {
-			ProcessCommands(p, cmd)
-		} else {
-			Output("red", translate(cantDoThatTR))
 		}
 	}
 
@@ -105,7 +81,59 @@ func PresentScene(p *Character) {
 			Output("red", translate(cantDoThatTR))
 		}
 	}
+
+	if loc.HasNPC {
+		if started {
+			showActions(p, npcCommands)
+			showWhereCanGo(loc)
+			showUniversalCmds()
+		}
+		cmd := UserInputln()
+		if ok := arrayIncludesCommand(npcCommands, cmd); ok {
+			ProcessCommands(p, cmd)
+		} else {
+			Output("red", translate(cantDoThatTR))
+		}
+	}
+
+	if !loc.HasEnemy && !loc.HasSeller && !loc.HasNPC {
+		if started {
+			showActions(p, worldCommands)
+			showWhereCanGo(loc)
+			showUniversalCmds()
+		}
+		cmd := UserInputln()
+		if ok := arrayIncludesCommand(worldCommands, cmd); ok {
+			ProcessCommands(p, cmd)
+		} else {
+			Output("red", translate(cantDoThatTR))
+		}
+	}
 	started = true
+}
+
+func (otqe *OneTimeQuestEvents) addEventString(str string) {
+	otqe.str = str
+	otqe.show = true
+}
+
+func (otqe *OneTimeQuestEvents) display() {
+	if otqe.show {
+		loc := hero.SetPlayerRoom()
+		if loc.HasNPC {
+			Output("blue", otqe.str)
+		}
+	}
+	otqe.str = ""
+	otqe.show = false
+}
+
+func applyStatus(player *Character) { player.applyStatusesEffect() }
+func showRootTuto(b bool) {
+	if b && rootTutoBool {
+		Output("red", translate(rootTutoTR))
+		rootTutoBool = false
+	}
 }
 
 func showWhereCanGo(loc *Location) {

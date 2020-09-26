@@ -9,6 +9,8 @@ type Location struct {
 	X, Y                                            int
 	Gate                                            *Gate
 	CanGoTo                                         []string
+	HasNPC                                          bool
+	NPC                                             *NPC
 }
 
 func (loc *Location) RemoveBattle() {

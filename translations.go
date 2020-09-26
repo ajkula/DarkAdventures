@@ -1190,16 +1190,6 @@ var DarklingTR = map[string]string{
 	frenchLang:  "Ténébréen",
 }
 
-var VillagerTR = map[string]string{
-	englishLang: "Villager",
-	frenchLang:  "Villageois",
-}
-
-var VillagerChiefTR = map[string]string{
-	englishLang: "Village Chief",
-	frenchLang:  "Chef de Village",
-}
-
 var usePotionTR = map[string]string{
 	englishLang: " use potion +",
 	frenchLang:  " utilise potion +",
@@ -1302,40 +1292,102 @@ var skillHelpTR = map[string]string{
 	frenchLang:  "- Utiliser une de vos compétences",
 }
 
-var RescueTargetTR = map[string]string{
+// ********************** Quests ********************
+
+var ElfNPCTR = map[string]string{
+	englishLang: "an Elf",
+	frenchLang:  "un Elfe",
+}
+
+var DarkElfNPCTR = map[string]string{
+	englishLang: "a Dark Elf",
+	frenchLang:  "un Elfe Noire",
+}
+
+var GnollNPCTR = map[string]string{
+	englishLang: "a Gnoll",
+	frenchLang:  "un Gnoll",
+}
+
+var VillagerNPCTR = map[string]string{
+	englishLang: "a Villager",
+	frenchLang:  "un Villageoi",
+}
+
+var VillagerChiefNPCTR = map[string]string{
+	englishLang: "the Village Chief",
+	frenchLang:  "le Chef du Village",
+}
+
+var RescueFriendTR = map[string]string{
 	englishLang: "Friend",
 	frenchLang:  "Ami",
 }
 
-var ShamanTR = map[string]string{
+var RescueShamanTR = map[string]string{
 	englishLang: "Shaman",
 	frenchLang:  "Shaman",
 }
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var RescueVillagerTR = map[string]string{
+	englishLang: "Villager",
+	frenchLang:  "Villageoi",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var saveTR = map[string]string{
+	englishLang: "save",
+	frenchLang:  "sauver",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var retrieveTR = map[string]string{
+	englishLang: "retrieve",
+	frenchLang:  "apporter",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var killTR = map[string]string{
+	englishLang: "kill",
+	frenchLang:  "tuer",
+}
 
-// var NAME = map[string]string{
-// 	englishLang: ,
-// 	frenchLang: ,
-// }
+var saveRequestTR = map[string]string{
+	englishLang: "Hello. Please help me save ",
+	frenchLang:  "Bonjour. S'il vous plaît aidez-moi à sauver ",
+}
+
+var retrieveRequestTR = map[string]string{
+	englishLang: "Hello. Could you bring me ",
+	frenchLang:  "Bonjour. Pourriez-vous m'apporter ",
+}
+
+var killRequestTR = map[string]string{
+	englishLang: "Hello. Would you help me to kill ",
+	frenchLang:  "Bonjour. Voudriez-vous m'aider à tuer ",
+}
+
+var GreetingsTR = map[string]string{
+	englishLang: DoubleTab + "Hey there, I'm ",
+	frenchLang:  DoubleTab + "Hey par ici! Je suis ",
+}
+
+var questAnswerTR = map[string]string{
+	englishLang: "Thank you! Here's your reward: ",
+	frenchLang:  "Merci! Voici votre récompense: ",
+}
+
+var killsAcceptTR = map[string]string{
+	englishLang: "You will find the targets out there...",
+	frenchLang:  "Vous trouverez les cibles sur ces terres...",
+}
+
+var saveAcceptTR = map[string]string{
+	englishLang: "If you release a prisonner they'll just flee safely.",
+	frenchLang:  "Si vous libérer un prisonnier il partira sain et sauf.",
+}
+
+var retrieveAcceptTR = map[string]string{
+	englishLang: "Will you give me ",
+	frenchLang:  "Allez-vous me donner ",
+}
 
 // var NAME = map[string]string{
 // 	englishLang: ,

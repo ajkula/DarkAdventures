@@ -76,6 +76,9 @@ func init() {
 	// 	fmt.Println("grid", l)
 	// }
 	CreateMap()
+	CreateDragon()
+	initializeQuests()
+
 	makeEnemyTiers()
 	InitGates()
 }

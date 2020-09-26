@@ -33,7 +33,10 @@ var Repos []*Repo
 
 func getRepos() *Repo {
 	resp, err := http.Get(githugApiURL)
-	check(err)
+	if err != nil {
+		fmt.Printf("Error retrieving Game last version: %s\n", err)
+		return &Repo{Name: releaseVersion}
+	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	check(err)

@@ -96,6 +96,13 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 		if ok := player.BuyFromShop(itemName); !ok {
 			Output("red", translate(cantBuyTR)+Article(itemName))
 		}
+	case Initial(commands.Yes):
+		quest := loc.NPC.Quest
+		playerQuestsMap.addQuest(quest)
+		if !quest.Active {
+			quest.Active = true
+			break
+		}
 	// case "get":
 	// 	err, index, itm := FindItemByName(itemName)
 	// 	//Make sure we do not pick it up twice
@@ -104,13 +111,6 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 	// 		itm.RemoveItemFromRoom(loc)
 	// 	} else {
 	// 		Output("Could not get " + itemName)
-	// 	}
-	// case "open":
-	// 	OpenItem(player, itemName)
-	// case "inv":
-	// 	Output("yellow", "Your Inventory: ")
-	// 	for _, itm := range player.Items {
-	// 		Output("yellow", "\t"+Items[itm].Name)
 	// 	}
 	case Initial(commands.Help):
 		ResetTurns()
@@ -121,10 +121,6 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 		Output("blue", Tab+CustomSpaceAlign("[s]kill", 25)+translate(skillHelpTR))
 		Output("blue", Tab+CustomSpaceAlign("[b]uy <Item Name>", 25)+translate(buyHelpTR))
 		Output("blue", Tab+CustomSpaceAlign("[u]se <Item Name>", 25)+translate(useHelpTR))
-		// Output("blue", "\tparry - Attemp to Parry incoming attack")
-		// Output("blue", "\trun - Escape attack")
-		// Output("blue", "\tget <Item Name> - Pick up item")
-		// Output("blue", "\topen <Item Name> - Open an iten if it can be opened")
 		Output("blue", Tab+CustomSpaceAlign("[i]nv", 25)+translate(invHelpTR))
 		Output("blue", Tab+CustomSpaceAlign("[m]ap", 25)+translate(mapHelpTR))
 	case Initial(commands.Quit):

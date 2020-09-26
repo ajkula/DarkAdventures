@@ -24,6 +24,7 @@ const emptyGauge string = " "
 const dragonPos string = "V"
 const nightWalkerPos string = "●"
 const enemyPos string = "Д"
+const NPCPosition string = "P"
 
 var playerEnemyColor = map[bool]string{
 	false: "green",
@@ -114,7 +115,7 @@ var difficultyNames = DifficultyNames{
 }
 
 type Commands struct {
-	Attack, Skill, Use, Escape, Go, Map, Buy, Inv, Stats, Help, Quit string
+	Attack, Skill, Use, Escape, Go, Map, Buy, Inv, Stats, Yes, Help, Quit string
 }
 
 var commands = &Commands{
@@ -127,6 +128,7 @@ var commands = &Commands{
 	Buy:    "Buy",
 	Inv:    "Inv",
 	Stats:  "Props",
+	Yes:    "Yes",
 	Help:   "Help",
 	Quit:   "Quit",
 }
@@ -135,6 +137,7 @@ var allCommands = []string{commands.Attack, commands.Use, commands.Go, commands.
 var battleCommands = []string{commands.Attack, commands.Use, commands.Escape, commands.Skill}
 var worldCommands = []string{commands.Go, commands.Use}
 var sellerCommands = []string{commands.Go, commands.Use, commands.Buy}
+var npcCommands = []string{commands.Go, commands.Use, commands.Yes}
 var universalCommands = []string{commands.Map, commands.Inv, commands.Stats, commands.Help, commands.Quit}
 var difficultyIndex = map[int]string{0: difficultyNames.Easy, 1: difficultyNames.Meddium, 2: difficultyNames.Hard}
 var GameDifficulty = map[string]int{difficultyNames.Easy: 15, difficultyNames.Meddium: 30, difficultyNames.Hard: 45}

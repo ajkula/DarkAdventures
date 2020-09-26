@@ -497,11 +497,13 @@ func (enemy *Character) createEnemyInventory() {
 		if A == itemNames.Coins {
 			Q := rand.Intn(5) + rand.Intn(5) + rand.Intn(5) + rand.Intn(3)
 			enemy.addItemTypeToInventory(A, Q)
-			aggregate[A] += Q
+			aggregateItems[A] += Q
+			totalItemsMinusQuestsObject[A] += Q
 			itemsByEnemy[enemy.Name][A] += Q
 		} else {
 			enemy.addItemTypeToInventory(A, 1)
-			aggregate[A]++
+			aggregateItems[A]++
+			totalItemsMinusQuestsObject[A]++
 			itemsByEnemy[enemy.Name][A]++
 		}
 	}
@@ -721,12 +723,16 @@ func (player *Character) DisplayStats() {
 	Output("cyan", "\n"+DoubleTab+"================= "+translate(Skill)+" ================\n")
 	Output("stats", translate(heroesSkillDescription[player.Name]))
 
-	Output("cyan", "\n"+DoubleTab+"============== Status Effects ============\n")
+	Output("cyan", "\n"+DoubleTab+"============= Status Effects =============\n")
 	var allStatus []string
 	for _, bp := range player.StatusEffects.AllStatus {
 		allStatus = append(allStatus, bp.Name)
 	}
 	Output("stats", Tab+ArrayToString(allStatus))
+	Output("cyan", "\n"+DoubleTab+"================= quests =================\n")
+	for _, quest := range playerQuestsMap.activeQuestByTarget {
+		Output("stats", Tab+CalcPropsSpaceAlign(quest.QuestType, strconv.Itoa(quest.Condition.Quantity)+" "+quest.Condition.Target+plurial(quest.Condition.Quantity)))
+	}
 	fmt.Println()
 }
 

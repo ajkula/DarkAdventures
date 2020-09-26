@@ -24,6 +24,9 @@ func DisplayWorldMap(p *Character) {
 				if WorldMap[y][x].HasEnemy {
 					result[y][x] = WorldMap[y][x].Enemy.Icon
 				}
+				if WorldMap[y][x].HasNPC {
+					result[y][x] = NPCPosition
+				}
 			}
 			if WorldMap[y][x].HasEnemy && Difficulty == 0 {
 				if i := indexOf(giants, WorldMap[y][x].Enemy.Name); i != -1 {

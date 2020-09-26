@@ -4,6 +4,8 @@ type Pile struct {
 	Enemies       []*Character
 	Gates         []*Gate
 	AllCharacters []*Character
+	NPCS          []*NPC
+	NPCsRefList   []*NPC
 }
 
 var pile *Pile = &Pile{}
@@ -73,4 +75,25 @@ func (pile *Pile) indexOfCharacter(player *Character) (i int) {
 
 func (pile *Pile) ejectCharacter(i int) {
 	pile.Enemies = append(pile.Enemies[:i], pile.Enemies[i+1:]...)
+}
+
+func (pile *Pile) PushNPC(args ...*NPC) {
+	npc := args
+	pile.NPCS = append(pile.NPCS, npc...)
+	pile.NPCsRefList = append(pile.NPCsRefList, npc...)
+}
+
+func (pile *Pile) unshiftNPC() *NPC {
+	npc := pile.NPCS[:1][0]
+	pile.NPCS = pile.NPCS[1:]
+	return npc
+}
+
+func (pile *Pile) find(id string) (n *NPC) {
+	for id, npc := range pile.NPCsRefList {
+		if id == id {
+			return npc
+		}
+	}
+	return nil
 }

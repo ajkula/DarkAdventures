@@ -73,6 +73,9 @@ func canWalkerMoveThatWay(y, x int) bool {
 	if loc.HasSeller {
 		return false
 	}
+	if loc.HasNPC {
+		return false
+	}
 	return true
 }
 
