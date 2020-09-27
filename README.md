@@ -54,7 +54,7 @@ Collect the best items to make it to through alive:
 - **Keys** to open chests or other mechanisms, will break on use.
 - **Moonstones** once used will instantly infuse into your arms and raise your strength by **5 Points**.
 - **Dolls** are a weird unexplained find, owners of that unworldly curiosity have reported to wake up after they thought they died. Even the weakest of them felt stronger for a while! Will suddenly disappear and revive you instantly with **30 HP** no matter your base health.
- - **Skills** are a set of various techniques each Hero can do to vanquish enemis, you earn them randomly on lvl up. Currently all heroes have their Skills available.
+- **Skills** are a set of various techniques each Hero can do to vanquish enemis, you earn them randomly on lvl up. Currently all heroes have their Skills available.
  
 ###### Regarding enemies skills available:
  - [x] Dragon
@@ -63,6 +63,15 @@ Collect the best items to make it to through alive:
  - [x] Skeleton
  - [ ] Orc
  - [ ] NightWalkers
+
+### Help NPCs Quests
+
+Some NPCs will have some requests for you, help them to get EXP rewards.
+Quests are of these categories: kill, retrieve, save.
+They work like so:
+- kill: just kill the requested targets to bring some peace to this world.
+- retrieve: bring the NPC what they need.
+- save: some monsters on the world map hold the NPC's friends, find and kill these monsters to release the hostages.
 
 ### More dangers than it seems
 
