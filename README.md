@@ -69,9 +69,9 @@ Collect the best items to make it to through alive:
 Some NPCs will have some requests for you, help them to get EXP rewards.
 Quests are of these categories: kill, retrieve, save.
 They work like so:
-- kill: just kill the requested targets to bring some peace to this world.
-- retrieve: bring the NPC what they need.
-- save: some monsters on the world map hold the NPC's friends, find and kill these monsters to release the hostages.
+- **kill** just kill the requested targets to bring some peace to this world.
+- **retrieve** bring the NPC what they need.
+- **save** some monsters on the world map hold the NPC's friends, find and kill these monsters to release the hostages.
 
 ### More dangers than it seems
 
