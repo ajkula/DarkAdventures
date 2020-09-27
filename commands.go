@@ -97,12 +97,7 @@ func ProcessCommands(player *Character, input string, args ...interface{}) {
 			Output("red", translate(cantBuyTR)+Article(itemName))
 		}
 	case Initial(commands.Yes):
-		quest := loc.NPC.Quest
-		playerQuestsMap.addQuest(quest)
-		if !quest.Active {
-			quest.Active = true
-			break
-		}
+		followRetieveQuests()
 	// case "get":
 	// 	err, index, itm := FindItemByName(itemName)
 	// 	//Make sure we do not pick it up twice

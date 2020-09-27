@@ -10,17 +10,21 @@ import (
 
 type PlayerQuestsMap struct {
 	activeQuestsByID    map[string]*Quest
-	activeQuestByTarget map[string]*Quest
+	activeQuestByTarget map[string]map[string]*Quest
+	activeQuestByType   map[string][]*Quest
 }
 
 var playerQuestsMap = &PlayerQuestsMap{
 	activeQuestsByID:    map[string]*Quest{},
-	activeQuestByTarget: map[string]*Quest{},
+	activeQuestByTarget: map[string]map[string]*Quest{},
+	activeQuestByType:   map[string][]*Quest{},
 }
 
 func (pqm *PlayerQuestsMap) addQuest(q *Quest) {
-	pqm.activeQuestByTarget[q.Condition.Target] = q
+	pqm.activeQuestByTarget[q.Condition.Target] = map[string]*Quest{}
+	pqm.activeQuestByTarget[q.Condition.Target][q.ID] = q
 	pqm.activeQuestsByID[q.ID] = q
+	pqm.activeQuestByType[q.QuestType] = append(pqm.activeQuestByType[q.QuestType], q)
 }
 
 var questProbabilityPercentage = 5
@@ -198,6 +202,8 @@ func indexOfConditions(arr []*Condition, item *Condition) bool {
 	return false
 }
 
+var allQuests map[string]*Quest = make(map[string]*Quest)
+
 func initializeQuests() {
 	length := 3 + Difficulty
 	// ***************************************************
@@ -212,15 +218,14 @@ func initializeQuests() {
 
 	for i := 0; i < length; i++ {
 		n := createNPC(createQuest)
-		fmt.Printf("%+v\n", n.Quest)
-		fmt.Printf("%s\n", n.Quest.Dialogs.Greetings)
-		fmt.Printf("%s\n", n.Quest.Dialogs.Request)
-		fmt.Printf("%s\n", n.Quest.Dialogs.Answer)
-		fmt.Printf("%+v\n", n.Quest.Dialogs.Accepted)
+		fmt.Printf("%+v\n", n.Quest)                // ICI
+		fmt.Printf("%s\n", n.Quest.Dialogs.Request) // ICI
+		allQuests[n.Quest.ID] = n.Quest
 		pile.PushNPC(n)
 	}
 
 	var locs []*Location
+	var rescueQuests []*Quest
 	freeRoomsLength := len(noEnemyRooms)
 	locs = noEnemyRooms
 	for i := 0; i < length; i++ {
@@ -230,8 +235,27 @@ func initializeQuests() {
 		r.NPC = pile.unshiftNPC()
 		r.NPC.Quest.X = r.X
 		r.NPC.Quest.Y = r.Y
-		locs = skipOneLocationByIndex(noEnemyRooms, index)
+		if r.NPC.QuestType == questTypes.SAVE {
+			rescueQuests = append(rescueQuests, r.NPC.Quest)
+		}
+		locs = skipOneLocationByIndex(locs, index)
 		freeRoomsLength = len(locs)
+	}
+
+	if len(rescueQuests) > 0 {
+		var enemiesLocs []*Location
+		enemyRoomsLength := len(enemyRooms)
+		enemiesLocs = enemyRooms
+		for _, q := range rescueQuests {
+			for i := 0; i < q.Condition.Quantity; i++ {
+				index := rand.Intn(enemyRoomsLength)
+				r := enemiesLocs[index]
+				r.Enemy.HasHostage = true
+				r.Enemy.Hostage = &Hostage{Name: q.Condition.Target, QuestID: q.ID}
+				enemiesLocs = skipOneLocationByIndex(enemiesLocs, index)
+				enemyRoomsLength = len(enemiesLocs)
+			}
+		}
 	}
 	// ***************************************************
 }
@@ -239,17 +263,21 @@ func initializeQuests() {
 func cleanResolvedQuests() {
 	length := 3 + Difficulty
 	IDbox := make(map[string]*Quest, length)
-	TARGETbox := make(map[string]*Quest, length)
+	TARGETbox := make(map[string]map[string]*Quest, length)
 	for id, quest := range playerQuestsMap.activeQuestsByID {
 		if quest.Resolved {
 			hero.LevelUp.Exp += quest.Condition.ExpValue
-			Output("blue", quest.Dialogs.Answer)
+			hero.calcLVL()
+			// Output("blue", quest.Dialogs.Answer)
 			WorldMap[quest.Y][quest.X].HasNPC = false
 			WorldMap[quest.Y][quest.X].Description += translate(someoneWasHereTR)
 		}
 		if !quest.Resolved {
 			IDbox[id] = quest
-			TARGETbox[quest.QuestType] = quest
+			if _, ok := TARGETbox[quest.QuestType]; !ok {
+				TARGETbox[quest.QuestType] = make(map[string]*Quest) // ICI
+			}
+			TARGETbox[quest.QuestType][id] = quest // ICI
 		}
 	}
 	playerQuestsMap.activeQuestsByID = IDbox
@@ -260,12 +288,64 @@ func skipOneLocationByIndex(arr []*Location, i int) []*Location {
 	return append(append([]*Location{}, arr[:i]...), arr[i+1:]...)
 }
 
-func followKillQuestsEvolution(enemyName string) {
-	for id, quest := range playerQuestsMap.activeQuestByTarget {
-		if id == questTypes.KILL {
-			if quest.Condition.Target == enemyName {
-				quest.Condition.Quantity--
+func followKillQuestsEvolution(enemy *Character) {
+	for _, questByID := range playerQuestsMap.activeQuestByTarget {
+		for _, quest := range questByID {
+			if quest.QuestType == questTypes.KILL {
+				if quest.Condition.Target == enemy.Name {
+					quest.Condition.Quantity--
+					if quest.Condition.Quantity == 0 {
+						quest.Resolved = true
+						oneTimeQuestEvents.addEventString(dialogFromConditions(quest))
+					}
+				}
 			}
 		}
 	}
+}
+
+func followSaveQuests(e *Character) {
+	if e.HasHostage {
+		if q, ok := playerQuestsMap.activeQuestsByID[e.Hostage.QuestID]; ok {
+			q.Condition.Quantity--
+			if q.Condition.Quantity == 0 {
+				q.Resolved = true
+				oneTimeQuestEvents.addEventString(dialogFromConditions(q))
+			}
+		} else {
+			q := allQuests[e.Hostage.QuestID]
+			q.Condition.Quantity--
+			if q.Condition.Quantity == 0 {
+				q.Resolved = true
+			}
+		}
+	}
+}
+
+func followRetieveQuests() {
+	loc := hero.SetPlayerRoom()
+	quest := loc.NPC.Quest
+	if !quest.Active {
+		playerQuestsMap.addQuest(quest)
+		quest.Active = true
+		return
+	}
+	if q, ok := playerQuestsMap.activeQuestsByID[quest.ID]; ok {
+		if q.QuestType == questTypes.RETRIEVE {
+			requested := q.Condition.Target
+			num := q.Condition.Quantity
+			if hero.hasItemInInventory(requested) {
+				if hero.Inventory[requested].Quantity >= num {
+					hero.Inventory[requested].Quantity -= num
+					q.Resolved = true
+					oneTimeQuestEvents.addEventString(dialogFromConditions(q))
+				}
+			}
+		}
+	}
+}
+
+func followQuests(enemy *Character) {
+	followKillQuestsEvolution(enemy)
+	followSaveQuests(enemy)
 }

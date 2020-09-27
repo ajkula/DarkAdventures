@@ -1389,6 +1389,31 @@ var retrieveAcceptTR = map[string]string{
 	frenchLang:  "Allez-vous me donner ",
 }
 
+var noQuestsTR = map[string]string{
+	englishLang: "No Quest in progress",
+	frenchLang:  "Pas de Quête en cours",
+}
+
+var noneTR = map[string]string{
+	englishLang: "None",
+	frenchLang:  "Aucuns",
+}
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
+// var NAME = map[string]string{
+// 	englishLang: ,
+// 	frenchLang: ,
+// }
+
 // var NAME = map[string]string{
 // 	englishLang: ,
 // 	frenchLang: ,

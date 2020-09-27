@@ -56,17 +56,22 @@ func (landing *Encounter) reset() {
 	landing.isFirst = true
 }
 
+type Hostage struct {
+	Name, QuestID string
+}
+
 type Character struct {
 	Welcome, Name, Details, From, Icon      string
 	Health, Evasion, Strength, Boost, Skill int
 	BaseHealth, Crit, LVL, ExpValue         int
-	Alive, Npc                              bool
+	Alive, Npc, HasHostage                  bool
 	Inventory                               map[string]*ItemQuantity
 	Display                                 *DisplayImage
 	LevelUp                                 *Leveling
 	Special                                 *Special
 	StatusEffects                           *StatusEffectsBlueprint
 	Encounter                               *Encounter
+	Hostage                                 *Hostage
 
 	CurrentLocation []int
 }
@@ -728,12 +733,23 @@ func (player *Character) DisplayStats() {
 	for _, bp := range player.StatusEffects.AllStatus {
 		allStatus = append(allStatus, bp.Name)
 	}
-	Output("stats", Tab+ArrayToString(allStatus))
-	Output("cyan", "\n"+DoubleTab+"================= quests =================\n")
-	for _, quest := range playerQuestsMap.activeQuestByTarget {
-		Output("stats", Tab+CalcPropsSpaceAlign(quest.QuestType, strconv.Itoa(quest.Condition.Quantity)+" "+quest.Condition.Target+plurial(quest.Condition.Quantity)))
+	statusString := Tab + Tab + Tab + Tab + translate(noneTR)
+	if len(allStatus) > 0 {
+		statusString = Tab + ArrayToString(allStatus)
 	}
-	fmt.Println()
+	Output("stats", statusString)
+	Output("cyan", "\n"+DoubleTab+"================= quests =================\n")
+	questsString := ""
+	for _, quest := range playerQuestsMap.activeQuestsByID {
+		if !quest.Rewarded {
+			questsString += Tab + CalcPropsSpaceAlign(quest.QuestType, strconv.Itoa(quest.Condition.Quantity)+" "+quest.Condition.Target+plurial(quest.Condition.Quantity)) + "\n"
+		}
+	}
+	if questsString == "" {
+		questsString = Tab + Tab + Tab + translate(noQuestsTR) + "\n"
+	}
+	Output("stats", questsString)
+	// fmt.Println()
 }
 
 // **************************************************************************************

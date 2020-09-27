@@ -92,7 +92,7 @@ func checkPlayers() {
 				if enemy.Name == enemiesList.DRAGON {
 					msgDragonDead = enemiesList.DRAGON
 				}
-				followKillQuestsEvolution(enemy.Name)
+				followQuests(opp)
 				SCORE.scoreKills(opp.Name)
 				EnemiesKilled++
 				player.LevelUp.Exp += opp.ExpValue

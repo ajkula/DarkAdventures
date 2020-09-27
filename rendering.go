@@ -19,8 +19,12 @@ type OneTimeQuestEvents struct {
 
 func PresentScene(p *Character) {
 	loc := p.SetPlayerRoom()
+	var t int8 = 1
 	loc.RemoveBattle()
-	t := getTurns()
+	cleanResolvedQuests()
+	if loc.HasEnemy {
+		t = getTurns()
+	}
 	if started {
 		loc.showImage()
 		if t == 1 {
@@ -28,7 +32,9 @@ func PresentScene(p *Character) {
 			if (loc.HasEnemy && indexOf(giants, loc.Enemy.Name) == -1) || !loc.HasEnemy {
 				Output("yellow", loc.Ephemeral)
 				if loc.HasNPC {
-					// ICI QUEST
+					if loc.NPC.Quest.Rewarded == true {
+						loc.HasNPC = false
+					}
 					oneTimeQuestEvents.addEventString(dialogFromConditions(loc.NPC.Quest))
 				}
 			}
@@ -118,12 +124,12 @@ func (otqe *OneTimeQuestEvents) addEventString(str string) {
 }
 
 func (otqe *OneTimeQuestEvents) display() {
-	if otqe.show {
-		loc := hero.SetPlayerRoom()
-		if loc.HasNPC {
-			Output("blue", otqe.str)
-		}
-	}
+	// if otqe.show {
+	// loc := hero.SetPlayerRoom()
+	// if loc.HasNPC {
+	Output("blue", otqe.str)
+	// }
+	// }
 	otqe.str = ""
 	otqe.show = false
 }
