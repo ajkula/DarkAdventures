@@ -66,6 +66,20 @@ func PresentScene(p *Character) {
 		p.DisplayExpGauge()
 	}
 
+	if !loc.HasEnemy && !loc.HasSeller && !loc.HasNPC {
+		if started {
+			showActions(p, worldCommands)
+			showWhereCanGo(loc)
+			showUniversalCmds()
+		}
+		cmd := UserInputln()
+		if ok := arrayIncludesCommand(worldCommands, cmd); ok {
+			ProcessCommands(p, cmd)
+		} else {
+			Output("red", translate(cantDoThatTR))
+		}
+	}
+
 	if loc.HasEnemy {
 		if loc.Enemy.Alive {
 			showActions(p, battleCommands)
@@ -96,20 +110,6 @@ func PresentScene(p *Character) {
 		}
 		cmd := UserInputln()
 		if ok := arrayIncludesCommand(npcCommands, cmd); ok {
-			ProcessCommands(p, cmd)
-		} else {
-			Output("red", translate(cantDoThatTR))
-		}
-	}
-
-	if !loc.HasEnemy && !loc.HasSeller && !loc.HasNPC {
-		if started {
-			showActions(p, worldCommands)
-			showWhereCanGo(loc)
-			showUniversalCmds()
-		}
-		cmd := UserInputln()
-		if ok := arrayIncludesCommand(worldCommands, cmd); ok {
 			ProcessCommands(p, cmd)
 		} else {
 			Output("red", translate(cantDoThatTR))

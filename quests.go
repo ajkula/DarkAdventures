@@ -52,22 +52,27 @@ var conditions = map[string][]*Condition{}
 // QuestTypes
 var baseConditionsMap = map[string][]*Condition{
 	questTypes.KILL: {
-		&Condition{Target: enemiesList.GOBLIN, Quantity: 4, ExpValue: 15},
+		&Condition{Target: enemiesList.GOBLIN, Quantity: 4, ExpValue: 20},
+		&Condition{Target: enemiesList.GOBLIN, Quantity: 6, ExpValue: 26},
 		&Condition{Target: enemiesList.SKELETON, Quantity: 8, ExpValue: 25},
+		&Condition{Target: enemiesList.SKELETON, Quantity: 5, ExpValue: 17},
+		&Condition{Target: enemiesList.SKELETON, Quantity: 3, ExpValue: 10},
 		&Condition{Target: enemiesList.ORC, Quantity: 1, ExpValue: 20},
-		&Condition{Target: enemiesList.SORCERER, Quantity: 2, ExpValue: 15},
-		&Condition{Target: enemiesList.NIGHTWALKER, Quantity: 2, ExpValue: 30},
+		&Condition{Target: enemiesList.SORCERER, Quantity: 2, ExpValue: 12},
+		&Condition{Target: enemiesList.NIGHTWALKER, Quantity: 2, ExpValue: 40},
 		&Condition{Target: enemiesList.DRAGON, Quantity: 1, ExpValue: 30},
 	},
 	questTypes.SAVE: {
+		&Condition{Target: translate(RescueFriendTR), Quantity: 3, ExpValue: 20},
 		&Condition{Target: translate(RescueFriendTR), Quantity: 1, ExpValue: 10},
 		&Condition{Target: translate(RescueShamanTR), Quantity: 1, ExpValue: 10},
-		&Condition{Target: translate(RescueVillagerTR), Quantity: 2, ExpValue: 10},
+		&Condition{Target: translate(RescueVillagerTR), Quantity: 2, ExpValue: 15},
 	},
 	questTypes.RETRIEVE: {
+		&Condition{Target: itemNames.Doll, Quantity: 1, ExpValue: 25},
 		&Condition{Target: itemNames.Scroll, Quantity: 1, ExpValue: 13},
 		&Condition{Target: itemNames.Moonstone, Quantity: 1, ExpValue: 19},
-		&Condition{Target: itemNames.Potion, Quantity: 1, ExpValue: 10},
+		&Condition{Target: itemNames.Potion, Quantity: 1, ExpValue: 15},
 	},
 }
 
