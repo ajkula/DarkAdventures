@@ -73,11 +73,11 @@ They work like so:
 - **retrieve** bring the NPC what they need.
 - **save** some monsters on the world map hold the NPC's friends, find and kill these monsters to release the hostages.
 
-### More dangers than it seems
+### Status effects and Passive capacities
 
-There aren't only enemy hits and Skills you should worry about, but a few status effects are making their ways into the game, most of them reducing max health, HP or dealing DMG over time...
-Generaly killing the responsible foe would cure them, but not in all cases.
-Those are about to come ingame soon, the skeleton mechanics are set, now all is needed are the different statuses and their effects.
+The status effects are reducing max health, HP or dealing DMG over time...
+You'll see different ones that you can apply to enemies or get from them.
+Characters have some passive capacities attack or defense based, by either classes or races.
 
 ### The mightiest of foes
 
