@@ -12,7 +12,7 @@ You might want to **go get**:
 
 There are a few steps to make the experience much better however:
  - GDrive URL to download the game:
-    * [**Windows 64**](https://tinyurl.com/y4y4avp5)
+    * [**Windows 64**](https://github.com/ajkula/DarkAdventures/releases/download/v1.2.0/DarkAdventures.zip)
     * [**Mac 64**](https://tinyurl.com/y57ktnbh)
     * [**Linux 64**](https://tinyurl.com/y3odpymo)
  - I recommend using a terminal emulator on windows such as: 
