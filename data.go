@@ -2,7 +2,7 @@ package main
 
 import "math/rand"
 
-const releaseVersion = "v1.1.0"
+const releaseVersion = "v1.2.0"
 const updatedAvailable = " New version available "
 const DefaultLandscape = "ffffffffff\nffffddffff\nffdddddfff\nffdddlllff\nffddllllff\nfffllllfff\nfffffcclll\nfffllcclll\nffffllllll\nllllllllll"
 const englishLang string = "en"
