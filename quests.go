@@ -64,8 +64,10 @@ var baseConditionsMap = map[string][]*Condition{
 	},
 	questTypes.SAVE: {
 		&Condition{Target: translate(RescueFriendTR), Quantity: 3, ExpValue: 20},
+		&Condition{Target: translate(RescueFriendTR), Quantity: 2, ExpValue: 15},
 		&Condition{Target: translate(RescueFriendTR), Quantity: 1, ExpValue: 10},
 		&Condition{Target: translate(RescueShamanTR), Quantity: 1, ExpValue: 10},
+		&Condition{Target: translate(RescueShamanTR), Quantity: 2, ExpValue: 15},
 		&Condition{Target: translate(RescueVillagerTR), Quantity: 2, ExpValue: 15},
 	},
 	questTypes.RETRIEVE: {
@@ -73,6 +75,10 @@ var baseConditionsMap = map[string][]*Condition{
 		&Condition{Target: itemNames.Scroll, Quantity: 1, ExpValue: 13},
 		&Condition{Target: itemNames.Moonstone, Quantity: 1, ExpValue: 19},
 		&Condition{Target: itemNames.Potion, Quantity: 1, ExpValue: 15},
+		&Condition{Target: itemNames.Doll, Quantity: 2, ExpValue: 45},
+		&Condition{Target: itemNames.Scroll, Quantity: 2, ExpValue: 20},
+		&Condition{Target: itemNames.Moonstone, Quantity: 2, ExpValue: 35},
+		&Condition{Target: itemNames.Potion, Quantity: 2, ExpValue: 25},
 	},
 }
 

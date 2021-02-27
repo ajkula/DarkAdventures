@@ -66,7 +66,9 @@ func PresentScene(p *Character) {
 		p.DisplayExpGauge()
 	}
 
-	if !loc.HasEnemy && !loc.HasSeller && !loc.HasNPC {
+	// That's awful, but I am looking for another way
+	switch true {
+	case !loc.HasEnemy && !loc.HasSeller && !loc.HasNPC:
 		if started {
 			showActions(p, worldCommands)
 			showWhereCanGo(loc)
@@ -78,17 +80,15 @@ func PresentScene(p *Character) {
 		} else {
 			Output("red", translate(cantDoThatTR))
 		}
-	}
-
-	if loc.HasEnemy {
+		break
+	case loc.HasEnemy:
 		if loc.Enemy.Alive {
 			showActions(p, battleCommands)
 			showUniversalCmds()
 			Battle(p, loc.Enemy)
 		}
-	}
-
-	if loc.HasSeller {
+		break
+	case loc.HasSeller:
 		if started {
 			showActions(p, sellerCommands)
 			showWhereCanGo(loc)
@@ -100,9 +100,8 @@ func PresentScene(p *Character) {
 		} else {
 			Output("red", translate(cantDoThatTR))
 		}
-	}
-
-	if loc.HasNPC {
+		break
+	case loc.HasNPC:
 		if started {
 			showActions(p, npcCommands)
 			showWhereCanGo(loc)
@@ -114,7 +113,11 @@ func PresentScene(p *Character) {
 		} else {
 			Output("red", translate(cantDoThatTR))
 		}
+		break
+	default:
+		break
 	}
+
 	started = true
 }
 
