@@ -5,7 +5,7 @@ type Location struct {
 	Item, Chest                                     map[string]*ItemQuantity
 	HasSeller, HasEnemy, Visited, HasGate, HasChest bool
 	Seller                                          string
-	Enemy                                           *Character // ICI
+	Enemy                                           *Character
 	X, Y                                            int
 	Gate                                            *Gate
 	CanGoTo                                         []string

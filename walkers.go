@@ -65,8 +65,6 @@ func (walker *Walker) walkerPossibleWays() []string {
 
 func canWalkerMoveThatWay(y, x int) bool {
 	var loc *Location = WorldMap[y][x]
-	// ICI
-
 	if loc.HasEnemy {
 		return false
 	}

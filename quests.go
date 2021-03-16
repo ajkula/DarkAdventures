@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"math/rand"
 	"strconv"
@@ -218,19 +217,19 @@ var allQuests map[string]*Quest = make(map[string]*Quest)
 func initializeQuests() {
 	length := 3 + Difficulty
 	// ***************************************************
-	// ICI Quest Checks
 	validateAvailableConditions()
-	for n, a := range conditions {
-		for _, c := range a {
-			fmt.Printf("%s: %+v\n", n, c)
-		}
-		fmt.Println()
-	}
+	// ICI Quest Checks
+	// for n, a := range conditions {
+	// 	for _, c := range a {
+	// 		fmt.Printf("%s: %+v\n", n, c)
+	// 	}
+	// 	fmt.Println()
+	// }
 
 	for i := 0; i < length; i++ {
 		n := createNPC(createQuest)
-		fmt.Printf("%+v\n", n.Quest)                // ICI
-		fmt.Printf("%s\n", n.Quest.Dialogs.Request) // ICI
+		// fmt.Printf("%+v\n", n.Quest)                // ICI
+		// fmt.Printf("%s\n", n.Quest.Dialogs.Request) // ICI
 		allQuests[n.Quest.ID] = n.Quest
 		pile.PushNPC(n)
 	}

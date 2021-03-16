@@ -60,8 +60,8 @@ var nearOrcSearchTR = map[string]string{
 }
 
 var youSeeTR = map[string]string{
-	englishLang: Tab + "You see ",
-	frenchLang:  Tab + "Vous voyez ",
+	englishLang: Tab + "There is a ",
+	frenchLang:  Tab + "Il y a ",
 }
 
 var deadOnTheGroundTR = map[string]string{
@@ -1111,7 +1111,7 @@ var skeletonDarkTR = map[string]string{
 	englishLang: Tab + "You got stabbed by a rotten sword!\n" +
 		Tab + "your blood is turning Dark...\n",
 	frenchLang: Tab + "Vous avez été blessé par une lame pourrissante!\n" +
-		Tab + "votre sang devient s'assombri...\n",
+		Tab + "votre sang s'assombri...\n",
 }
 
 var GraceProtectsYouTR = map[string]string{
@@ -1131,6 +1131,13 @@ var DragonSkillFireTR = map[string]string{
 		DoubleTab + "Coup du déluge de flames ",
 }
 
+var nightWalkerDarkTR = map[string]string{
+	englishLang: Tab + "The tip of the NightWalker's claws hit you\n" +
+		Tab + "your blood is turning Dark...\n",
+	frenchLang: Tab + "Le NightWalker vous a griffé\n" +
+		Tab + "votre sang s'assombri...\n",
+}
+
 var HPTR = map[string]string{
 	englishLang: " HP",
 	frenchLang:  " HP",
@@ -1139,6 +1146,11 @@ var HPTR = map[string]string{
 var SorcererDragonFireTR = map[string]string{
 	englishLang: Tab + "Seeing it coming, you quickly whistle a protection spell\n",
 	frenchLang:  Tab + "Voyant ce qui arrive, vous souffler un sort de protection\n",
+}
+
+var PaladinNightWlakerResistTR = map[string]string{
+	englishLang: Tab + "Your armor saved you from a terrible doom\n",
+	frenchLang:  Tab + "Votre armure vous sauve d'un terrible sort\n",
 }
 
 var BarbarianLuckDragonTR = map[string]string{

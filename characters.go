@@ -796,7 +796,7 @@ func (player *Character) useSkillSet(e *Character) {
 		}
 		if !ok && !e.Npc {
 			Output("red", Tab+translate(TheTR)+player.Name+translate(StealFailTR))
-			return
+			break
 		}
 		if name == itemNames.Coins {
 			player.addItemTypeToInventory(name, itemQ.Quantity)
@@ -893,6 +893,15 @@ func (player *Character) useSkillSet(e *Character) {
 
 		// ********************************************************************************
 	case enemiesList.NIGHTWALKER:
+		dmg := rand.Intn(10) + 10
+		Output("red", translate(nightWalkerDarkTR))
+		hero.addStatus(&Blueprint{Name: statuses.Dark, Counter: 1})
+		if e.Name == heroesList.Paladin {
+			Output("green", translate(PaladinNightWlakerResistTR))
+			dmg /= 2
+		}
+		e.Health = e.Health - dmg
+		time.Sleep(1 * time.Second)
 		break
 
 		// ********************************************************************************

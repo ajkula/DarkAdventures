@@ -21,7 +21,7 @@ type Repo struct {
 	ZipballUrl string `json:"zipball_url"`
 	TarballUrl string `json:"tarball_url"`
 	Commit     Commit `json:"commit"`
-	node_id    string `json:"node_id"`
+	NodeID     string `json:"node_id"`
 }
 
 type Commit struct {

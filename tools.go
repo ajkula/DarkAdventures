@@ -84,6 +84,7 @@ var aggregateEnemies = map[string]int{
 	enemiesList.DRAGON:   0,
 }
 
+// ICI
 func AnalyzeItemsRepartition() {
 	for e, items := range itemsByEnemy {
 		Output("green", DoubleTab+e+":")
@@ -100,7 +101,7 @@ func getRandomArrayString(arr []string) string {
 }
 
 func makeWorldMapSizes(Y, X int) [][]*Location {
-	fmt.Println(Y, X)
+	// fmt.Println(Y, X) // ICI
 	var w [][]*Location
 	total := 0
 	var tempo []*Location
@@ -149,9 +150,10 @@ func CreateMap() [][]*Location {
 			addOrcProximity(WorldMap[b][a])
 		}
 	}
-	showGameItems()
-	showGameEnemies()
-	AnalyzeItemsRepartition()
+	// ICI
+	// showGameItems()
+	// showGameEnemies()
+	// AnalyzeItemsRepartition()
 
 	Output("white", translate(difficultyTR), difficultyIndex[Difficulty], "\n")
 	return WorldMap

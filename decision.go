@@ -112,7 +112,7 @@ func doAttack(p, e *Character) {
 
 func TreeVector(tree Node, p, e *Character) {
 	// ICI
-	Output("red", Tab+tree.Label+" leaf: ", tree.Leaf, " value: ", tree.Value)
+	// Output("red", Tab+tree.Label+" leaf: ", tree.Leaf, " value: ", tree.Value)
 
 	if tree.Leaf {
 		tree.Action(p, e)
