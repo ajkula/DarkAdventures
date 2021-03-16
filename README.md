@@ -61,8 +61,8 @@ Collect the best items to make it to through alive:
  - [x] Goblin
  - [x] Sorcerer
  - [x] Skeleton
+ - [x] NightWalkers
  - [ ] Orc
- - [ ] NightWalkers
 
 ### Help NPCs Quests
 
