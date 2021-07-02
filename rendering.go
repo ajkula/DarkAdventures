@@ -6,7 +6,7 @@ import (
 	"unicode/utf8"
 )
 
-var started bool = false
+var started bool = true
 var navTutoBool bool = true
 var fightTutoBool bool = true
 var rootTutoBool bool = true
