@@ -120,25 +120,25 @@ func storyFromImage(name string, index int) string {
 }
 
 var heroStoryAndImages = map[string]map[int]string{
-	heroesList.Thief: map[int]string{
+	heroesList.Thief: {
 		0: translate(heroStoryThiefTR0),
 		1: translate(heroStoryThiefTR1),
 		2: translate(heroStoryThiefTR2),
 		3: translate(heroStoryThiefTR3),
 	},
-	heroesList.Paladin: map[int]string{
+	heroesList.Paladin: {
 		0: translate(heroStoryPaladinTR0),
 		1: translate(heroStoryPaladinTR1),
 		2: translate(heroStoryPaladinTR2),
 		3: translate(heroStoryPaladinTR3),
 	},
-	heroesList.Wizard: map[int]string{
+	heroesList.Wizard: {
 		0: translate(heroStoryWizardTR0),
 		1: translate(heroStoryWizardTR1),
 		2: translate(heroStoryWizardTR2),
 		3: translate(heroStoryWizardTR3),
 	},
-	heroesList.Barbarian: map[int]string{
+	heroesList.Barbarian: {
 		0: translate(heroStoryBarbarianTR0),
 		1: translate(heroStoryBarbarianTR1),
 		2: translate(heroStoryBarbarianTR2),

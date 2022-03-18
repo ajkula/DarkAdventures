@@ -30,19 +30,19 @@ func MakeEnemyDecision(p1, p2 *Character) {
 		Name:  e.Name,
 		Value: 50,
 		Children: []Node{
-			Node{
+			{
 				Leaf:  false,
 				Label: "random",
 				Name:  e.Name,
 				Value: 40,
 				Children: []Node{
-					Node{
+					{
 						Leaf:   true,
 						Label:  "health",
 						Name:   e.Name,
 						Action: doHeal,
 					},
-					Node{
+					{
 						Leaf:   true,
 						Label:  "attack",
 						Name:   e.Name,
@@ -50,7 +50,7 @@ func MakeEnemyDecision(p1, p2 *Character) {
 					},
 				},
 			},
-			Node{
+			{
 				//******************
 				// Leaf:   true,
 				// Label:  "skill",
@@ -62,25 +62,25 @@ func MakeEnemyDecision(p1, p2 *Character) {
 				Name:  e.Name,
 				Value: enemyOrDragon,
 				Children: []Node{
-					Node{
+					{
 						Leaf:   true,
 						Label:  "attack",
 						Name:   e.Name,
 						Action: doAttack,
 					},
-					Node{
+					{
 						Leaf:  false,
 						Label: "skill",
 						Name:  e.Name,
 						Value: enemyOrDragon,
 						Children: []Node{
-							Node{
+							{
 								Leaf:   true,
 								Label:  "attack",
 								Name:   e.Name,
 								Action: doAttack,
 							},
-							Node{
+							{
 								Leaf:   true,
 								Label:  "skill",
 								Name:   e.Name,

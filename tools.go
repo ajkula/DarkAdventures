@@ -513,7 +513,7 @@ func OffsetLegend(arr []string, offset, index int) string {
 }
 
 var itemsByEnemy = map[string]map[string]int{
-	enemiesList.GOBLIN: map[string]int{
+	enemiesList.GOBLIN: {
 		itemNames.Moonstone: 0,
 		itemNames.Doll:      0,
 		itemNames.Coins:     0,
@@ -521,7 +521,7 @@ var itemsByEnemy = map[string]map[string]int{
 		itemNames.Potion:    0,
 		itemNames.Scroll:    0,
 	},
-	enemiesList.SKELETON: map[string]int{
+	enemiesList.SKELETON: {
 		itemNames.Moonstone: 0,
 		itemNames.Doll:      0,
 		itemNames.Coins:     0,
@@ -529,7 +529,7 @@ var itemsByEnemy = map[string]map[string]int{
 		itemNames.Potion:    0,
 		itemNames.Scroll:    0,
 	},
-	enemiesList.ORC: map[string]int{
+	enemiesList.ORC: {
 		itemNames.Moonstone: 0,
 		itemNames.Doll:      0,
 		itemNames.Coins:     0,
@@ -537,7 +537,7 @@ var itemsByEnemy = map[string]map[string]int{
 		itemNames.Potion:    0,
 		itemNames.Scroll:    0,
 	},
-	enemiesList.SORCERER: map[string]int{
+	enemiesList.SORCERER: {
 		itemNames.Moonstone: 0,
 		itemNames.Doll:      0,
 		itemNames.Coins:     0,
@@ -545,7 +545,7 @@ var itemsByEnemy = map[string]map[string]int{
 		itemNames.Potion:    0,
 		itemNames.Scroll:    0,
 	},
-	enemiesList.DRAGON: map[string]int{
+	enemiesList.DRAGON: {
 		itemNames.Moonstone: 0,
 		itemNames.Doll:      0,
 		itemNames.Coins:     0,
@@ -553,7 +553,7 @@ var itemsByEnemy = map[string]map[string]int{
 		itemNames.Potion:    0,
 		itemNames.Scroll:    0,
 	},
-	enemiesList.NIGHTWALKER: map[string]int{
+	enemiesList.NIGHTWALKER: {
 		itemNames.Moonstone: 0,
 		itemNames.Doll:      0,
 		itemNames.Coins:     0,
@@ -561,7 +561,7 @@ var itemsByEnemy = map[string]map[string]int{
 		itemNames.Potion:    0,
 		itemNames.Scroll:    0,
 	},
-	enemiesList.NECROMANCER: map[string]int{
+	enemiesList.NECROMANCER: {
 		itemNames.Moonstone: 0,
 		itemNames.Doll:      0,
 		itemNames.Coins:     0,
