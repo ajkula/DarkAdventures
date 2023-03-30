@@ -172,7 +172,7 @@ var EnemyChancesByName map[string]int = map[string]int{
 }
 
 var ItemChancesByEnemyName map[string]map[string]int = map[string]map[string]int{
-	enemiesList.SKELETON: map[string]int{
+	enemiesList.SKELETON: {
 		itemNames.Doll:      99,
 		itemNames.Moonstone: 98,
 		itemNames.Scroll:    94,
@@ -180,7 +180,7 @@ var ItemChancesByEnemyName map[string]map[string]int = map[string]map[string]int
 		itemNames.Key:       80,
 		itemNames.Coins:     5,
 	},
-	enemiesList.GOBLIN: map[string]int{
+	enemiesList.GOBLIN: {
 		itemNames.Doll:      99,
 		itemNames.Moonstone: 98,
 		itemNames.Scroll:    96,
@@ -188,7 +188,7 @@ var ItemChancesByEnemyName map[string]map[string]int = map[string]map[string]int
 		itemNames.Key:       60,
 		itemNames.Coins:     1,
 	},
-	enemiesList.SORCERER: map[string]int{
+	enemiesList.SORCERER: {
 		itemNames.Doll:      99,
 		itemNames.Moonstone: 98,
 		itemNames.Potion:    92,
@@ -196,7 +196,7 @@ var ItemChancesByEnemyName map[string]map[string]int = map[string]map[string]int
 		itemNames.Scroll:    50,
 		itemNames.Coins:     10,
 	},
-	enemiesList.ORC: map[string]int{
+	enemiesList.ORC: {
 		itemNames.Doll:      99,
 		itemNames.Scroll:    98,
 		itemNames.Potion:    94,
@@ -204,7 +204,7 @@ var ItemChancesByEnemyName map[string]map[string]int = map[string]map[string]int
 		itemNames.Moonstone: 50,
 		itemNames.Coins:     1,
 	},
-	enemiesList.DRAGON: map[string]int{
+	enemiesList.DRAGON: {
 		itemNames.Doll:      60,
 		itemNames.Scroll:    55,
 		itemNames.Potion:    50,
@@ -212,7 +212,7 @@ var ItemChancesByEnemyName map[string]map[string]int = map[string]map[string]int
 		itemNames.Moonstone: 5,
 		itemNames.Coins:     1,
 	},
-	enemiesList.NECROMANCER: map[string]int{
+	enemiesList.NECROMANCER: {
 		itemNames.Doll:      50,
 		itemNames.Scroll:    25,
 		itemNames.Potion:    15,
@@ -220,7 +220,7 @@ var ItemChancesByEnemyName map[string]map[string]int = map[string]map[string]int
 		itemNames.Moonstone: 5,
 		itemNames.Coins:     1,
 	},
-	enemiesList.NIGHTWALKER: map[string]int{
+	enemiesList.NIGHTWALKER: {
 		itemNames.Doll:      35,
 		itemNames.Scroll:    20,
 		itemNames.Potion:    15,
@@ -468,22 +468,22 @@ type EscapeResults struct{ OK, RAND, KO string }
 
 var escapeResults = &EscapeResults{OK: "ok", RAND: "rand", KO: "ko"}
 var escapeCases map[string]map[string]string = map[string]map[string]string{
-	heroesList.Thief: map[string]string{
+	heroesList.Thief: {
 		escapeResults.OK:   translate(ThiefEscapeOK),
 		escapeResults.RAND: translate(ThiefEscapeRAND),
 		escapeResults.KO:   translate(ThiefEscapeKO),
 	},
-	heroesList.Paladin: map[string]string{
+	heroesList.Paladin: {
 		escapeResults.OK:   translate(PaladinEscapeOK),
 		escapeResults.RAND: translate(PaladinEscapeRAND),
 		escapeResults.KO:   translate(PaladinEscapeKO),
 	},
-	heroesList.Wizard: map[string]string{
+	heroesList.Wizard: {
 		escapeResults.OK:   translate(WizardEscapeOK),
 		escapeResults.RAND: translate(WizardEscapeRAND),
 		escapeResults.KO:   translate(WizardEscapeKO),
 	},
-	heroesList.Barbarian: map[string]string{
+	heroesList.Barbarian: {
 		escapeResults.OK:   translate(BarbarianEscapeOK),
 		escapeResults.RAND: translate(BarbarianEscapeRAND),
 		escapeResults.KO:   translate(BarbarianEscapeKO),
