@@ -123,27 +123,21 @@ func TreeVector(tree Node, p, e *Character) {
 }
 
 func getTreeIndexNavigation(tree Node, e *Character) int {
-	index := 0
 	switch tree.Label {
 	case "health":
 		if GetAPercentageOfB(e.Health, e.BaseHealth) >= float32(tree.Value) || !e.hasItemInInventory("potion") {
-			index = 1
+			return 1
 		}
-		break
 	case "random":
 		if PercentChances(tree.Value) {
-			index = 1
+			return 1
 		}
-		break
 	case "skill":
 		if e.Skill > 0 {
 			if PercentChances(tree.Value) {
-				index = 1
+				return 1
 			}
 		}
-		break
-	default:
-		return 0
 	}
-	return index
+	return 0
 }
