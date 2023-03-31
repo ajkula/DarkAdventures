@@ -602,22 +602,7 @@ func (player *Character) setNewNext() {
 }
 
 func (player *Character) applyRates() {
-	// var odd int = player.LVL % 2
-	// To activate depending on how hard mode behaves
-	// if player.Npc {
-	// 	odd = player.LVL % 3
-	// 	if odd == 2 {
-	// 		odd = 0
-	// 	}
-	// }
-	// if odd == 1 {
-	// 	player.Skill += player.LevelUp.Rates.Skill
-	// 	if !player.Npc {
-	// 		Output("white", Tab+CalculateSpaceAlign(translate(SkillsUP))+"+ "+strconv.Itoa(player.LevelUp.Rates.Skill))
-	// 	}
-	// }
 	player.ExpValue = player.ExpValue + int(float32(player.ExpValue)*.2)
-	// for i := 0; i < (2 - odd); i++ {
 	for i := 0; i < 2; i++ {
 		operator := lvlRatesMap[rand.Intn(len(lvlRatesMap))]
 		switch operator {
@@ -711,13 +696,13 @@ func (player *Character) DisplayStats() {
 		}
 	}
 	Output("cyan", "\n"+DoubleTab+"================= "+translate(StatusTR)+" =================\n")
-	Output("stats", Tab+CalcPropsSpaceAlign(translate(Health), strconv.Itoa(player.Health)+"/"+strconv.Itoa(player.BaseHealth))+"  "+
-		Tab+CalcPropsSpaceAlign(translate(Crit), strconv.Itoa(player.Crit)))
-	Output("stats", Tab+CalcPropsSpaceAlign(translate(Strength), strconv.Itoa(player.Strength))+"  "+
-		Tab+CalcPropsSpaceAlign(translate(BoostTR), strconv.Itoa(player.Boost)))
 	Output("stats", Tab+CalcPropsSpaceAlign(translate(Level), strconv.Itoa(player.LVL))+"  "+
-		Tab+CalcPropsSpaceAlign(translate(Evasion), strconv.Itoa(player.Evasion)))
+		Tab+CalcPropsSpaceAlign(translate(Crit), strconv.Itoa(player.Crit)))
 	Output("stats", Tab+CalcPropsSpaceAlign(translate(Exp), strconv.Itoa(exp)+"/"+strconv.Itoa(player.LevelUp.NextRank))+"  "+
+		Tab+CalcPropsSpaceAlign(translate(BoostTR), strconv.Itoa(player.Boost)))
+	Output("stats", Tab+CalcPropsSpaceAlign(translate(Health), strconv.Itoa(player.Health)+"/"+strconv.Itoa(player.BaseHealth))+"  "+
+		Tab+CalcPropsSpaceAlign(translate(Evasion), strconv.Itoa(player.Evasion)))
+	Output("stats", Tab+CalcPropsSpaceAlign(translate(Strength), strconv.Itoa(player.Strength))+"  "+
 		Tab+CalcPropsSpaceAlign(translate(Rooms), strconv.Itoa(r)+"/"+strconv.Itoa(tm)))
 	Output("stats", Tab+CalcPropsSpaceAlign(translate(Enemies), strconv.Itoa(EnemiesKilled)+"/"+strconv.Itoa(EnemiesCount))+"  "+
 		Tab+CalcPropsSpaceAlign(translate(Skill), strconv.Itoa(player.Skill)))
