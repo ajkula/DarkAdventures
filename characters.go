@@ -465,13 +465,10 @@ func (player *Character) DisplayItems() string {
 }
 
 func (player *Character) hasItemInInventory(name string) bool {
-	_, ok := player.Inventory[name]
-	if ok {
-		ok = player.Inventory[name].Quantity >= 1
-	} else {
-		ok = false
+	if _, ok := player.Inventory[name]; ok {
+		return player.Inventory[name].Quantity >= 1
 	}
-	return ok
+	return false
 }
 
 func (player *Character) getEnemyItems(enemy *Character) {
