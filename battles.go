@@ -99,7 +99,6 @@ func checkPlayers() {
 				player.getEnemyItems(enemy)
 				player.calcLVL()
 				player.SetPlayerRoom().Ephemeral = ""
-				return
 			case false:
 				if !opp.hasItemInInventory(itemNames.Doll) || (opp.hasItemInInventory(itemNames.Doll) && opp.Inventory[itemNames.Doll].Quantity < 1) {
 					Output("red", translate(youDiedTR))
