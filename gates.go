@@ -37,13 +37,12 @@ var gateA *Gate = &Gate{}
 var gateB *Gate = &Gate{}
 var gatesTwoWayArray []*Gate
 
-var subMapNames SubMapNames = SubMapNames{
+var subMapNames = SubMapNames{
 	NorthEast: "NorthEast",
 	NorthWest: "NorthWest",
 	SouthEast: "SouthEast",
 	SouthWest: "SouthWest",
 }
-var subMapsParts []string = []string{subMapNames.NorthEast, subMapNames.NorthWest, subMapNames.SouthEast, subMapNames.SouthWest}
 
 var subMaps *SubMaps
 var diagonals map[int][]string = map[int][]string{
@@ -113,9 +112,6 @@ func InitGates() {
 		WorldMap[y][x].HasGate = true
 		WorldMap[y][x].Gate = pile.Gates[i]
 	}
-
-	// fmt.Printf("gateA: %+v\n", gateA)
-	// fmt.Printf("gateB: %+v\n", gateB)
 }
 
 func (gate *Gate) Warp(player *Character) {
@@ -126,9 +122,8 @@ func (gate *Gate) Warp(player *Character) {
 }
 
 func ToggleIndexs(i int) (index int) {
-	index = 0
 	if i == 0 {
-		index = 1
+		return 1
 	}
-	return index
+	return 0
 }

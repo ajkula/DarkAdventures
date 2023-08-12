@@ -19,7 +19,6 @@ var X = 10
 var Y = 10
 
 var Grid [][]string
-var player Character
 var Difficulty int
 var Hero int
 var hero *Character
@@ -59,22 +58,13 @@ func init() {
 	Intro()
 	var lines = strings.Split(string(file), "\n")
 	cols := strings.Split(lines[0], "")
-	var temporary []string
-	temporary = append(temporary, cols...)
 	Y = len(lines)
 	X = len(cols)
 	for index := range lines {
 		cols := strings.Split(lines[index], "")
-		// for rank, element := range cols {
-		temporary = cols
-		Grid = append(Grid, temporary)
-		// Grid[index] = append(Grid[index], cols...)
-		// Grid[index][rank] = element
-		// }
+		Grid = append(Grid, cols)
 	}
-	// for _, l := range Grid {
-	// 	fmt.Println("grid", l)
-	// }
+
 	CreateMap()
 	CreateDragon()
 	initializeQuests()
@@ -85,14 +75,11 @@ func init() {
 
 func main() {
 	var sigOnce int = 0
-	// player = *new(Character)
 	ChooseHero()
 	hero = heroFromName(indexedHeroes[Hero])
 	hero.SetPlayerRoom()
 	hero.getImage()
 	pile.PushCharacters(hero)
-	// hero.addStatus(&Blueprint{Name: statuses.Dark})
-	// hero.MoveTo("n")
 
 	for {
 		if msgDragonDead == enemiesList.DRAGON && sigOnce == 0 {

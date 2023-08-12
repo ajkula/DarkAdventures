@@ -10,10 +10,23 @@ type Walker struct {
 	Freeze           bool
 }
 
+type Direction struct {
+	Name   string
+	DeltaX int
+	DeltaY int
+}
+
+var allDirections = []Direction{
+	{Name: directions.North, DeltaX: 0, DeltaY: -1},
+	{Name: directions.South, DeltaX: 0, DeltaY: 1},
+	{Name: directions.East, DeltaX: 1, DeltaY: 0},
+	{Name: directions.West, DeltaX: -1, DeltaY: 0},
+}
+
 func (walker *Walker) walkerMoves() {
 	// walker.Encounter.reset()
 	if !walker.Freeze {
-		if ok := walker.isAlive(); ok {
+		if isWalkerAlive := walker.isAlive(); isWalkerAlive {
 			loc := walker.SetPlayerRoom()
 			walker.PreviousLocation = []int{loc.Y, loc.X}
 
@@ -35,32 +48,22 @@ func (walker *Walker) shouldFreeze(str string) {
 }
 
 func (walker *Walker) walkerPossibleWays() []string {
-	var youCanGo []string
-	var yourPlace *Location
-	yourPlace = walker.SetPlayerRoom()
+	youCanGo := []string{}
+	currentLocation := walker.SetPlayerRoom()
 
-	if yourPlace.X >= 1 {
-		if canWalkerMoveThatWay(yourPlace.Y, yourPlace.X-1) {
-			youCanGo = append(youCanGo, directions.West)
-		}
-	}
-	if yourPlace.X <= X-2 {
-		if canWalkerMoveThatWay(yourPlace.Y, yourPlace.X+1) {
-			youCanGo = append(youCanGo, directions.East)
-		}
-	}
-
-	if yourPlace.Y >= 1 {
-		if canWalkerMoveThatWay(yourPlace.Y-1, yourPlace.X) {
-			youCanGo = append(youCanGo, directions.North)
-		}
-	}
-	if yourPlace.Y <= Y-2 {
-		if canWalkerMoveThatWay(yourPlace.Y+1, yourPlace.X) {
-			youCanGo = append(youCanGo, directions.South)
+	for _, dir := range allDirections {
+		newX := currentLocation.X + dir.DeltaX
+		newY := currentLocation.Y + dir.DeltaY
+		if isInsideMap(newY, newX) && canWalkerMoveThatWay(newY, newX) {
+			youCanGo = append(youCanGo, dir.Name)
 		}
 	}
 	return youCanGo
+}
+
+// check if a given x, y is inside the map boundaries
+func isInsideMap(y, x int) bool {
+	return x >= 0 && x < X && y >= 0 && y < Y
 }
 
 func canWalkerMoveThatWay(y, x int) bool {
