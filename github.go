@@ -1,7 +1,5 @@
-// "Package main" is the namespace declaration
 package main
 
-// importing standard libraries
 import (
 	"encoding/json"
 	"fmt"
@@ -9,12 +7,9 @@ import (
 	"net/http"
 )
 
-// constants
 const (
-	githugApiURL = "https://api.github.com/repos/ajkula/DarkAdventures/tags"
+	githubApiURL = "https://api.github.com/repos/ajkula/DarkAdventures/tags"
 )
-
-// User struct represents the JSON data from GitHub API: https://api.github.com/repos/ajkula/DarkAdventures/tags
 
 type Repo struct {
 	Name       string `json:"name"`
@@ -29,19 +24,22 @@ type Commit struct {
 	URL string `json:"url"`
 }
 
-var Repos []*Repo
+var repos []*Repo
 
 func getRepos() *Repo {
-	resp, err := http.Get(githugApiURL)
+	resp, err := http.Get(githubApiURL)
 	if err != nil {
-		fmt.Printf("Error retrieving Game last version: %s\n", err)
+		check(err)
 		return &Repo{Name: releaseVersion}
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	check(err)
-	json.Unmarshal(body, &Repos)
-	return Repos[0]
+	json.Unmarshal(body, &repos)
+	if len(repos) == 0 || repos[0] == nil {
+		return &Repo{Name: releaseVersion}
+	}
+	return repos[0]
 }
 
 func check(e error) {
