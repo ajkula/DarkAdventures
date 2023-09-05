@@ -648,7 +648,7 @@ var fightTutoTR = map[string]string{
 		DoubleTab + "a (pour attaquer)\n" +
 		DoubleTab + "e (tanter de vous échapper)\n" +
 		DoubleTab + "s (utiliser une compétence si vous en avez)\n" +
-		DoubleTab + "s (voir votre inventaire)\n" +
+		DoubleTab + "i (voir votre inventaire)\n" +
 		DoubleTab + "p (voir l'état du perso, et si des compétences sont dispo)\n" +
 		DoubleTab + "u (utiliser un item +) ",
 }
