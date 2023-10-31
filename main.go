@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"math/rand"
 	"os"
 	"strings"
 	"time"
@@ -32,7 +31,7 @@ func Check(e error) {
 func init() {
 	lastVer := getRepos()
 	updateTitle(lastVer)
-	rand.Seed(time.Now().UTC().UnixNano())
+	// rand.Seed(time.Now().UTC().UnixNano())
 	Out = os.Stdout
 	In = os.Stdin
 	ResetTurns()
