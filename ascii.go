@@ -198,27 +198,27 @@ var title string = "888888888888888888888888888888888888888888888888888888888888
 	"88888888888888888888888888888888888888888888888888888888888888888888888888888888\n" +
 	"88888888888888888888888888888888888888888888888888888888888888888888888888888888\n"
 
-const goblinAscii string = DoubleTab + "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n" + DoubleTab +
-	"MMMMMMMMMMMMMMMD8DMMMMMMMMMMMMMMMMM\n" + DoubleTab +
-	"MMMMMMMMMMMMMMZ$$$ZMMMMMMMMMMMMMMMM\n" + DoubleTab +
-	"MMMMMMMMMMM8II+I$7?IIOMMMMMMMMMMMMM\n" + DoubleTab +
-	"MMMMMMMMMMMOI=++I+++$8MMMMMMMMMMMMM\n" + DoubleTab +
-	"MMMMMMMMMMZII+==~=+???ZMMMMMMMMMMMM\n" + DoubleTab +
-	"MMMMMMMMMO=~====?++=?+=I8MMMMMMMMMM\n" + DoubleTab +
-	"MMMMMMMM8+=O$=?+++=7MM8+?OMMMMMMMMM\n" + DoubleTab +
-	"MMMMMMMM7+8MZ=+=++~ZMMMD7IDMMMMMMMM\n" + DoubleTab +
-	"MMMMMMMOI8MM8=+=+++7MMMMMO$MMMMMMMM\n" + DoubleTab +
-	"MMMMMMD$MMMMM7+??II+8MMMMMZ$MMMMMMM\n" + DoubleTab +
-	"MMMMMM77Z8MMOI+??I++I8MM8Z$7DMMMMMM\n" + DoubleTab +
-	"MMMMMM$78DMZ$$?~=~=+I7MMDM8?OMMMMMM\n" + DoubleTab +
-	"MMMMMD7ZMM$7$ZOI+~=O77$MMD$IOMMMMMM\n" + DoubleTab +
-	"MMMMMMZ78M?+8MM$=?+ZM7+7DMDDMMMMMMM\n" + DoubleTab +
-	"MMMMMMMMMMI?OMM$=+?+DM$=?MMMMMMMMMM\n" + DoubleTab +
-	"MMMMMMDMDMZI8DDZ=+??ODDOIZMDDMMMMMM\n" + DoubleTab +
-	"MDDDDDDD88Z7$OZZ?77$ZZZOZIZ8DDDDDDM\n" + DoubleTab +
-	"DDDDD88Z7II?7ZZZZ$$$ZZZZ$??IODDDDMM\n" + DoubleTab +
-	"MMMMMDDOZO88DDDMDDDMMMMMMD88DMMMMMM\n" + DoubleTab +
-	"MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n"
+const goblinAscii string = DoubleTab + "...................................\n" + DoubleTab +
+	"...............,:,.................\n" + DoubleTab +
+	"..............=+++=................\n" + DoubleTab +
+	"...........:II$I+?7II~.............\n" + DoubleTab +
+	"...........~IZ$$I$$$+:.............\n" + DoubleTab +
+	"..........=II$ZZOZ$777=............\n" + DoubleTab +
+	".........~ZOZZZZ7$$Z7$ZI:..........\n" + DoubleTab +
+	"........:$Z~+Z7$$$Z?..:$7~.........\n" + DoubleTab +
+	"........?$:.=Z$Z$$O=...,?I,........\n" + DoubleTab +
+	".......~I:..:Z$Z$$$?.....~+........\n" + DoubleTab +
+	"......,+.....?$77II$:.....=+.......\n" + DoubleTab +
+	"......??=:..~I$77I$$I:..:=+?,......\n" + DoubleTab +
+	"......+?:,.=++7OZOZ$I?..,.:7~......\n" + DoubleTab +
+	".....,?=..+?+=~I$OZ~??+..,+I~......\n" + DoubleTab +
+	"......=?:.7$:..+Z7$=.?$?,.,,.......\n" + DoubleTab +
+	"..........I7~..+Z$7$,.+Z7..........\n" + DoubleTab +
+	"......,.,.=I:,,=Z$77~,,~I=.,,......\n" + DoubleTab +
+	".,,,,,,,::=?+~==7??+===~=I=:,,,,,,.\n" + DoubleTab +
+	",,,,,::=?II7?====+++====+77I~,,,,..\n" + DoubleTab +
+	".....,,~=~::,,,.,,,......,::,......\n" + DoubleTab +
+	"...................................\n"
 
 const skeletonAscii string = DoubleTab + "MMMMMMMMMMMOMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n" + DoubleTab +
 	"MMMMMMMMMMMZMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n" + DoubleTab +

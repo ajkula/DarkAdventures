@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"math/rand"
 	"os"
 	"strings"
@@ -39,7 +38,7 @@ func init() {
 	ResetTurns()
 	Difficulty = 0
 
-	file, err := ioutil.ReadFile("landscape.txt")
+	file, err := os.ReadFile("landscape.txt")
 	if err != nil {
 		f, error := os.Create("landscape.txt")
 		Check(error)
@@ -51,7 +50,7 @@ func init() {
 		// w := tabwriter.NewWriter(os.Stdout, 1, 1, 1, ' ', 0)
 		// fmt.Fprintf(w, "Wrote default Landscape WorldMap: %v bytes wrote to disk\n\n", num)
 		fmt.Fprintf(os.Stdout, "Wrote default Landscape WorldMap: %v bytes wrote to disk\n\n", num)
-		file, e = ioutil.ReadFile("landscape.txt")
+		file, e = os.ReadFile("landscape.txt")
 		Check(e)
 	}
 	showTitle()

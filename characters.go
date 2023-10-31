@@ -558,12 +558,13 @@ func (player *Character) BuyFromShop(name string) bool {
 // ***************************************************************************************************
 
 func (player *Character) calcLVL() {
+	lvlUpStr := DoubleTab + CalculateSpaceAlign(translate(LevelUPTR)) + "LVL "
 	next := player.LevelUp.NextRank
 	xp := player.getXPtoNext()
 	if xp-next >= 0 {
 		// Output LEVEL UP
 		if !player.Npc {
-			Output("cyan", DoubleTab+CalculateSpaceAlign(translate(LevelUPTR))+"LVL "+strconv.Itoa(player.LVL+1)+" !!")
+			Output("cyan", lvlUpStr+strconv.Itoa(player.LVL+1)+" !!")
 		}
 		player.passLvl()
 	} else {
@@ -585,8 +586,7 @@ func (player *Character) getXPtoNext() (res int) {
 	for i := 0; i < len(player.LevelUp.achievedLevelsChain); i++ {
 		allCaps += player.LevelUp.achievedLevelsChain[i]
 	}
-	res = player.LevelUp.Exp - allCaps
-	return res
+	return player.LevelUp.Exp - allCaps
 }
 
 func (player *Character) getTheNext() (res int) {
@@ -673,7 +673,6 @@ func (player *Character) DisplayExpGauge() {
 }
 
 func CalcPropsSpaceAlign(name, value string) string {
-	// +":"
 	var length int = 1
 	num := 27
 	if num-utf8.RuneCountInString(value)-utf8.RuneCountInString(name) > length {
