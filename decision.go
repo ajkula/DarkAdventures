@@ -51,12 +51,6 @@ func MakeEnemyDecision(p1, p2 *Character) {
 				},
 			},
 			{
-				//******************
-				// Leaf:   true,
-				// Label:  "skill",
-				// Name:   e.Name,
-				// Action: doSkill,
-				//******************
 				Leaf:  false,
 				Label: "skill",
 				Name:  e.Name,
@@ -111,9 +105,6 @@ func doAttack(p, e *Character) {
 }
 
 func TreeVector(tree Node, p, e *Character) {
-	// ICI
-	// Output("red", Tab+tree.Label+" leaf: ", tree.Leaf, " value: ", tree.Value)
-
 	if tree.Leaf {
 		tree.Action(p, e)
 		return
